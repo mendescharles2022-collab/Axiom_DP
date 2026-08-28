@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block titulo %}Recibo {{ recibo.competencia }} — {{ recibo.empresa.razao_social|titulo_pt }}{% endblock %}
+{% block conteudo %}
+
+<a href="{{ url_for('recibos.listar', empresa_id=recibo.empresa_id) }}">← Recibos avulsos</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ "Pró-labore" if recibo.tipo == "pro_labore" else "Contracheque" }} — {{ recibo.competencia }}</h2>
+    <div class="acoes-topo">
+      <form method="post" action="{{ url_for('recibos.gerar', recibo_id=recibo.id) }}" class="form-inline">
+        <button type="submit" class="botao">{% if recibo.caminho_arquivo_gerado %}Gerar novamente{% else %}Gerar documento{% endif %}</button>
+      </form>
+      {% if recibo.caminho_arquivo_gerado %}
+      <a class="botao botao-secundario" href="{{ url_for('recibos.baixar', recibo_id=recibo.id) }}">Baixar .docx</a>
+      {% endif %}
+      <form method="post" action="{{ url_for('recibos.excluir', recibo_id=recibo.id) }}" onsubmit="return confirm('Excluir este recibo?');" class="form-inline">
+        <button type="submit" class="botao-perigo">Excluir</button>
+      </form>
+    </div>
+  </div>
+
+  <table class="tabela-dados">
+    <tr><td>Empresa</td><td>{{ recibo.empresa.razao_social|titulo_pt }}</td></tr>
+    <tr><td>Beneficiário</td><td>{{ (recibo.empregado.nome_completo if recibo.empregado else recibo.nome_pro_labore)|titulo_pt }}</td></tr>
+    <tr><td>Frase de quitação</td><td>{{ recibo.frase_quitacao.texto if recibo.frase_quitacao else "Declaro que recebi o valor descrito e dou plena quitação do que me é devido até o momento." }}</td></tr>
+  </table>
+</section>
+
+{% if erro_calculo %}
+<section class="card">
+  <p class="flash flash-erro">{{ erro_calculo }}</p>
+</section>
+{% elif resultado %}
+
+<section class="card">
+  <h2>Itens</h2>
+  <table>
+    <thead><tr><th>Rubrica</th><th>Referência</th><th>Provento</th><th>Desconto</th></tr></thead>
+    <tbody>
+      {% for item in recibo.itens %}
+      <tr>
+        <td>{{ item.rubrica.codigo }} — {{ item.rubrica.nome }}</td>
+        <td>{{ item.referencia or "-" }}</td>
+        <td>{{ "R$ %.2f"|format(item.valor_provento) if item.valor_provento else "-" }}</td>
+        <td>{{ "R$ %.2f"|format(item.valor_desconto) if item.valor_desconto else "-" }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+
+<section class="card">
+  <h2>Cálculo</h2>
+  <table class="tabela-dados">
+    <tr><td>Total de proventos</td><td>R$ {{ "%.2f"|format(resultado.total_proventos) }}</td></tr>
+    <tr><td>Total de descontos (itens)</td><td>R$ {{ "%.2f"|format(resultado.total_descontos) }}</td></tr>
+    <tr><td>Base de cálculo INSS</td><td>R$ {{ "%.2f"|format(resultado.base_inss) }}</td></tr>
+    <tr><td>INSS</td><td>R$ {{ "%.2f"|format(resultado.inss.valor) }}</td></tr>
+    <tr><td>Base de cálculo IRRF</td><td>R$ {{ "%.2f"|format(resultado.base_irrf) }}</td></tr>
+    <tr><td>IRRF (faixa {{ resultado.irrf.aliquota_faixa }}%)</td><td>R$ {{ "%.2f"|format(resultado.irrf.valor_final) }}</td></tr>
+    {% if resultado.irrf.valor_redutor %}
+    <tr><td class="texto-muted">— redutor Lei 15.270/2025 aplicado</td><td class="texto-muted">- R$ {{ "%.2f"|format(resultado.irrf.valor_redutor) }}</td></tr>
+    {% endif %}
+    <tr><td>Base de cálculo FGTS</td><td>R$ {{ "%.2f"|format(resultado.base_fgts) }}</td></tr>
+    <tr><td>FGTS do mês</td><td>R$ {{ "%.2f"|format(resultado.fgts) }}</td></tr>
+    <tr><td><strong>Líquido a receber</strong></td><td><strong>R$ {{ "%.2f"|format(resultado.liquido) }}</strong></td></tr>
+  </table>
+</section>
+
+{% endif %}
+
+{% endblock %}

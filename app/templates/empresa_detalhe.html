@@ -9,6 +9,7 @@
     <h2>{{ empresa.razao_social|titulo_pt }}</h2>
     <div class="acoes-topo">
       <a class="botao" href="/empresas/{{ empresa.id }}/emitir">Emitir documento</a>
+      <a class="botao botao-secundario" href="{{ url_for('recibos.listar', empresa_id=empresa.id) }}">Recibos avulsos</a>
       <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/historico">Histórico</a>
       <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/editar">Editar</a>
       {% if empresa.tipo_inscricao == "CNPJ" %}

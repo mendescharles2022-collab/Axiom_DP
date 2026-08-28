@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar frase" if frase and frase.id else "Nova frase" }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+{% set f = frase or {} %}
+{% set fid = f.id if f is mapping else (f.id if f else None) %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ "Editar frase" if fid else "Nova frase" }}</h2>
+    <a href="{{ url_for('frases_quitacao.listar') }}">← Voltar</a>
+  </div>
+
+  <form method="post" action="{{ url_for('frases_quitacao.editar_salvar', frase_id=fid) if fid else url_for('frases_quitacao.nova_salvar') }}" class="form-grid">
+    <label class="col-2">Nome *
+      <input name="nome" required value="{{ f.nome or '' }}">
+    </label>
+    <label class="col-2">Texto *
+      <textarea name="texto" rows="3" required>{{ f.texto or '' }}</textarea>
+    </label>
+    <div class="col-2 acoes-form">
+      <button type="submit">Salvar</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

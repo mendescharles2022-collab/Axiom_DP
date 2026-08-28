@@ -24,13 +24,19 @@ social, opção Simples/MEI, situação especial) com suporte a CNPJ
 alfanumérico e aos campos CAEPF/CEI/CNO, máscaras completas nos
 formulários, `titulo_pt` para corrigir capitalização de dados vindos em
 CAIXA ALTA, importação das 537 empresas e 1.798 rubricas do escritório,
-e o motor de cálculo de contracheque/pró-labore avulso (INSS progressivo,
+o motor de cálculo de contracheque/pró-labore avulso (INSS progressivo,
 IRRF por tabela + redutor 2026/Lei 15.270/2025, FGTS) — ver avisos de
 "valores a confirmar" no topo de `app/services/calculo_folha.py` e
-`scripts/seed_tabelas_fiscais.py` antes de usar para folha real.
+`scripts/seed_tabelas_fiscais.py` antes de usar para folha real — e as
+telas de emissão do recibo avulso: escolher empresa/empregado (ou nome
+do sócio, para pró-labore sem registro), lançar os itens por rubrica,
+calcular INSS/IRRF/FGTS automaticamente e gerar o `.docx` (2 vias,
+estrutura baseada na planilha de referência do escritório). Frases de
+quitação parametrizáveis por empresa, com CRUD restrito a administradores
+em "Frases de quitação".
 
-**Em andamento:** telas/rotas de emissão do recibo avulso (parametrização
-da frase de quitação) e módulo de relatórios/histórico.
+**Em andamento:** módulo de relatórios/histórico cruzando
+`DocumentoEmitido` e `ReciboAvulso`.
 
 **Antes de continuar o desenvolvimento, leia [`HANDOFF_CLAUDE_CODE.md`](./HANDOFF_CLAUDE_CODE.md).**
 Ele consolida todas as decisões de arquitetura e o roteiro detalhado
@@ -76,6 +82,8 @@ venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 python scripts/seed_templates.py    # popula o catálogo de modelos (1x, ou de novo ao adicionar modelos)
 python scripts/importar_dados_escritorio.py   # importa as 537 empresas e as 1.798 rubricas do escritório
+python scripts/seed_tabelas_fiscais.py        # tabelas INSS/IRRF + redutor 2026 (CONFIRA os valores antes de uso real)
+python scripts/seed_frase_quitacao.py         # frase de quitação "Tradicional"
 python main.py
 ```
 

@@ -17,6 +17,7 @@
         <span class="nome-usuario">{{ current_user.nome }}</span>
         {% if current_user.is_admin %}
         <a href="{{ url_for('usuarios.listar') }}">Usuários</a>
+        <a href="{{ url_for('frases_quitacao.listar') }}">Frases de quitação</a>
         {% endif %}
         <form method="post" action="{{ url_for('auth.logout') }}" class="form-inline">
           <button type="submit" class="botao-sair">Sair</button>

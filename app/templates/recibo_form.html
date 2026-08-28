@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block titulo %}Novo recibo avulso — {{ empresa.razao_social|titulo_pt }}{% endblock %}
+{% block conteudo %}
+
+<a href="{{ url_for('recibos.listar', empresa_id=empresa.id) }}">← Recibos avulsos</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Novo recibo avulso</h2>
+  </div>
+
+  <form method="post" action="{{ url_for('recibos.novo_salvar', empresa_id=empresa.id) }}" class="form-grid">
+    <label>Tipo
+      <select name="tipo" id="tipo">
+        <option value="contracheque">Contracheque</option>
+        <option value="pro_labore">Pró-labore</option>
+      </select>
+    </label>
+    <label>Competência (mês/ano) *
+      <input type="month" name="competencia" required>
+    </label>
+
+    <label>Empregado {% if empregados %}{% else %}(nenhum cadastrado){% endif %}
+      <select name="empregado_id">
+        <option value="">— pró-labore sem registro de empregado —</option>
+        {% for emp in empregados %}
+        <option value="{{ emp.id }}">{{ emp.nome_completo|titulo_pt }} — {{ emp.cargo or "sem cargo definido" }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Nome (só para pró-labore sem empregado cadastrado)
+      <input name="nome_pro_labore">
+    </label>
+
+    <label class="col-2">Frase de quitação
+      <select name="frase_quitacao_id">
+        <option value="">
+          {% if empresa.frase_quitacao_padrao %}padrão da empresa: {{ empresa.frase_quitacao_padrao.nome }}{% else %}frase tradicional{% endif %}
+        </option>
+        {% for f in frases %}
+        <option value="{{ f.id }}">{{ f.nome }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <h3 class="col-2">Itens do recibo (rubricas)</h3>
+    <p class="texto-muted col-2">
+      Escolha a rubrica e informe o valor como provento OU desconto.
+      INSS e IRRF são calculados automaticamente — não precisa lançá-los aqui.
+      Linhas em branco são ignoradas.
+    </p>
+
+    <datalist id="lista-rubricas">
+      {% for r in rubricas %}
+      <option value="{{ r.codigo }} — {{ r.nome }}"></option>
+      {% endfor %}
+    </datalist>
+
+    <div class="col-2" style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr><th>Rubrica</th><th>Referência</th><th>Provento (R$)</th><th>Desconto (R$)</th></tr>
+      </thead>
+      <tbody>
+        {% for i in linhas %}
+        <tr>
+          <td style="min-width:280px;">
+            <input name="rubrica_texto_{{ i }}" list="lista-rubricas" placeholder="digite o código ou o nome da rubrica">
+          </td>
+          <td style="width:100px;"><input name="referencia_{{ i }}" placeholder="ex.: 30"></td>
+          <td style="width:130px;"><input name="valor_provento_{{ i }}" data-mask="moeda" inputmode="decimal"></td>
+          <td style="width:130px;"><input name="valor_desconto_{{ i }}" data-mask="moeda" inputmode="decimal"></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    </div>
+
+    <div class="col-2 acoes-form">
+      <button type="submit">Salvar e calcular</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

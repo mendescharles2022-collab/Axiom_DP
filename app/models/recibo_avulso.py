@@ -19,6 +19,7 @@ class ReciboAvulso(db.Model):
     tipo = db.Column(db.String(20), nullable=False, default="contracheque")  # contracheque | pro_labore
     frase_quitacao_id = db.Column(db.Integer, db.ForeignKey("frases_quitacao.id"))
     nome_pro_labore = db.Column(db.String(200))  # nome do sócio, só quando empregado_id é nulo
+    caminho_arquivo_gerado = db.Column(db.String(400))
     criado_em = db.Column(db.DateTime, default=datetime.utcnow)
 
     empresa = db.relationship("Empresa")

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Recibos avulsos — {{ empresa.razao_social|titulo_pt }}{% endblock %}
+{% block conteudo %}
+
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social|titulo_pt }}</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Recibos avulsos (contracheque / pró-labore)</h2>
+    <a class="botao" href="{{ url_for('recibos.novo_form', empresa_id=empresa.id) }}">+ Novo recibo</a>
+  </div>
+
+  {% if recibos %}
+  <table>
+    <thead><tr><th>Competência</th><th>Tipo</th><th>Beneficiário</th><th>Situação</th><th></th></tr></thead>
+    <tbody>
+      {% for r in recibos %}
+      <tr>
+        <td>{{ r.competencia }}</td>
+        <td><span class="badge">{{ "Pró-labore" if r.tipo == "pro_labore" else "Contracheque" }}</span></td>
+        <td>{{ (r.empregado.nome_completo if r.empregado else r.nome_pro_labore)|titulo_pt }}</td>
+        <td>{% if r.caminho_arquivo_gerado %}Gerado{% else %}<span class="texto-muted">Não gerado</span>{% endif %}</td>
+        <td class="acoes">
+          <a href="{{ url_for('recibos.detalhe', recibo_id=r.id) }}">Abrir</a>
+          {% if r.caminho_arquivo_gerado %}
+          <a href="{{ url_for('recibos.baixar', recibo_id=r.id) }}">Baixar</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum recibo avulso emitido ainda para esta empresa.</p>
+  {% endif %}
+</section>
+
+{% endblock %}

@@ -10,6 +10,7 @@ from app.models.emissao import DocumentoEmitido
 from app.models.cnae_secundario import CnaeSecundario
 from app.models.socio import Socio
 from app.models.inscricao_estadual import InscricaoEstadual
+from app.models.frase_quitacao import FraseQuitacao
 from app.services.cnpj_service import consultar_cnpj, CnpjConsultaError
 from app.services.document_engine import gerar_documento, GeracaoDocumentoError
 
@@ -57,6 +58,7 @@ def _campos_empresa_do_form(form):
         natureza_juridica=form.get("natureza_juridica", "").strip() or None,
         status=form.get("status", "Ativo").strip() or "Ativo",
         forma_envio=form.get("forma_envio", "").strip() or None,
+        frase_quitacao_padrao_id=form.get("frase_quitacao_padrao_id", type=int),
         observacoes=form.get("observacoes", "").strip() or None,
     )
 
@@ -120,10 +122,14 @@ def index():
     return render_template("empresas_lista.html", empresas=empresas, busca=busca)
 
 
+def _frases_quitacao():
+    return FraseQuitacao.query.order_by(FraseQuitacao.nome).all()
+
+
 # ---------------------------------------------------------------- Empresas
 @paginas_bp.get("/empresas/nova")
 def empresa_nova_form():
-    return render_template("empresa_form.html", empresa=None)
+    return render_template("empresa_form.html", empresa=None, frases=_frases_quitacao())
 
 
 @paginas_bp.post("/empresas/nova")
@@ -131,11 +137,11 @@ def empresa_nova_salvar():
     dados = _campos_empresa_do_form(request.form)
     if not dados["razao_social"] or not dados["cnpj"]:
         flash("Razão social e CNPJ são obrigatórios.", "erro")
-        return render_template("empresa_form.html", empresa=dados)
+        return render_template("empresa_form.html", empresa=dados, frases=_frases_quitacao())
 
     if Empresa.query.filter_by(cnpj=dados["cnpj"]).first():
         flash("Já existe uma empresa cadastrada com este CNPJ.", "erro")
-        return render_template("empresa_form.html", empresa=dados)
+        return render_template("empresa_form.html", empresa=dados, frases=_frases_quitacao())
 
     empresa = Empresa(**dados)
     db.session.add(empresa)
@@ -158,7 +164,7 @@ def empresa_detalhe(empresa_id):
 @paginas_bp.get("/empresas/<int:empresa_id>/editar")
 def empresa_editar_form(empresa_id):
     empresa = Empresa.query.get_or_404(empresa_id)
-    return render_template("empresa_form.html", empresa=empresa)
+    return render_template("empresa_form.html", empresa=empresa, frases=_frases_quitacao())
 
 
 @paginas_bp.post("/empresas/<int:empresa_id>/editar")
@@ -168,7 +174,7 @@ def empresa_editar_salvar(empresa_id):
     if not dados["razao_social"] or not dados["cnpj"]:
         flash("Razão social e CNPJ são obrigatórios.", "erro")
         dados["id"] = empresa_id
-        return render_template("empresa_form.html", empresa=dados)
+        return render_template("empresa_form.html", empresa=dados, frases=_frases_quitacao())
 
     duplicada = Empresa.query.filter(
         Empresa.cnpj == dados["cnpj"], Empresa.id != empresa_id
@@ -176,7 +182,7 @@ def empresa_editar_salvar(empresa_id):
     if duplicada:
         flash("Já existe outra empresa cadastrada com este CNPJ.", "erro")
         dados["id"] = empresa_id
-        return render_template("empresa_form.html", empresa=dados)
+        return render_template("empresa_form.html", empresa=dados, frases=_frases_quitacao())
 
     for campo, valor in dados.items():
         setattr(empresa, campo, valor)

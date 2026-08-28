@@ -131,6 +131,7 @@ def calcular_irrf(base_calculo, competencia: str, dependentes: int = 0) -> dict:
         "valor_tabela": _arredondar(valor_tabela),
         "valor_redutor": _arredondar(redutor_valor),
         "valor_final": _arredondar(valor_final),
+        "aliquota_faixa": _d(faixa_aplicavel["aliquota"]),
         "tabela": tabela,
         "tabela_redutor": tabela_redutor,
     }

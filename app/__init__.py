@@ -31,10 +31,14 @@ def create_app(config_overrides: dict | None = None):
     from app.routes.empregados import empregados_bp
     from app.routes.paginas import paginas_bp
     from app.routes.usuarios import usuarios_bp
+    from app.routes.recibos import recibos_bp
+    from app.routes.frases_quitacao import frases_quitacao_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(paginas_bp)
     app.register_blueprint(usuarios_bp, url_prefix="/usuarios")
+    app.register_blueprint(recibos_bp)
+    app.register_blueprint(frases_quitacao_bp, url_prefix="/frases-quitacao")
     app.register_blueprint(empresas_bp, url_prefix="/api/empresas")
     app.register_blueprint(empregados_bp, url_prefix="/api/empregados")
 

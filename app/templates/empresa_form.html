@@ -95,6 +95,14 @@
     <label>Forma de envio
       <input name="forma_envio" id="forma_envio" value="{{ e.forma_envio or '' }}">
     </label>
+    <label>Frase de quitação padrão (recibos)
+      <select name="frase_quitacao_padrao_id">
+        <option value="">— usar a frase tradicional —</option>
+        {% for f in frases %}
+        <option value="{{ f.id }}" {% if e.frase_quitacao_padrao_id == f.id %}selected{% endif %}>{{ f.nome }}</option>
+        {% endfor %}
+      </select>
+    </label>
 
     <label class="col-2">Observações
       <textarea name="observacoes" rows="3">{{ e.observacoes or '' }}</textarea>
