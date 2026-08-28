@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block titulo %}Histórico — {{ empresa.razao_social }}{% endblock %}
+{% block titulo %}Histórico — {{ empresa.razao_social|titulo_pt }}{% endblock %}
 {% block conteudo %}
 
-<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social }}</a>
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social|titulo_pt }}</a>
 
 <section class="card">
   <div class="card-topo">
@@ -17,7 +17,7 @@
       <tr>
         <td>{{ d.emitido_em.strftime("%d/%m/%Y %H:%M") }}</td>
         <td>{{ d.template.nome }}</td>
-        <td>{{ d.empregado.nome_completo if d.empregado else "-" }}</td>
+        <td>{{ d.empregado.nome_completo|titulo_pt if d.empregado else "-" }}</td>
         <td class="acoes"><a href="/documentos/{{ d.id }}/baixar">Baixar</a></td>
       </tr>
       {% endfor %}

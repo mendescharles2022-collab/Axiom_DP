@@ -6,7 +6,7 @@
 {% set empid = emp.id if emp is mapping else (emp.id if emp else None) %}
 {% set acao = ("/empregados/%d/editar" % empid) if empid else ("/empresas/%d/empregados/novo" % empresa.id) %}
 
-<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social }}</a>
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social|titulo_pt }}</a>
 
 <section class="card">
   <div class="card-topo">

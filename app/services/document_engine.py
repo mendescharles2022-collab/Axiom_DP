@@ -15,6 +15,7 @@ from docxtpl import DocxTemplate
 from app.config import DOCS_TEMPLATES_DIR, OUTPUT_DIR
 from app.extensions import db
 from app.models.emissao import DocumentoEmitido
+from app.utils.texto import titulo_pt
 
 MESES_PT = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
             "agosto", "setembro", "outubro", "novembro", "dezembro"]
@@ -31,12 +32,12 @@ def _v(valor):
 
 def _empresa_contexto(empresa):
     return SimpleNamespace(
-        razao_social=_v(empresa.razao_social),
-        nome_fantasia=_v(empresa.nome_fantasia),
+        razao_social=_v(titulo_pt(empresa.razao_social)),
+        nome_fantasia=_v(titulo_pt(empresa.nome_fantasia)),
         cnpj=_v(empresa.cnpj),
         inscricao_estadual=_v(empresa.inscricao_estadual),
         endereco_completo=empresa.endereco_completo() or "",
-        municipio=_v(empresa.municipio),
+        municipio=_v(titulo_pt(empresa.municipio)),
         uf=_v(empresa.uf),
         cnae_principal=_v(empresa.cnae_principal),
         situacao_cadastral=_v(empresa.situacao_cadastral),
@@ -52,10 +53,18 @@ _CAMPOS_EMPREGADO_TEXTO = [
 ]
 
 
+_CAMPOS_EMPREGADO_TITULO_PT = {"nome_completo", "endereco"}
+
+
 def _empregado_contexto(empregado):
     if not empregado:
         return SimpleNamespace(**{c: "" for c in _CAMPOS_EMPREGADO_TEXTO}, salario_base="")
-    dados = {c: _v(getattr(empregado, c)) for c in _CAMPOS_EMPREGADO_TEXTO}
+    dados = {}
+    for c in _CAMPOS_EMPREGADO_TEXTO:
+        valor = getattr(empregado, c)
+        if c in _CAMPOS_EMPREGADO_TITULO_PT:
+            valor = titulo_pt(valor)
+        dados[c] = _v(valor)
     dados["salario_base"] = f"{empregado.salario_base:.2f}" if empregado.salario_base is not None else ""
     return SimpleNamespace(**dados)
 

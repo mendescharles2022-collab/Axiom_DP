@@ -21,7 +21,7 @@
     <tbody>
       {% for e in empresas %}
       <tr>
-        <td><a href="/empresas/{{ e.id }}">{{ e.razao_social }}</a></td>
+        <td><a href="/empresas/{{ e.id }}">{{ e.razao_social|titulo_pt }}</a></td>
         <td>{{ e.cnpj }}</td>
         <td>{{ e.municipio or "-" }}{% if e.uf %}/{{ e.uf }}{% endif %}</td>
         <td>

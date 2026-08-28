@@ -1,6 +1,7 @@
 from flask import Flask
 from app.config import Config
 from app.extensions import db, login_manager
+from app.utils.texto import titulo_pt
 
 
 def create_app(config_overrides: dict | None = None):
@@ -10,6 +11,8 @@ def create_app(config_overrides: dict | None = None):
     app.config.from_object(Config)
     if config_overrides:
         app.config.update(config_overrides)
+
+    app.jinja_env.filters["titulo_pt"] = titulo_pt
 
     db.init_app(app)
 

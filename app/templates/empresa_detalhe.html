@@ -1,12 +1,12 @@
 {% extends "base.html" %}
-{% block titulo %}{{ empresa.razao_social }} — Axiom_DP{% endblock %}
+{% block titulo %}{{ empresa.razao_social|titulo_pt }} — Axiom_DP{% endblock %}
 {% block conteudo %}
 
 <a href="/">← Todas as empresas</a>
 
 <section class="card">
   <div class="card-topo">
-    <h2>{{ empresa.razao_social }}</h2>
+    <h2>{{ empresa.razao_social|titulo_pt }}</h2>
     <div class="acoes-topo">
       <a class="botao" href="/empresas/{{ empresa.id }}/emitir">Emitir documento</a>
       <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/historico">Histórico</a>
@@ -23,7 +23,7 @@
   </div>
 
   <table class="tabela-dados">
-    <tr><td>Nome fantasia</td><td>{{ empresa.nome_fantasia or "-" }}</td></tr>
+    <tr><td>Nome fantasia</td><td>{{ empresa.nome_fantasia|titulo_pt if empresa.nome_fantasia else "-" }}</td></tr>
     <tr><td>{{ empresa.tipo_inscricao }}</td><td>{{ empresa.cnpj }}</td></tr>
     <tr><td>Inscrição estadual</td><td>{{ empresa.inscricao_estadual or "-" }}</td></tr>
     {% if empresa.caepf %}<tr><td>CAEPF</td><td>{{ empresa.caepf }}</td></tr>{% endif %}
@@ -67,7 +67,7 @@
     <thead><tr><th>Nome</th><th>Qualificação</th><th>CPF</th></tr></thead>
     <tbody>
       {% for s in empresa.socios %}
-      <tr><td>{{ s.nome or "-" }}</td><td>{{ s.qualificacao or "-" }}</td><td>{{ s.cpf_parcial or "-" }}</td></tr>
+      <tr><td>{{ s.nome|titulo_pt if s.nome else "-" }}</td><td>{{ s.qualificacao or "-" }}</td><td>{{ s.cpf_parcial or "-" }}</td></tr>
       {% endfor %}
     </tbody>
   </table>
@@ -100,7 +100,7 @@
     <tbody>
       {% for emp in empregados %}
       <tr>
-        <td>{{ emp.nome_completo }}</td>
+        <td>{{ emp.nome_completo|titulo_pt }}</td>
         <td>{{ emp.cpf }}</td>
         <td>{{ emp.cargo or "-" }}</td>
         <td><span class="badge">{{ emp.tipo_contrato }}</span></td>

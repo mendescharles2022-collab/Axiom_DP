@@ -1,5 +1,6 @@
 from datetime import datetime
 from app.extensions import db
+from app.utils.texto import titulo_pt
 
 
 class Empresa(db.Model):
@@ -72,9 +73,18 @@ class Empresa(db.Model):
     )
 
     def endereco_completo(self):
-        partes = [self.logradouro, self.numero, self.complemento, self.bairro]
+        """
+        Monta o endereço já com a capitalização corrigida (dados de
+        logradouro/bairro/município costumam vir em CAIXA ALTA da RFB e das
+        planilhas do escritório) — o dado bruto continua intacto nas
+        colunas individuais.
+        """
+        partes = [
+            titulo_pt(self.logradouro), self.numero,
+            titulo_pt(self.complemento), titulo_pt(self.bairro),
+        ]
         rua = ", ".join([p for p in partes if p])
-        cidade = f"{self.municipio}/{self.uf}" if self.municipio else ""
+        cidade = f"{titulo_pt(self.municipio)}/{self.uf}" if self.municipio else ""
         return f"{rua} - {cidade} - CEP {self.cep or ''}".strip(" -")
 
     def to_dict(self):

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block titulo %}{{ template.nome }} — {{ empresa.razao_social }}{% endblock %}
+{% block titulo %}{{ template.nome }} — {{ empresa.razao_social|titulo_pt }}{% endblock %}
 {% block conteudo %}
 
 <a href="/empresas/{{ empresa.id }}/emitir">← Voltar ao catálogo</a>
@@ -20,7 +20,7 @@
       <select name="empregado_id" required>
         <option value="">Selecione...</option>
         {% for emp in empregados %}
-          <option value="{{ emp.id }}">{{ emp.nome_completo }} — {{ emp.cargo or "sem cargo definido" }}</option>
+          <option value="{{ emp.id }}">{{ emp.nome_completo|titulo_pt }} — {{ emp.cargo or "sem cargo definido" }}</option>
         {% endfor %}
       </select>
     </label>
