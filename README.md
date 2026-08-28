@@ -39,8 +39,21 @@ app/
 └── static/          CSS, JS, imagens (inclui a arte da tela de login)
 scripts/             conversão de templates e seed do catálogo
 dados_para_importar/ planilhas fornecidas pelo escritório (clientes, rubricas, recibo de referência)
-database/            banco SQLite (deve ser movido para fora da pasta do sistema — ver handoff)
+database/            banco SQLite (fica fora da pasta do sistema — ver "Dados e variável de ambiente")
 ```
+
+## Dados e variável de ambiente
+
+O banco SQLite e os documentos gerados ficam **fora** da pasta de
+instalação, para que atualizações do programa não arrisquem os dados:
+
+- Windows: `%APPDATA%\Axiom_DP\`
+- Linux/Mac (dev): `~/.axiom_dp/`
+
+Para usar outro caminho (ex.: pasta compartilhada da rede), defina a
+variável de ambiente `AXIOM_DP_DATA_DIR` antes de rodar o programa. O
+banco roda em modo **WAL**, para suportar múltiplas estações lendo e
+gravando ao mesmo tempo sem travar.
 
 ## Como rodar (estado atual do código)
 
