@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block titulo %}{{ config.titulo or "Sistema em manutenção" }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card aviso-manutencao">
+  <h2>{{ config.titulo or "Sistema em manutenção" }}</h2>
+  <p>{{ config.mensagem or "Voltamos em breve." }}</p>
+  {% if config.previsao_retorno %}
+  <p class="texto-muted">Previsão de retorno: {{ config.previsao_retorno.strftime("%d/%m/%Y %H:%M") }}</p>
+  {% endif %}
+</section>
+
+{% endblock %}

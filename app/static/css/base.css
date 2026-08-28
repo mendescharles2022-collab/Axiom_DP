@@ -100,4 +100,8 @@ td.acoes { display: flex; gap: 10px; align-items: center; border-bottom: none; }
 
 .card-sucesso { border-left: 4px solid #2E8B57; }
 .card-sucesso h2 { color: #2E8B57; }
+
+.aviso-manutencao { text-align: center; padding: 40px 32px; border-top: 4px solid #B08D3E; }
+.aviso-manutencao h2 { color: #1F3864; font-size: 22px; margin: 0 0 12px; }
+.aviso-manutencao p { margin: 6px 0; }
 .acoes-form { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }

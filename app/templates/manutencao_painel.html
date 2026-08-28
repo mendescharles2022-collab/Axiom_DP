@@ -1,0 +1,43 @@
+{% extends "base_manutencao.html" %}
+{% block titulo %}Painel de manutenção — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Modo manutenção</h2>
+  </div>
+  <p class="texto-muted">
+    Status atual:
+    {% if config.ativo %}<strong style="color:#A32D2D;">LIGADO</strong> — o sistema (porta principal) está mostrando a página de aviso para todo mundo que não é administrador.
+    {% else %}<strong style="color:#1E6B3C;">desligado</strong> — o sistema está funcionando normalmente.{% endif %}
+    {% if config.atualizado_por %}
+    <br>Última alteração: {{ config.atualizado_por.nome }}, em {{ config.atualizado_em.strftime("%d/%m/%Y %H:%M") if config.atualizado_em else "-" }}.
+    {% endif %}
+  </p>
+
+  <form method="post" action="{{ url_for('salvar') }}" class="form-grid">
+    <label>
+      <span>Ligar modo manutenção</span>
+      <input type="checkbox" name="ativo" {% if config.ativo %}checked{% endif %} style="width:auto;">
+    </label>
+
+    <label class="col-2">Título da página de aviso
+      <input type="text" name="titulo" value="{{ config.titulo or '' }}" required>
+    </label>
+
+    <label class="col-2">Mensagem
+      <textarea name="mensagem" rows="4">{{ config.mensagem or '' }}</textarea>
+    </label>
+
+    <label>Previsão de retorno (opcional)
+      <input type="datetime-local" name="previsao_retorno"
+             value="{{ config.previsao_retorno.strftime('%Y-%m-%dT%H:%M') if config.previsao_retorno else '' }}">
+    </label>
+
+    <div class="acoes-form col-2">
+      <button type="submit" class="botao">Salvar</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

@@ -14,6 +14,7 @@ from app.models.tabela_salario_familia import TabelaSalarioFamilia
 from app.models.frase_quitacao import FraseQuitacao
 from app.models.template_recibo import TemplateRecibo
 from app.models.recibo_avulso import ReciboAvulso, ReciboAvulsoItem
+from app.models.configuracao_manutencao import ConfiguracaoManutencao
 
 __all__ = [
     "Empresa",
@@ -33,4 +34,5 @@ __all__ = [
     "TemplateRecibo",
     "ReciboAvulso",
     "ReciboAvulsoItem",
+    "ConfiguracaoManutencao",
 ]

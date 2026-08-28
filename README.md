@@ -92,6 +92,30 @@ Receita Federal.
   solto sem valor quando a empresa ainda não tem endereço preenchido
   (comum nas importadas antes de "Atualizar dados da Receita").
 
+**Concluído (ADENDO B — modo manutenção com porta dedicada):**
+- `ConfiguracaoManutencao` (registro único): `ativo`, `titulo`, `mensagem`,
+  `previsao_retorno`, `atualizado_por`/`atualizado_em`.
+- Porta principal (`main.py`, `AXIOM_DP_PORT`, padrão **5600** — antes
+  5151): antes de qualquer rota (exceto login/logout/estáticos), checa
+  se o modo manutenção está ligado; se estiver, mostra uma página de
+  aviso (título + mensagem + previsão de retorno) para todo mundo que
+  não estiver logado como administrador. Um admin já logado continua
+  usando o sistema normalmente mesmo com a manutenção ligada.
+- Porta de administração (`manutencao.py`, `AXIOM_DP_PORT_MANUTENCAO`,
+  padrão **5601**): app Flask mínimo, separado, só acessível com login
+  de administrador — única função é ligar/desligar o modo manutenção e
+  editar título/mensagem/previsão de retorno. Compartilha o mesmo banco
+  SQLite (modo WAL) da porta principal, mas não depende de mais nada
+  dela — por isso continua no ar mesmo que a porta principal caia ou
+  seja reiniciada no meio de uma atualização.
+- `python main.py` sobe as duas com um único comando: a porta principal
+  roda em primeiro plano e, se a de manutenção ainda não estiver no ar,
+  sobe ela como processo do sistema operacional **desacoplado** (não um
+  processo filho) — testado de verdade: matar o processo da porta
+  principal (`kill -9`) não derruba a de manutenção, e reiniciar a
+  principal detecta que a de manutenção já está rodando e não duplica.
+  Para subir só a de manutenção isoladamente, `python manutencao.py`.
+
 **Avisos que ainda dependem de confirmação humana antes de uso em
 produção real (documentados também no código):**
 1. O mapeamento de campos da CNPJá (`app/services/cnpj_service.py`) foi
@@ -118,7 +142,8 @@ app/
 ├── models/          Empresa (+CNAE/Sócio/IE secundários), Empregado, Usuario,
 │                    TemplateDocumento, DocumentoEmitido, Rubrica, TabelaINSS,
 │                    TabelaIRRF, TabelaIRRFRedutor, TabelaSalarioFamilia,
-│                    FraseQuitacao, TemplateRecibo, ReciboAvulso
+│                    FraseQuitacao, TemplateRecibo, ReciboAvulso,
+│                    ConfiguracaoManutencao
 ├── routes/          rotas server-side (CRUD, emissão, recibos, relatórios) e API JSON
 ├── services/        CNPJá, motor de geração de documentos, cálculo de folha, recibo avulso
 ├── utils/           titulo_pt (capitalização pt-BR de dados em CAIXA ALTA)
@@ -128,10 +153,13 @@ app/
 ├── templates/       telas HTML (Jinja2)
 └── static/          CSS, JS (IMask vendorizado), imagens (arte da tela de login)
 scripts/             seed de templates/tabelas fiscais/frase e importação de planilhas
-tests/               suíte pytest (90 testes) — CRUD, auth, cálculo de folha, geração de
-                     documentos/recibos, importação, tudo via requisição HTTP real
+tests/               suíte pytest (99 testes) — CRUD, auth, cálculo de folha, geração de
+                     documentos/recibos, importação, modo manutenção, tudo via
+                     requisição HTTP real
 dados_para_importar/ planilhas fornecidas pelo escritório (clientes, rubricas, recibo de referência)
 database/            banco SQLite (fica fora da pasta do sistema — ver "Dados e variável de ambiente")
+main.py              porta principal (5600) + sobe a porta de manutenção se preciso
+manutencao.py        porta de administração/manutenção (5601), processo independente
 ```
 
 ## Dados e variável de ambiente
@@ -170,11 +198,18 @@ python main.py
 registros; empresas casam pelo documento (CNPJ/CPF) e rubricas pelo
 código.
 
-Isso sobe o servidor Flask em `0.0.0.0:5151` (porta configurável via
-`AXIOM_DP_PORT`), acessível pelo navegador de qualquer estação da rede
-local do escritório — inclusive a própria máquina que hospeda, em
-`http://localhost:5151`. No primeiro acesso, a tela pede para criar a
-conta de administrador; depois disso, login é sempre exigido.
+`python main.py` sobe **duas portas** com o mesmo comando:
+- **Principal** (`0.0.0.0:5600`, configurável via `AXIOM_DP_PORT`): o
+  sistema completo — é nela que o escritório trabalha no dia a dia,
+  em `http://localhost:5600` ou pelo IP da máquina na rede local. No
+  primeiro acesso, a tela pede para criar a conta de administrador;
+  depois disso, login é sempre exigido.
+- **Manutenção** (`0.0.0.0:5601`, configurável via
+  `AXIOM_DP_PORT_MANUTENCAO`): painel de administrador para ligar/
+  desligar uma mensagem de aviso na porta principal durante uma
+  atualização. Só acessível com login de administrador (o mesmo criado
+  na porta principal). Sobe como processo independente — reiniciar ou
+  derrubar a porta principal não tira ela do ar.
 
 ## Notas técnicas importantes
 
@@ -193,6 +228,11 @@ conta de administrador; depois disso, login é sempre exigido.
 - Identificadores Jinja não podem começar com dígito.
 - Cabeçalho/rodapé do Word ficam em partes separadas do XML — sempre
   incluir ao processar placeholders de um `.docx`.
+- `manutencao.py` é uma segunda app Flask independente que reaproveita
+  o mesmo objeto `db` (Flask-SQLAlchemy suporta `db.init_app()` em mais
+  de uma app), mas usa seu **próprio** `LoginManager` — o de
+  `app.extensions` não pode ser compartilhado entre as duas apps porque
+  `login_view`/`user_loader` ficam no próprio objeto, não por app.
 
 ## Empacotamento (sprint futura)
 

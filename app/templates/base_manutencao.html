@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>{% block titulo %}Painel de manutenção — Axiom_DP{% endblock %}</title>
+<link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+  <header>
+    <div class="header-topo">
+      <div>
+        <h1>Axiom_DP</h1>
+        <p class="subtitulo">Porta de administração e manutenção</p>
+      </div>
+      {% if current_user.is_authenticated %}
+      <div class="sessao-usuario">
+        <span class="nome-usuario">{{ current_user.nome }}</span>
+        <form method="post" action="{{ url_for('logout') }}" class="form-inline">
+          <button type="submit" class="botao-sair">Sair</button>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <main>
+    {% with mensagens = get_flashed_messages(with_categories=true) %}
+      {% if mensagens %}
+        {% for categoria, texto in mensagens %}
+          <div class="flash flash-{{ categoria }}">{{ texto }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block conteudo %}{% endblock %}
+  </main>
+</body>
+</html>

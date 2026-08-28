@@ -1,7 +1,14 @@
-from flask import Flask
+from flask import Flask, render_template, request
+from flask_login import current_user
+
 from app.config import Config
 from app.extensions import db, login_manager
 from app.utils.texto import titulo_pt
+
+# Endpoints que continuam acessíveis mesmo com o modo manutenção ligado —
+# precisam funcionar para um admin conseguir logar e para os arquivos
+# estáticos da própria página de aviso carregarem.
+_ENDPOINTS_LIVRES_DE_MANUTENCAO = {"static", "auth.login", "auth.login_salvar", "auth.logout"}
 
 
 def create_app(config_overrides: dict | None = None):
@@ -43,6 +50,20 @@ def create_app(config_overrides: dict | None = None):
     app.register_blueprint(relatorios_bp)
     app.register_blueprint(empresas_bp, url_prefix="/api/empresas")
     app.register_blueprint(empregados_bp, url_prefix="/api/empregados")
+
+    @app.before_request
+    def _checar_modo_manutencao():
+        if request.endpoint in _ENDPOINTS_LIVRES_DE_MANUTENCAO:
+            return None
+        if current_user.is_authenticated and current_user.is_admin:
+            return None
+
+        from app.models.configuracao_manutencao import ConfiguracaoManutencao
+
+        config = ConfiguracaoManutencao.query.get(1)
+        if config and config.ativo:
+            return render_template("manutencao.html", config=config), 503
+        return None
 
     with app.app_context():
         from app import models  # noqa: F401 — garante que os modelos sejam registrados
