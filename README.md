@@ -44,19 +44,36 @@ Receita Federal.
 - Módulo de relatórios (`/relatorios`): histórico de documentos emitidos
   e recibos avulsos, filtrável por período, empresa e tipo
 
-**Avisos importantes antes de uso em produção real (não são bugs — são
-pontos que dependem de confirmação humana, documentados também no código):**
+**Atualizado com dados oficiais fornecidos pelo Charles:**
+- `scripts/seed_tabelas_fiscais.py` agora semeia o histórico completo de
+  INSS (2012 a 2026, 15 vigências) e IRRF (2015 a 2026, 5 vigências),
+  a partir de um dataset oficial — não são mais estimativas.
+- O redutor de 2026 (Lei 15.270/2025) foi corrigido: é uma fórmula única
+  e contínua em toda a faixa 0–R$ 7.350 (não "zera tudo até R$ 5.000,
+  reduz parcial depois" como a primeira versão implementava — havia uma
+  faixa estreita, ~R$ 4.620 a R$ 5.000, em que essa leitura simplificada
+  cobrava menos imposto do que devido). Ver `app/models/tabela_irrf_redutor.py`.
+- A incidência de IRRF de cada `Rubrica` agora usa o lookup real da
+  Tabela 21 do eSocial (`INCIDENCIAS_IRRF_QUE_NAO_ENTRAM_NA_BASE` em
+  `app/services/calculo_folha.py`), não mais a heurística "0 = não
+  incide, resto incide" — vários códigos de isenção (diárias, ajuda de
+  custo, indenização, abono pecuniário de férias etc.) são != 0 mas não
+  entram na base tributável.
+
+**Avisos que ainda dependem de confirmação humana antes de uso em
+produção real (documentados também no código):**
 1. O mapeamento de campos da CNPJá (`app/services/cnpj_service.py`) foi
    feito pela documentação pública da API — o ambiente de desenvolvimento
    não teve saída de rede para validar contra uma chamada real.
-2. As tabelas de INSS/IRRF semeadas são as de 02/2024 — a mais recente
-   que os dados de treinamento confirmam com confiança. Confira se ainda
-   são as vigentes antes de fechar uma folha real; se não forem,
-   adicione uma tabela nova (nunca sobrescreva a antiga).
-3. Os códigos de incidência de cada `Rubrica` (vindos da planilha
-   `RELAÇÃO_DE_RUBRICA.xls`) não tinham documentação de significado —
-   o motor de cálculo assume "0 = não incide, qualquer outro código =
-   incide". Confirme essa convenção com o Charles.
+2. A dedução por dependente do IRRF (R$ 189,59) foi mantida constante em
+   todas as vigências semeadas — não veio no dataset oficial fornecido;
+   é um valor que não muda há vários reajustes, mas vale confirmar.
+3. Os códigos de incidência de INSS/FGTS/PIS de cada `Rubrica` (vindos
+   da planilha `RELAÇÃO_DE_RUBRICA.xls`) ainda usam a heurística "0 = não
+   incide, qualquer outro código = incide" — falta o Charles enviar a
+   tabela oficial de incidências de INSS/FGTS/PIS do eSocial (equivalente
+   à Tabela 21 que já resolveu o IRRF) para trocar pela mesma lógica de
+   lookup.
 
 **Antes de continuar o desenvolvimento, leia [`HANDOFF_CLAUDE_CODE.md`](./HANDOFF_CLAUDE_CODE.md).**
 Ele consolida todas as decisões de arquitetura e o roteiro detalhado
@@ -107,7 +124,7 @@ venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 python scripts/seed_templates.py    # popula o catálogo de modelos (1x, ou de novo ao adicionar modelos)
 python scripts/importar_dados_escritorio.py   # importa as 537 empresas e as 1.798 rubricas do escritório
-python scripts/seed_tabelas_fiscais.py        # tabelas INSS/IRRF + redutor 2026 (CONFIRA os valores antes de uso real)
+python scripts/seed_tabelas_fiscais.py        # histórico INSS 2012-2026, IRRF 2015-2026 + redutor 2026
 python scripts/seed_frase_quitacao.py         # frase de quitação "Tradicional"
 python main.py
 ```

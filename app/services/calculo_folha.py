@@ -6,24 +6,23 @@ IMPORTANTE — leia antes de usar para fechar folha real:
 1. As tabelas de INSS/IRRF ficam no banco (TabelaINSS/TabelaIRRF/
    TabelaIRRFRedutor), históricas por vigência — nunca hardcoded aqui, de
    propósito, para que competências passadas continuem corretas mesmo
-   depois de uma tabela nova entrar em vigor. O script
-   scripts/seed_tabelas_fiscais.py semeia a tabela de fev/2024 (INSS e
-   IRRF) e o redutor de 2026 (Lei nº 15.270/2025, valores dados
-   diretamente pelo HANDOFF) — CONFIRME com o Charles/fonte oficial se
-   essas são as tabelas vigentes na competência que você vai fechar antes
-   de confiar no resultado; se não forem, adicione uma nova linha na
-   tabela correspondente (não edite a antiga).
-2. `incidencia_irrf`/`incidencia_inss`/`incidencia_fgts`/`incidencia_pis`
-   em Rubrica guardam o código bruto da planilha `RELAÇÃO_DE_RUBRICA.xls`
-   fornecida pelo escritório — o significado exato de cada código (ex.:
-   11 vs. 12 vs. 21) não foi documentado para este projeto, só os valores
-   brutos. Este motor assume a convenção mais simples e defensável
-   observada nos dados: **0 = não incide, qualquer outro código = incide**
-   (todo código de incidência aparece como 0 quando a rubrica claramente
-   não afeta aquele tributo). CONFIRME esta convenção com o Charles — o
-   sistema de origem da planilha pode ter uma tabela de códigos própria
-   com nuances que essa regra simplificada não captura — antes de usar os
-   totais para fechamento oficial.
+   depois de uma tabela nova entrar em vigor. scripts/seed_tabelas_fiscais.py
+   semeia o histórico completo (INSS 2012-2026, IRRF 2015-2026 e o
+   redutor da Lei nº 15.270/2025 a partir de 01/2026) a partir de um
+   dataset oficial fornecido pelo Charles — não são mais estimativas da
+   memória de treinamento. Único valor ainda não confirmado pela fonte
+   oficial: a dedução por dependente do IRRF (ver aviso no próprio
+   script). Se uma tabela nova entrar em vigor, adicione uma linha nova
+   (nunca edite/sobrescreva uma vigência existente).
+2. `incidencia_irrf` em Rubrica usa os códigos oficiais da Tabela 21 do
+   eSocial (leiaute S-1.3) — ver INCIDENCIAS_IRRF_QUE_NAO_ENTRAM_NA_BASE
+   abaixo, classificado a partir da descrição oficial de cada código
+   (fonte: Charles). `incidencia_inss`/`incidencia_fgts`/`incidencia_pis`
+   AINDA usam a convenção simplificada "0 = não incide, qualquer outro
+   código = incide" — o Charles ainda não forneceu a tabela oficial de
+   incidências de INSS/FGTS/PIS do eSocial (equivalente à Tabela 21, mas
+   para contribuição previdenciária/FGTS/PIS). Assim que ele mandar,
+   troque essas duas pela mesma lógica de lookup usada para o IRRF.
 """
 from decimal import ROUND_HALF_UP, Decimal
 
@@ -33,6 +32,20 @@ from app.models.tabela_irrf_redutor import TabelaIRRFRedutor
 
 DOIS_CENTAVOS = Decimal("0.01")
 ALIQUOTA_FGTS = Decimal("8")
+
+# Códigos da Tabela 21 do eSocial (incidência de IRRF) cuja natureza NÃO
+# soma na base tributável mensal: rendimentos não tributáveis/isentos
+# (aposentado 65+, diárias, ajuda de custo, indenizações, moléstia grave,
+# abono pecuniário de férias, auxílio moradia, parcela isenta do
+# transporte), o "desconto simplificado" (não é rendimento) e verbas que
+# apenas transitam pela folha sem relação com IR (código 9) ou passam por
+# depósito/compensação judicial. Qualquer código fora desta lista soma na
+# base (inclusive códigos desconhecidos — mais seguro tributar de mais do
+# que de menos).
+INCIDENCIAS_IRRF_QUE_NAO_ENTRAM_NA_BASE = frozenset({
+    0, 1, 9, 67, 68, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+    81, 82, 83, 700, 701, 9067, 9082, 9083,
+})
 
 
 class CalculoFolhaError(Exception):
@@ -116,14 +129,19 @@ def calcular_irrf(base_calculo, competencia: str, dependentes: int = 0) -> dict:
     except CalculoFolhaError:
         tabela_redutor = None
 
-    if tabela_redutor:
-        if base <= _d(tabela_redutor.limite_isencao):
-            redutor_valor = valor_tabela
-        elif base <= _d(tabela_redutor.limite_redutor):
-            redutor_bruto = _d(tabela_redutor.valor_base_formula) - (
-                _d(tabela_redutor.coeficiente_formula) * base
-            )
-            redutor_valor = min(max(redutor_bruto, Decimal("0")), valor_tabela)
+    if tabela_redutor and base <= _d(tabela_redutor.limite_redutor):
+        # Fórmula única e contínua em toda a faixa 0–limite_redutor (não é
+        # "zera até limite_isencao, reduz parcial depois" — essa leitura
+        # inicial estava errada). limite_isencao (R$ 5.000) é só o ponto
+        # de referência que a lei usa para descrever o benefício ("redução
+        # de até R$ 312,89 até R$ 5.000,00"): abaixo dele o valor da
+        # fórmula quase sempre excede o imposto apurado (por isso zera na
+        # prática), mas o cálculo real é sempre min(fórmula, imposto
+        # apurado) — nunca gera crédito negativo.
+        redutor_bruto = _d(tabela_redutor.valor_base_formula) - (
+            _d(tabela_redutor.coeficiente_formula) * base
+        )
+        redutor_valor = min(max(redutor_bruto, Decimal("0")), valor_tabela)
 
     valor_final = valor_tabela - redutor_valor
     return {
@@ -137,7 +155,22 @@ def calcular_irrf(base_calculo, competencia: str, dependentes: int = 0) -> dict:
     }
 
 
-def _incide(codigo) -> bool:
+def _incide_irrf(codigo) -> bool:
+    """Lookup real, a partir da Tabela 21 do eSocial (ver topo do arquivo)."""
+    if codigo is None:
+        return False
+    try:
+        codigo_int = int(codigo)
+    except (TypeError, ValueError):
+        return True
+    return codigo_int not in INCIDENCIAS_IRRF_QUE_NAO_ENTRAM_NA_BASE
+
+
+def _incide_heuristica(codigo) -> bool:
+    """
+    Usada só para INSS/FGTS/PIS até o Charles enviar a tabela oficial de
+    incidências equivalente à Tabela 21 do eSocial (ver aviso no topo).
+    """
     return codigo not in (None, 0)
 
 
@@ -162,11 +195,11 @@ def montar_calculo_recibo(recibo, dependentes: int = 0) -> dict:
 
         valor_liquido_item = provento - desconto
         rubrica = item.rubrica
-        if _incide(rubrica.incidencia_inss):
+        if _incide_heuristica(rubrica.incidencia_inss):
             base_inss += valor_liquido_item
-        if _incide(rubrica.incidencia_irrf):
+        if _incide_irrf(rubrica.incidencia_irrf):
             base_irrf_bruta += valor_liquido_item
-        if _incide(rubrica.incidencia_fgts):
+        if _incide_heuristica(rubrica.incidencia_fgts):
             base_fgts += valor_liquido_item
 
     inss = calcular_inss(base_inss, recibo.competencia)
