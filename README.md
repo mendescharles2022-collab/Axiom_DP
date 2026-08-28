@@ -15,9 +15,12 @@ Receita Federal.
   campos específicos → gera o `.docx` pronto → fica no histórico
 - Testado ponta a ponta via requisição HTTP real, não só em memória
 
-**Em andamento (AXDP-003 em diante):** login com perfis de usuário,
-migração para servidor de rede local (acesso por navegador em vez de
-janela única), troca do provedor de CNPJ para a CNPJá (mais completo:
+**Concluído (AXDP-003):** login com sessão e perfis de usuário
+(admin/operador), banco de dados fora da pasta do sistema com WAL, e
+migração para servidor de rede local acessado por navegador (sem mais
+`pywebview`/janela única).
+
+**Em andamento:** troca do provedor de CNPJ para a CNPJá (mais completo:
 sócios, CNAEs secundários, inscrições estaduais), suporte a CNPJ
 alfanumérico e a CAEPF/CEI/CNO, biblioteca de máscaras completa, e um
 motor de emissão de contracheque/pró-labore avulso com tabelas
@@ -55,6 +58,10 @@ variável de ambiente `AXIOM_DP_DATA_DIR` antes de rodar o programa. O
 banco roda em modo **WAL**, para suportar múltiplas estações lendo e
 gravando ao mesmo tempo sem travar.
 
+A chave de assinatura de sessão (login) é gerada automaticamente e
+guardada em `secret_key` dentro dessa mesma pasta de dados na primeira
+execução. Em produção, prefira definir `AXIOM_DP_SECRET_KEY` explicitamente.
+
 ## Como rodar (estado atual do código)
 
 ```bash
@@ -65,10 +72,11 @@ python scripts/seed_templates.py    # popula o catálogo de modelos (1x, ou de n
 python main.py
 ```
 
-Isso abre uma janela do programa (via `pywebview`) conectada ao Flask
-local e ao SQLite, criado automaticamente em `database/axiom_dp.sqlite3`
-na primeira execução. **Este modo de execução está sendo substituído**
-por um servidor de rede com login — ver seção 3 do handoff.
+Isso sobe o servidor Flask em `0.0.0.0:5151` (porta configurável via
+`AXIOM_DP_PORT`), acessível pelo navegador de qualquer estação da rede
+local do escritório — inclusive a própria máquina que hospeda, em
+`http://localhost:5151`. No primeiro acesso, a tela pede para criar a
+conta de administrador; depois disso, login é sempre exigido.
 
 ## Notas técnicas importantes
 

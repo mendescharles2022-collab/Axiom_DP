@@ -1,36 +1,22 @@
 """
 Axiom_DP — ponto de entrada.
 
-Sobe o servidor Flask localmente (127.0.0.1) em uma thread separada e
-abre uma janela nativa do sistema operacional com pywebview apontando
-para ele. O usuário nunca vê barra de endereço nem "cara de navegador"
-— é uma janela de programa como qualquer outra.
+Sobe o servidor Flask escutando em todas as interfaces de rede
+(0.0.0.0), para ser acessado pelo navegador de qualquer estação do
+escritório — inclusive a própria máquina que hospeda. Não é mais um
+app desktop isolado por máquina (ver HANDOFF_CLAUDE_CODE.md, seção 3).
 """
-import threading
-import webview
+import os
+
 from app import create_app
 
-HOST = "127.0.0.1"
-PORT = 5151
-
-
-def rodar_flask():
-    app = create_app()
-    app.run(host=HOST, port=PORT, debug=False, use_reloader=False)
+HOST = "0.0.0.0"
+PORT = int(os.environ.get("AXIOM_DP_PORT", "5151"))
 
 
 def main():
-    thread_flask = threading.Thread(target=rodar_flask, daemon=True)
-    thread_flask.start()
-
-    webview.create_window(
-        "Axiom_DP — Departamento Pessoal",
-        f"http://{HOST}:{PORT}",
-        width=1100,
-        height=750,
-        min_size=(900, 600),
-    )
-    webview.start()
+    app = create_app()
+    app.run(host=HOST, port=PORT, debug=False)
 
 
 if __name__ == "__main__":

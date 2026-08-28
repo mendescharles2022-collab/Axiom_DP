@@ -2,6 +2,32 @@ import os
 import sys
 
 
+def _secret_key() -> str:
+    """
+    Chave de assinatura de sessão. Definir AXIOM_DP_SECRET_KEY é o
+    recomendado em produção; sem ela, gera uma chave aleatória na primeira
+    execução e a mantém em um arquivo dentro de DATA_DIR (fora do controle
+    de versão), para que as sessões sobrevivam a reinícios do servidor sem
+    depender de uma chave fixa no código-fonte.
+    """
+    env = os.environ.get("AXIOM_DP_SECRET_KEY")
+    if env:
+        return env
+
+    caminho = os.path.join(DATA_DIR, "secret_key")
+    if os.path.exists(caminho):
+        with open(caminho, encoding="utf-8") as f:
+            chave = f.read().strip()
+        if chave:
+            return chave
+
+    chave = os.urandom(32).hex()
+    os.makedirs(DATA_DIR, exist_ok=True)
+    with open(caminho, "w", encoding="utf-8") as f:
+        f.write(chave)
+    return chave
+
+
 def _data_dir_padrao() -> str:
     """
     Pasta padrão para dados persistentes (banco, documentos gerados) quando
@@ -23,7 +49,7 @@ OUTPUT_DIR = os.path.join(DATA_DIR, "documentos_gerados")
 
 
 class Config:
-    SECRET_KEY = "axiom-dp-local-secret"
+    SECRET_KEY = _secret_key()
     SQLALCHEMY_DATABASE_URI = f"sqlite:///{DATABASE_PATH}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
