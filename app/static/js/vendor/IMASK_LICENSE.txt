@@ -1,0 +1,3 @@
+IMask.js — vendorizado localmente para funcionar sem internet na rede do
+escritório (app/static/js/vendor/imask.min.js, versão 7.6.1).
+Licença: MIT — https://github.com/uNmAnNeR/imaskjs/blob/master/LICENSE

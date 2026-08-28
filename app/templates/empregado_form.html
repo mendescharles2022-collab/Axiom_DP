@@ -20,13 +20,13 @@
       <input name="nome_completo" required value="{{ emp.nome_completo or '' }}">
     </label>
     <label>CPF *
-      <input name="cpf" required value="{{ emp.cpf or '' }}">
+      <input name="cpf" required value="{{ emp.cpf or '' }}" data-mask="cpf">
     </label>
     <label>RG
       <input name="rg" value="{{ emp.rg or '' }}">
     </label>
     <label>Data de nascimento
-      <input name="data_nascimento" placeholder="AAAA-MM-DD" value="{{ emp.data_nascimento or '' }}">
+      <input type="date" name="data_nascimento" value="{{ emp.data_nascimento or '' }}">
     </label>
     <label>Nacionalidade
       <input name="nacionalidade" value="{{ emp.nacionalidade or 'brasileira' }}">
@@ -44,7 +44,7 @@
       <input name="pis_pasep" value="{{ emp.pis_pasep or '' }}">
     </label>
     <label>Telefone
-      <input name="telefone" value="{{ emp.telefone or '' }}">
+      <input name="telefone" value="{{ emp.telefone or '' }}" data-mask="telefone">
     </label>
     <label class="col-2">E-mail
       <input name="email" type="email" value="{{ emp.email or '' }}">
@@ -68,16 +68,16 @@
       </select>
     </label>
     <label>Data de admissão
-      <input name="data_admissao" placeholder="AAAA-MM-DD" value="{{ emp.data_admissao or '' }}">
+      <input type="date" name="data_admissao" value="{{ emp.data_admissao or '' }}">
     </label>
     <label>Data de desligamento
-      <input name="data_desligamento" placeholder="AAAA-MM-DD" value="{{ emp.data_desligamento or '' }}">
+      <input type="date" name="data_desligamento" value="{{ emp.data_desligamento or '' }}">
     </label>
     <label>Jornada semanal (horas)
-      <input name="jornada_semanal_horas" value="{{ emp.jornada_semanal_horas or '' }}">
+      <input name="jornada_semanal_horas" type="number" step="0.5" min="0" value="{{ emp.jornada_semanal_horas or '' }}">
     </label>
     <label>Salário-base (R$)
-      <input name="salario_base" value="{{ emp.salario_base or '' }}">
+      <input name="salario_base" value="{{ emp.salario_base or '' }}" data-mask="moeda" inputmode="decimal">
     </label>
 
     <h3 class="col-2">Dados bancários</h3>

@@ -61,9 +61,23 @@ def _campos_empresa_do_form(form):
     )
 
 
+def _parse_valor_brl(texto: str):
+    """
+    Converte um valor monetário digitado no formato brasileiro (a máscara
+    "moeda" produz algo como "1.234,56") para float. Também aceita um valor
+    já em formato simples ("1234.56"), caso o JavaScript esteja desativado.
+    """
+    texto = (texto or "").strip()
+    if not texto:
+        return None
+    if "," in texto:
+        texto = texto.replace(".", "").replace(",", ".")
+    return float(texto)
+
+
 def _campos_empregado_do_form(form):
-    salario = form.get("salario_base", "").strip().replace(",", ".")
-    jornada = form.get("jornada_semanal_horas", "").strip().replace(",", ".")
+    salario = _parse_valor_brl(form.get("salario_base", ""))
+    jornada = form.get("jornada_semanal_horas", "").strip()
     return dict(
         nome_completo=form.get("nome_completo", "").strip(),
         cpf=form.get("cpf", "").strip(),
@@ -83,7 +97,7 @@ def _campos_empregado_do_form(form):
         data_admissao=form.get("data_admissao", "").strip() or None,
         data_desligamento=form.get("data_desligamento", "").strip() or None,
         jornada_semanal_horas=float(jornada) if jornada else None,
-        salario_base=float(salario) if salario else None,
+        salario_base=salario,
         banco=form.get("banco", "").strip() or None,
         agencia=form.get("agencia", "").strip() or None,
         conta=form.get("conta", "").strip() or None,
