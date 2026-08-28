@@ -15,6 +15,7 @@
       {% if current_user.is_authenticated %}
       <div class="sessao-usuario">
         <span class="nome-usuario">{{ current_user.nome }}</span>
+        <a href="{{ url_for('relatorios.historico_geral') }}">Relatórios</a>
         {% if current_user.is_admin %}
         <a href="{{ url_for('usuarios.listar') }}">Usuários</a>
         <a href="{{ url_for('frases_quitacao.listar') }}">Frases de quitação</a>

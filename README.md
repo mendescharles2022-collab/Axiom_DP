@@ -15,28 +15,48 @@ Receita Federal.
   campos específicos → gera o `.docx` pronto → fica no histórico
 - Testado ponta a ponta via requisição HTTP real, não só em memória
 
-**Concluído (AXDP-003):** login com sessão e perfis de usuário
-(admin/operador), banco de dados fora da pasta do sistema com WAL,
-migração para servidor de rede local acessado por navegador (sem mais
-`pywebview`/janela única), troca do provedor de CNPJ para a **CNPJá**
-(sócios/QSA, CNAEs secundários, inscrições estaduais, porte, capital
-social, opção Simples/MEI, situação especial) com suporte a CNPJ
-alfanumérico e aos campos CAEPF/CEI/CNO, máscaras completas nos
-formulários, `titulo_pt` para corrigir capitalização de dados vindos em
-CAIXA ALTA, importação das 537 empresas e 1.798 rubricas do escritório,
-o motor de cálculo de contracheque/pró-labore avulso (INSS progressivo,
-IRRF por tabela + redutor 2026/Lei 15.270/2025, FGTS) — ver avisos de
-"valores a confirmar" no topo de `app/services/calculo_folha.py` e
-`scripts/seed_tabelas_fiscais.py` antes de usar para folha real — e as
-telas de emissão do recibo avulso: escolher empresa/empregado (ou nome
-do sócio, para pró-labore sem registro), lançar os itens por rubrica,
-calcular INSS/IRRF/FGTS automaticamente e gerar o `.docx` (2 vias,
-estrutura baseada na planilha de referência do escritório). Frases de
-quitação parametrizáveis por empresa, com CRUD restrito a administradores
-em "Frases de quitação".
+**Concluído (AXDP-003 — todos os 10 itens da seção 8 do handoff):**
+- Login com sessão e perfis de usuário (admin/operador); primeiro acesso
+  cria o administrador sem precisar de CLI/env var
+- Banco de dados fora da pasta do sistema (configurável via
+  `AXIOM_DP_DATA_DIR`), modo **WAL**
+- Servidor de rede local acessado por navegador (sem mais
+  `pywebview`/janela única)
+- Provedor de CNPJ trocado para a **CNPJá** — sócios/QSA, CNAEs
+  secundários, inscrições estaduais, porte, capital social, opção
+  Simples/MEI, situação especial; suporte a CNPJ alfanumérico e aos
+  campos CAEPF/CEI/CNO
+- Máscaras completas nos formulários (CPF, CNPJ/CPF dinâmico, CEI, CNO,
+  CAEPF, IE por UF, telefone, CEP, valores monetários)
+- `titulo_pt`: corrige capitalização de dados vindos em CAIXA ALTA da
+  RFB/planilhas, só na exibição e na geração de documentos (o dado bruto
+  nunca é alterado no banco)
+- Importação das 537 empresas e 1.798 rubricas do escritório
+  (idempotente — `scripts/importar_dados_escritorio.py`)
+- Motor de cálculo de contracheque/pró-labore avulso: INSS progressivo,
+  IRRF por tabela + redutor 2026 (Lei 15.270/2025), FGTS — **ver os
+  avisos de "valores a confirmar" no topo de
+  `app/services/calculo_folha.py` e `scripts/seed_tabelas_fiscais.py`
+  antes de usar para fechar folha real**
+- Telas de emissão do recibo avulso (empresa/empregado ou pró-labore sem
+  registro, itens por rubrica, cálculo automático, `.docx` em 2 vias) e
+  CRUD de frases de quitação parametrizáveis por empresa
+- Módulo de relatórios (`/relatorios`): histórico de documentos emitidos
+  e recibos avulsos, filtrável por período, empresa e tipo
 
-**Em andamento:** módulo de relatórios/histórico cruzando
-`DocumentoEmitido` e `ReciboAvulso`.
+**Avisos importantes antes de uso em produção real (não são bugs — são
+pontos que dependem de confirmação humana, documentados também no código):**
+1. O mapeamento de campos da CNPJá (`app/services/cnpj_service.py`) foi
+   feito pela documentação pública da API — o ambiente de desenvolvimento
+   não teve saída de rede para validar contra uma chamada real.
+2. As tabelas de INSS/IRRF semeadas são as de 02/2024 — a mais recente
+   que os dados de treinamento confirmam com confiança. Confira se ainda
+   são as vigentes antes de fechar uma folha real; se não forem,
+   adicione uma tabela nova (nunca sobrescreva a antiga).
+3. Os códigos de incidência de cada `Rubrica` (vindos da planilha
+   `RELAÇÃO_DE_RUBRICA.xls`) não tinham documentação de significado —
+   o motor de cálculo assume "0 = não incide, qualquer outro código =
+   incide". Confirme essa convenção com o Charles.
 
 **Antes de continuar o desenvolvimento, leia [`HANDOFF_CLAUDE_CODE.md`](./HANDOFF_CLAUDE_CODE.md).**
 Ele consolida todas as decisões de arquitetura e o roteiro detalhado
@@ -46,13 +66,18 @@ das próximas sprints — é o documento mais atualizado do repositório.
 
 ```
 app/
-├── models/          Empresa, Empregado, TemplateDocumento, DocumentoEmitido
-├── routes/          rotas server-side (CRUD + emissão) e API JSON
-├── services/        consulta de CNPJ e motor de geração de documentos
+├── models/          Empresa (+CNAE/Sócio/IE secundários), Empregado, Usuario,
+│                    TemplateDocumento, DocumentoEmitido, Rubrica, TabelaINSS,
+│                    TabelaIRRF, TabelaIRRFRedutor, FraseQuitacao, ReciboAvulso
+├── routes/          rotas server-side (CRUD, emissão, recibos, relatórios) e API JSON
+├── services/        CNPJá, motor de geração de documentos, cálculo de folha, recibo avulso
+├── utils/           titulo_pt (capitalização pt-BR de dados em CAIXA ALTA)
 ├── docs_templates/  48 modelos .docx prontos para merge (docxtpl)
 ├── templates/       telas HTML (Jinja2)
-└── static/          CSS, JS, imagens (inclui a arte da tela de login)
-scripts/             conversão de templates e seed do catálogo
+└── static/          CSS, JS (IMask vendorizado), imagens (arte da tela de login)
+scripts/             seed de templates/tabelas fiscais/frase e importação de planilhas
+tests/               suíte pytest (77 testes) — CRUD, auth, cálculo de folha, geração de
+                     documentos/recibos, importação, tudo via requisição HTTP real
 dados_para_importar/ planilhas fornecidas pelo escritório (clientes, rubricas, recibo de referência)
 database/            banco SQLite (fica fora da pasta do sistema — ver "Dados e variável de ambiente")
 ```

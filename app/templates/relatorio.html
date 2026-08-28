@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block titulo %}Relatórios — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Relatórios / histórico geral</h2>
+  </div>
+
+  <form method="get" action="{{ url_for('relatorios.historico_geral') }}" class="form-grid">
+    <label>De
+      <input type="date" name="data_inicio" value="{{ data_inicio }}">
+    </label>
+    <label>Até
+      <input type="date" name="data_fim" value="{{ data_fim }}">
+    </label>
+    <label>Empresa
+      <select name="empresa_id">
+        <option value="">Todas as empresas</option>
+        {% for e in empresas %}
+        <option value="{{ e.id }}" {% if empresa_id == e.id %}selected{% endif %}>{{ e.razao_social|titulo_pt }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Tipo
+      <select name="tipo">
+        <option value="todos" {% if tipo == "todos" %}selected{% endif %}>Documentos e recibos</option>
+        <option value="documentos" {% if tipo == "documentos" %}selected{% endif %}>Só documentos</option>
+        <option value="recibos" {% if tipo == "recibos" %}selected{% endif %}>Só recibos avulsos</option>
+      </select>
+    </label>
+    <div class="col-2 acoes-form">
+      <button type="submit">Filtrar</button>
+    </div>
+  </form>
+</section>
+
+{% if tipo in ("todos", "documentos") %}
+<section class="card">
+  <h2>Documentos emitidos ({{ documentos|length }})</h2>
+  {% if documentos %}
+  <table>
+    <thead><tr><th>Data</th><th>Empresa</th><th>Modelo</th><th>Empregado</th><th></th></tr></thead>
+    <tbody>
+      {% for d in documentos %}
+      <tr>
+        <td>{{ d.emitido_em.strftime("%d/%m/%Y %H:%M") }}</td>
+        <td><a href="/empresas/{{ d.empresa_id }}">{{ d.empresa.razao_social|titulo_pt }}</a></td>
+        <td>{{ d.template.nome }}</td>
+        <td>{{ d.empregado.nome_completo|titulo_pt if d.empregado else "-" }}</td>
+        <td class="acoes"><a href="/documentos/{{ d.id }}/baixar">Baixar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum documento emitido no período.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% if tipo in ("todos", "recibos") %}
+<section class="card">
+  <h2>Recibos avulsos ({{ recibos|length }})</h2>
+  {% if recibos %}
+  <table>
+    <thead><tr><th>Data</th><th>Empresa</th><th>Competência</th><th>Tipo</th><th>Beneficiário</th><th></th></tr></thead>
+    <tbody>
+      {% for r in recibos %}
+      <tr>
+        <td>{{ r.criado_em.strftime("%d/%m/%Y %H:%M") }}</td>
+        <td><a href="/empresas/{{ r.empresa_id }}">{{ r.empresa.razao_social|titulo_pt }}</a></td>
+        <td>{{ r.competencia }}</td>
+        <td><span class="badge">{{ "Pró-labore" if r.tipo == "pro_labore" else "Contracheque" }}</span></td>
+        <td>{{ (r.empregado.nome_completo if r.empregado else r.nome_pro_labore)|titulo_pt }}</td>
+        <td class="acoes">
+          <a href="{{ url_for('recibos.detalhe', recibo_id=r.id) }}">Abrir</a>
+          {% if r.caminho_arquivo_gerado %}
+          <a href="{{ url_for('recibos.baixar', recibo_id=r.id) }}">Baixar</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum recibo avulso emitido no período.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{% endblock %}
