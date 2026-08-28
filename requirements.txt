@@ -4,3 +4,5 @@ Flask-Login==0.6.3
 SQLAlchemy==2.0.35
 docxtpl==0.18.0
 requests==2.32.3
+openpyxl==3.1.5
+xlrd==2.0.2

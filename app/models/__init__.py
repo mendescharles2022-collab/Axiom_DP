@@ -6,6 +6,7 @@ from app.models.usuario import Usuario
 from app.models.cnae_secundario import CnaeSecundario
 from app.models.socio import Socio
 from app.models.inscricao_estadual import InscricaoEstadual
+from app.models.rubrica import Rubrica
 
 __all__ = [
     "Empresa",
@@ -16,4 +17,5 @@ __all__ = [
     "CnaeSecundario",
     "Socio",
     "InscricaoEstadual",
+    "Rubrica",
 ]

@@ -70,8 +70,14 @@ python -m venv venv
 venv\Scripts\activate        # Windows
 pip install -r requirements.txt
 python scripts/seed_templates.py    # popula o catálogo de modelos (1x, ou de novo ao adicionar modelos)
+python scripts/importar_dados_escritorio.py   # importa as 537 empresas e as 1.798 rubricas do escritório
 python main.py
 ```
+
+`importar_dados_escritorio.py` é idempotente — pode ser rodado de novo
+(por exemplo, se o Charles enviar uma planilha atualizada) sem duplicar
+registros; empresas casam pelo documento (CNPJ/CPF) e rubricas pelo
+código.
 
 Isso sobe o servidor Flask em `0.0.0.0:5151` (porta configurável via
 `AXIOM_DP_PORT`), acessível pelo navegador de qualquer estação da rede
