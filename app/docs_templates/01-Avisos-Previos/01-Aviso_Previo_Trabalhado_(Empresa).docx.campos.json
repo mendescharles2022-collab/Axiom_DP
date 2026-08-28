@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "data_de_inicio_do_aviso_previo",
+    "rotulo": "Data de início do aviso prévio:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_prevista_de_encerramento",
+    "rotulo": "Data prevista de encerramento:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Duração do aviso prévio:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "acrescidos",
+    "rotulo": "Duração do aviso prévio: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "totalizando",
+    "rotulo": "Duração do aviso prévio: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "efetivo_trabalho_sera",
+    "rotulo": "Efetivo de trabalho será",
+    "tipo": "texto"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "nome": "data_de_afastamento_desligamento",
+    "rotulo": "Data de afastamento/desligamento:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "saldo_salario",
+    "rotulo": "Saldo de salário:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "aviso_previo_indenizado_se_houver",
+    "rotulo": "Aviso prévio (indenizado, se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ferias_vencidas_1_3",
+    "rotulo": "Férias vencidas + 1/3:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ferias_proporcionais_1_3",
+    "rotulo": "Férias proporcionais + 1/3:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_13o_salario_proporcional",
+    "rotulo": "13º salário proporcional:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "multa_40_fgts_se_aplicavel",
+    "rotulo": "Multa de 40% do fgts (se aplicável):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "outras_verbas",
+    "rotulo": "Outras verbas:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "total_bruto",
+    "rotulo": "Total bruto:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "descontos_inss_irrf_outros",
+    "rotulo": "Descontos (inss/irrf/outros):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "valor_liquido_pagar",
+    "rotulo": "Valor líquido a pagar:",
+    "tipo": "texto"
+  }
+]

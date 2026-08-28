@@ -1,0 +1,92 @@
+[
+  {
+    "nome": "matricula",
+    "rotulo": "Estagiário(a):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "instituicao_de_ensino",
+    "rotulo": "Instituição de ensino:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Curso:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "nome_curso",
+    "rotulo": "Curso: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "agente_de_integracao_se_houver",
+    "rotulo": "Agente de integração (se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "area_de_atuacao_atividades",
+    "rotulo": "Área de atuação/atividades:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_inicio",
+    "rotulo": "Data de início:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Data prevista de término:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Carga horária:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "horas_diarias",
+    "rotulo": "Carga horária: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "bolsa_estagio",
+    "rotulo": "Bolsa-estágio:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "auxilio_transporte",
+    "rotulo": "Auxílio-transporte:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Supervisor(a) na empresa:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "professor_a_orientador_a",
+    "rotulo": "Professor(a) orientador(a):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "apolice",
+    "rotulo": "Seguro contra acidentes pessoais:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "seguradora",
+    "rotulo": "Seguro contra acidentes pessoais: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "Nome",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "Nome do professor(a) orientador(a)",
+    "tipo": "texto"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Nome do dependente 1:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Nome do dependente 1: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "certidao",
+    "rotulo": "Nome do dependente 1: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Nome do dependente 2:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Nome do dependente 2: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "certidao_4",
+    "rotulo": "Nome do dependente 2: (parte 3)",
+    "tipo": "texto"
+  }
+]

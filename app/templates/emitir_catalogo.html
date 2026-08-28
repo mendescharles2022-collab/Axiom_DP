@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Emitir documento — {{ empresa.razao_social }}{% endblock %}
+{% block conteudo %}
+
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social }}</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Emitir documento</h2>
+  </div>
+
+  {% if not empregados %}
+    <p class="texto-muted">
+      Esta empresa ainda não tem nenhum empregado cadastrado.
+      <a href="/empresas/{{ empresa.id }}/empregados/novo">Cadastre um empregado</a> antes de emitir um documento.
+    </p>
+  {% endif %}
+
+  {% for categoria, itens in categorias.items() %}
+  <div class="grupo-categoria">
+    <h3>{{ categoria }}</h3>
+    <ul class="lista-templates">
+      {% for t in itens %}
+      <li>
+        <a href="/empresas/{{ empresa.id }}/emitir/{{ t.id }}">{{ t.nome }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</section>
+
+{% endblock %}

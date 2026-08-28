@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "salario_base",
+    "rotulo": "Salário-base:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "media_horas_extras_quando_houver",
+    "rotulo": "Média de horas extras (quando houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "outros_adicionais_quando_houver",
+    "rotulo": "Outros adicionais (quando houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "remuneracao_bruta_mensal_media",
+    "rotulo": "Remuneração bruta mensal (média):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "colaborador_desta_empresa_desde",
+    "rotulo": "Colaborador(a) desta empresa desde",
+    "tipo": "texto"
+  }
+]

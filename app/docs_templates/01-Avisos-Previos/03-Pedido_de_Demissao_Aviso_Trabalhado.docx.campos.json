@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "data_deste_comunicado",
+    "rotulo": "Data deste comunicado:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ultimo_dia_de_trabalho_previsto",
+    "rotulo": "Último dia de trabalho previsto:",
+    "tipo": "texto"
+  }
+]

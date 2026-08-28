@@ -1,0 +1,42 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Data e horário do fato:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa_as",
+    "rotulo": "Data e horário do fato: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "local_do_fato",
+    "rotulo": "Local do fato:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "responsavel_pelo_registro",
+    "rotulo": "Responsável pelo registro:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Relatar, de forma factual e sem juízo de valor, o que foi observado ou reportado: o que aconteceu, quem estava envolvido, testemunhas presentes e eventuais medidas imediatas tomadas no momento.",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Registrar, se aplicável, a versão apresentada pelo(a) colaborador(a) sobre o ocorrido.",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Nome do líder/gestor",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "Nome da testemunha, quando houver",
+    "tipo": "texto"
+  }
+]

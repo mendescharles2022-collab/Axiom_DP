@@ -1,0 +1,117 @@
+[
+  {
+    "nome": "campo_13o_salario_avos",
+    "rotulo": "13º salário [__] avos:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ferias_avos",
+    "rotulo": "Férias [__] avos:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1_3_sobre_ferias",
+    "rotulo": "1/3 sobre férias:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "saldo_salario",
+    "rotulo": "Saldo de salário:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "aviso_previo_se_houver",
+    "rotulo": "Aviso prévio (se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "outro_provento_especificar",
+    "rotulo": "Outro provento (especificar):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "total_proventos",
+    "rotulo": "Total de proventos (a):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "inss",
+    "rotulo": "Inss:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "irrf",
+    "rotulo": "Irrf:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "adiantamentos_vales_ja_pagos",
+    "rotulo": "Adiantamentos/vales já pagos:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "aviso_previo_nao_cumprido_se_houver",
+    "rotulo": "Aviso prévio não cumprido (se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "outro_desconto_especificar",
+    "rotulo": "Outro desconto (especificar):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "total_descontos_b",
+    "rotulo": "Total de descontos (b):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "liquido_receber_b",
+    "rotulo": "Líquido a receber (a − b):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "r",
+    "rotulo": "R$",
+    "tipo": "texto"
+  },
+  {
+    "nome": "periodo",
+    "rotulo": "No período de",
+    "tipo": "texto"
+  },
+  {
+    "nome": "periodo_dd_mm_aaaa",
+    "rotulo": "Período de [dd/mm/aaaa] a",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_13o_salario",
+    "rotulo": "13º salário",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ferias",
+    "rotulo": "Férias",
+    "tipo": "texto"
+  }
+]

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titulo %}Histórico — {{ empresa.razao_social }}{% endblock %}
+{% block conteudo %}
+
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social }}</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Documentos emitidos</h2>
+  </div>
+
+  {% if documentos %}
+  <table>
+    <thead><tr><th>Data</th><th>Modelo</th><th>Empregado</th><th></th></tr></thead>
+    <tbody>
+      {% for d in documentos %}
+      <tr>
+        <td>{{ d.emitido_em.strftime("%d/%m/%Y %H:%M") }}</td>
+        <td>{{ d.template.nome }}</td>
+        <td>{{ d.empregado.nome_completo if d.empregado else "-" }}</td>
+        <td class="acoes"><a href="/documentos/{{ d.id }}/baixar">Baixar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum documento emitido ainda para esta empresa.</p>
+  {% endif %}
+</section>
+
+{% endblock %}

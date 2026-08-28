@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "item_1_uniforme",
+    "rotulo": "Item 1 (uniforme):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "item_2_epi",
+    "rotulo": "Item 2 (EPI):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "item_3",
+    "rotulo": "Item 3:",
+    "tipo": "texto"
+  }
+]

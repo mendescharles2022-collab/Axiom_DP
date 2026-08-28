@@ -1,0 +1,52 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Período aquisitivo:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Período aquisitivo: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Período de gozo:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa_2",
+    "rotulo": "Período de gozo: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "salario_ferias",
+    "rotulo": "Salário de férias:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "terco_constitucional_1_3",
+    "rotulo": "Terço constitucional (1/3):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "abono_pecuniario_se_houver",
+    "rotulo": "Abono pecuniário (se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "descontos_inss_irrf",
+    "rotulo": "Descontos (inss/irrf):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "valor_liquido_recebido",
+    "rotulo": "Valor líquido recebido:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_do_pagamento",
+    "rotulo": "Data do pagamento:",
+    "tipo": "texto"
+  }
+]

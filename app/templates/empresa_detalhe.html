@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block titulo %}{{ empresa.razao_social }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<a href="/">← Todas as empresas</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ empresa.razao_social }}</h2>
+    <div class="acoes-topo">
+      <a class="botao" href="/empresas/{{ empresa.id }}/emitir">Emitir documento</a>
+      <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/historico">Histórico</a>
+      <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/editar">Editar</a>
+      <form method="post" action="/empresas/{{ empresa.id }}/excluir" onsubmit="return confirm('Excluir esta empresa e TODOS os empregados vinculados a ela? Essa ação não pode ser desfeita.');" class="form-inline">
+        <button type="submit" class="botao-perigo">Excluir empresa</button>
+      </form>
+    </div>
+  </div>
+
+  <table class="tabela-dados">
+    <tr><td>Nome fantasia</td><td>{{ empresa.nome_fantasia or "-" }}</td></tr>
+    <tr><td>CNPJ</td><td>{{ empresa.cnpj }}</td></tr>
+    <tr><td>Inscrição estadual</td><td>{{ empresa.inscricao_estadual or "-" }}</td></tr>
+    <tr><td>Endereço</td><td>{{ empresa.endereco_completo() }}</td></tr>
+    <tr><td>CNAE principal</td><td>{{ empresa.cnae_principal or "-" }}</td></tr>
+    <tr><td>Situação cadastral</td><td>{{ empresa.situacao_cadastral or "-" }}</td></tr>
+    <tr><td>Natureza jurídica</td><td>{{ empresa.natureza_juridica or "-" }}</td></tr>
+  </table>
+</section>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Empregados</h2>
+    <a class="botao" href="/empresas/{{ empresa.id }}/empregados/novo">+ Novo empregado</a>
+  </div>
+
+  {% if empregados %}
+  <table>
+    <thead><tr><th>Nome</th><th>CPF</th><th>Cargo</th><th>Tipo de contrato</th><th></th></tr></thead>
+    <tbody>
+      {% for emp in empregados %}
+      <tr>
+        <td>{{ emp.nome_completo }}</td>
+        <td>{{ emp.cpf }}</td>
+        <td>{{ emp.cargo or "-" }}</td>
+        <td><span class="badge">{{ emp.tipo_contrato }}</span></td>
+        <td class="acoes">
+          <a href="/empregados/{{ emp.id }}/editar">Editar</a>
+          <form method="post" action="/empregados/{{ emp.id }}/excluir" onsubmit="return confirm('Excluir este empregado?');" class="form-inline">
+            <button type="submit" class="link-perigo">Excluir</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum empregado cadastrado para esta empresa ainda.</p>
+  {% endif %}
+</section>
+
+{% endblock %}

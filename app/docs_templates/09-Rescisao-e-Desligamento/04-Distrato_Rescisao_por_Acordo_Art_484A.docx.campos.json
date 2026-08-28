@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "data_de_encerramento_do_contrato",
+    "rotulo": "Data de encerramento do contrato:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  }
+]

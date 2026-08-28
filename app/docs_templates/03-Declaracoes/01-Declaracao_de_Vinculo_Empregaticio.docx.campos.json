@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "desde",
+    "rotulo": "Desde",
+    "tipo": "texto"
+  },
+  {
+    "nome": "jornada_trabalho",
+    "rotulo": "Jornada de trabalho de",
+    "tipo": "texto"
+  }
+]

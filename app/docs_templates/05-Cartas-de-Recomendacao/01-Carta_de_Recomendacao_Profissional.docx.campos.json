@@ -1,0 +1,42 @@
+[
+  {
+    "nome": "periodo",
+    "rotulo": "No período de",
+    "tipo": "texto"
+  },
+  {
+    "nome": "periodo_dd_mm_aaaa",
+    "rotulo": "Período de [dd/mm/aaaa] a",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Nome",
+    "tipo": "texto"
+  },
+  {
+    "nome": "nome_demonstrou",
+    "rotulo": "[nome] demonstrou",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Descrever uma realização, projeto ou característica marcante do desempenho do(a) profissional",
+    "tipo": "texto"
+  },
+  {
+    "nome": "recomendamos",
+    "rotulo": "Recomendamos",
+    "tipo": "texto"
+  },
+  {
+    "nome": "adicionais_atraves_contato",
+    "rotulo": "Adicionais através do contato",
+    "tipo": "texto"
+  },
+  {
+    "nome": "nome_responsavel",
+    "rotulo": "Nome_responsavel }} –",
+    "tipo": "texto"
+  }
+]

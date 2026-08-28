@@ -1,0 +1,47 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Item 1:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Item 1: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ca",
+    "rotulo": "Item 1: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Item 2:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Item 2: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ca_4",
+    "rotulo": "Item 2: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "Item 3:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_6",
+    "rotulo": "Item 3: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ca_7",
+    "rotulo": "Item 3: (parte 3)",
+    "tipo": "texto"
+  }
+]

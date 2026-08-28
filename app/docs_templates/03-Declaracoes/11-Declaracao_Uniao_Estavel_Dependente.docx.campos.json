@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "manter_uniao_estavel",
+    "rotulo": "Manter união estável com",
+    "tipo": "texto"
+  },
+  {
+    "nome": "desde",
+    "rotulo": "Desde",
+    "tipo": "texto"
+  }
+]

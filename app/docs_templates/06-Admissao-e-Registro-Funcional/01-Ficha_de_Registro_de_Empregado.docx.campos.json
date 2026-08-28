@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "ctps_no_serie",
+    "rotulo": "CTPS (nº/série):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "titulo_de_eleitor",
+    "rotulo": "Título de eleitor:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "contato_de_emergencia",
+    "rotulo": "Contato de emergência:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Jornada de trabalho:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "salario_base",
+    "rotulo": "Salário-base:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "lider_imediato",
+    "rotulo": "Líder imediato:",
+    "tipo": "texto"
+  }
+]

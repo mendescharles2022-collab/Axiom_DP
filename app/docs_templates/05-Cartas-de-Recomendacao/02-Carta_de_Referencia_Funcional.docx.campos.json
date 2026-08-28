@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Período:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Período: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "motivo_de_desligamento_se_aplicavel",
+    "rotulo": "Motivo de desligamento (se aplicável):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "periodo",
+    "rotulo": "No período de",
+    "tipo": "texto"
+  },
+  {
+    "nome": "periodo_dd_mm_aaaa",
+    "rotulo": "Período de [dd/mm/aaaa] a",
+    "tipo": "texto"
+  }
+]

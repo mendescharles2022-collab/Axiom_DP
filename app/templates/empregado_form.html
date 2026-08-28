@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar empregado" if empregado and empregado.id else "Novo empregado" }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+{% set emp = empregado or {} %}
+{% set empid = emp.id if emp is mapping else (emp.id if emp else None) %}
+{% set acao = ("/empregados/%d/editar" % empid) if empid else ("/empresas/%d/empregados/novo" % empresa.id) %}
+
+<a href="/empresas/{{ empresa.id }}">← {{ empresa.razao_social }}</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ "Editar empregado" if empid else "Novo empregado" }}</h2>
+  </div>
+
+  <form method="post" action="{{ acao }}" class="form-grid">
+
+    <h3 class="col-2">Dados pessoais</h3>
+    <label class="col-2">Nome completo *
+      <input name="nome_completo" required value="{{ emp.nome_completo or '' }}">
+    </label>
+    <label>CPF *
+      <input name="cpf" required value="{{ emp.cpf or '' }}">
+    </label>
+    <label>RG
+      <input name="rg" value="{{ emp.rg or '' }}">
+    </label>
+    <label>Data de nascimento
+      <input name="data_nascimento" placeholder="AAAA-MM-DD" value="{{ emp.data_nascimento or '' }}">
+    </label>
+    <label>Nacionalidade
+      <input name="nacionalidade" value="{{ emp.nacionalidade or 'brasileira' }}">
+    </label>
+    <label>Estado civil
+      <input name="estado_civil" value="{{ emp.estado_civil or '' }}">
+    </label>
+    <label>CTPS (número)
+      <input name="ctps_numero" value="{{ emp.ctps_numero or '' }}">
+    </label>
+    <label>CTPS (série)
+      <input name="ctps_serie" value="{{ emp.ctps_serie or '' }}">
+    </label>
+    <label>PIS/PASEP
+      <input name="pis_pasep" value="{{ emp.pis_pasep or '' }}">
+    </label>
+    <label>Telefone
+      <input name="telefone" value="{{ emp.telefone or '' }}">
+    </label>
+    <label class="col-2">E-mail
+      <input name="email" type="email" value="{{ emp.email or '' }}">
+    </label>
+    <label class="col-2">Endereço completo
+      <input name="endereco" value="{{ emp.endereco or '' }}">
+    </label>
+
+    <h3 class="col-2">Dados funcionais</h3>
+    <label>Cargo/Função
+      <input name="cargo" value="{{ emp.cargo or '' }}">
+    </label>
+    <label>Setor
+      <input name="setor" value="{{ emp.setor or '' }}">
+    </label>
+    <label>Tipo de contrato
+      <select name="tipo_contrato">
+        {% for valor, rotulo in tipos_contrato %}
+          <option value="{{ valor }}" {% if (emp.tipo_contrato or 'indeterminado') == valor %}selected{% endif %}>{{ rotulo }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Data de admissão
+      <input name="data_admissao" placeholder="AAAA-MM-DD" value="{{ emp.data_admissao or '' }}">
+    </label>
+    <label>Data de desligamento
+      <input name="data_desligamento" placeholder="AAAA-MM-DD" value="{{ emp.data_desligamento or '' }}">
+    </label>
+    <label>Jornada semanal (horas)
+      <input name="jornada_semanal_horas" value="{{ emp.jornada_semanal_horas or '' }}">
+    </label>
+    <label>Salário-base (R$)
+      <input name="salario_base" value="{{ emp.salario_base or '' }}">
+    </label>
+
+    <h3 class="col-2">Dados bancários</h3>
+    <label>Banco
+      <input name="banco" value="{{ emp.banco or '' }}">
+    </label>
+    <label>Agência
+      <input name="agencia" value="{{ emp.agencia or '' }}">
+    </label>
+    <label>Conta
+      <input name="conta" value="{{ emp.conta or '' }}">
+    </label>
+    <label>Chave PIX
+      <input name="chave_pix" value="{{ emp.chave_pix or '' }}">
+    </label>
+
+    <label class="col-2">Observações
+      <textarea name="observacoes" rows="3">{{ emp.observacoes or '' }}</textarea>
+    </label>
+
+    <div class="col-2 acoes-form">
+      <button type="submit">Salvar empregado</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

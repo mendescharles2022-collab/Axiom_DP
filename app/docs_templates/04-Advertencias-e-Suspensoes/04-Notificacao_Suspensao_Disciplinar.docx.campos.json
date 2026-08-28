@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Período da suspensão:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa_1",
+    "rotulo": "Período da suspensão: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa_dd_mm_aaaa",
+    "rotulo": "Período da suspensão: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_retorno_ao_trabalho",
+    "rotulo": "Data de retorno ao trabalho:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Descrever de forma objetiva os fatos que motivam a suspensão, fazendo referência, quando cabível, às advertências anteriores (datas e motivos).",
+    "tipo": "texto"
+  }
+]

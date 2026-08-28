@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titulo %}Empresas — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Empresas cadastradas</h2>
+    <a class="botao" href="/empresas/nova">+ Nova empresa</a>
+  </div>
+
+  <form class="linha" method="get" action="/">
+    <input type="text" name="q" placeholder="Buscar por razão social ou CNPJ" value="{{ busca }}">
+    <button type="submit">Buscar</button>
+  </form>
+
+  {% if empresas %}
+  <table>
+    <thead>
+      <tr><th>Razão social</th><th>CNPJ</th><th>Município/UF</th><th>Situação</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for e in empresas %}
+      <tr>
+        <td><a href="/empresas/{{ e.id }}">{{ e.razao_social }}</a></td>
+        <td>{{ e.cnpj }}</td>
+        <td>{{ e.municipio or "-" }}{% if e.uf %}/{{ e.uf }}{% endif %}</td>
+        <td>
+          {% if e.situacao_cadastral %}
+            <span class="badge">{{ e.situacao_cadastral }}</span>
+          {% else %}
+            <span class="texto-muted">não consultado</span>
+          {% endif %}
+        </td>
+        <td class="acoes"><a href="/empresas/{{ e.id }}">Abrir</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhuma empresa cadastrada ainda. Clique em "+ Nova empresa" para começar.</p>
+  {% endif %}
+</section>
+
+{% endblock %}

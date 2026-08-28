@@ -1,0 +1,62 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Nome do dependente 1:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Nome do dependente 1: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Nome do dependente 1: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Nome do dependente 1: (parte 4)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "Nome do dependente 2:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "Nome do dependente 2: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_6",
+    "rotulo": "Nome do dependente 2: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_7",
+    "rotulo": "Nome do dependente 2: (parte 4)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_8",
+    "rotulo": "Nome do dependente 3:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_9",
+    "rotulo": "Nome do dependente 3: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_10",
+    "rotulo": "Nome do dependente 3: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_11",
+    "rotulo": "Nome do dependente 3: (parte 4)",
+    "tipo": "texto"
+  }
+]

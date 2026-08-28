@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "ocorrido",
+    "rotulo": "Ocorrido em",
+    "tipo": "texto"
+  },
+  {
+    "nome": "as",
+    "rotulo": "Às",
+    "tipo": "texto"
+  },
+  {
+    "nome": "ocorrida",
+    "rotulo": "Ocorrida em",
+    "tipo": "texto"
+  },
+  {
+    "nome": "atrasos_faltas_nos_ultimos",
+    "rotulo": "De atrasos/faltas nos últimos",
+    "tipo": "texto"
+  },
+  {
+    "nome": "totalizando",
+    "rotulo": "Totalizando",
+    "tipo": "texto"
+  }
+]

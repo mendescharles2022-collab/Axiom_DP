@@ -1,0 +1,2137 @@
+[
+  {
+    "categoria": "01-Avisos-Previos",
+    "nome": "Aviso Previo Trabalhado (Empresa)",
+    "arquivo": "01-Avisos-Previos/01-Aviso_Previo_Trabalhado_(Empresa).docx",
+    "campos_extras": [
+      {
+        "nome": "data_de_inicio_do_aviso_previo",
+        "rotulo": "Data de início do aviso prévio:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_prevista_de_encerramento",
+        "rotulo": "Data prevista de encerramento:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Duração do aviso prévio:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "acrescidos",
+        "rotulo": "Duração do aviso prévio: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "totalizando",
+        "rotulo": "Duração do aviso prévio: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "efetivo_trabalho_sera",
+        "rotulo": "Efetivo de trabalho será",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "01-Avisos-Previos",
+    "nome": "Aviso Previo Indenizado (Empresa)",
+    "arquivo": "01-Avisos-Previos/02-Aviso_Previo_Indenizado_(Empresa).docx",
+    "campos_extras": [
+      {
+        "nome": "ultimo_dia_efetivamente_trabalhado",
+        "rotulo": "Último dia efetivamente trabalhado:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_saida_para_todos_os_fins_legais",
+        "rotulo": "Data de saída (para todos os fins legais):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Duração do aviso prévio indenizado:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "acrescidos",
+        "rotulo": "Duração do aviso prévio indenizado: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "totalizando",
+        "rotulo": "Duração do aviso prévio indenizado: (parte 3)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "01-Avisos-Previos",
+    "nome": "Pedido de Demissao Aviso Trabalhado",
+    "arquivo": "01-Avisos-Previos/03-Pedido_de_Demissao_Aviso_Trabalhado.docx",
+    "campos_extras": [
+      {
+        "nome": "data_deste_comunicado",
+        "rotulo": "Data deste comunicado:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ultimo_dia_de_trabalho_previsto",
+        "rotulo": "Último dia de trabalho previsto:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "01-Avisos-Previos",
+    "nome": "Pedido de Demissao Dispensa do Aviso",
+    "arquivo": "01-Avisos-Previos/04-Pedido_de_Demissao_Dispensa_do_Aviso.docx",
+    "campos_extras": [
+      {
+        "nome": "data_deste_comunicado",
+        "rotulo": "Data deste comunicado:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ultimo_dia_efetivo_de_trabalho",
+        "rotulo": "Último dia efetivo de trabalho:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "01-Avisos-Previos",
+    "nome": "Comunicado Dispensa Justa Causa",
+    "arquivo": "01-Avisos-Previos/05-Comunicado_Dispensa_Justa_Causa.docx",
+    "campos_extras": [
+      {
+        "nome": "data_do_desligamento",
+        "rotulo": "Data do desligamento:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "alinea",
+        "rotulo": "Fundamento legal:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "alinea_1",
+        "rotulo": "Alínea \"",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Descrever, de forma objetiva, clara e cronológica, os fatos, datas e eventuais advertências ou suspensões anteriores relacionadas à conduta que fundamenta a dispensa por justa causa.",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato de Experiencia",
+    "arquivo": "02-Contratos-de-Trabalho/01-Contrato_de_Experiencia.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Prazo de vigência:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_4",
+        "rotulo": "Prazo de vigência: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "deste_contrato",
+        "rotulo": "Deste contrato é de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_8",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato por Prazo Indeterminado",
+    "arquivo": "02-Contratos-de-Trabalho/02-Contrato_por_Prazo_Indeterminado.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "iniciando_se",
+        "rotulo": "Iniciando-se em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato Tempo Parcial",
+    "arquivo": "02-Contratos-de-Trabalho/03-Contrato_Tempo_Parcial.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato Trabalho Temporario",
+    "arquivo": "02-Contratos-de-Trabalho/04-Contrato_Trabalho_Temporario.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Prazo de vigência:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_4",
+        "rotulo": "Prazo de vigência: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_8",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato por Obra Certa",
+    "arquivo": "02-Contratos-de-Trabalho/05-Contrato_por_Obra_Certa.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "obra_servico_a_que_se_vincula_o_contrato",
+        "rotulo": "Obra/serviço a que se vincula o contrato:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Duração estimada da obra/etapa:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Duração estimada da obra/etapa: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_8",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "02-Contratos-de-Trabalho",
+    "nome": "Contrato de Safra Rural",
+    "arquivo": "02-Contratos-de-Trabalho/06-Contrato_de_Safra_Rural.docx",
+    "campos_extras": [
+      {
+        "nome": "descricao_sumaria_das_atribuicoes",
+        "rotulo": "Descrição sumária das atribuições:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_de_trabalho",
+        "rotulo": "Local de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Jornada de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Jornada de trabalho: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Jornada de trabalho: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "h_as",
+        "rotulo": "Jornada de trabalho: (parte 5)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "intervalo",
+        "rotulo": "Jornada de trabalho: (parte 6)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao",
+        "rotulo": "Remuneração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_2",
+        "rotulo": "Remuneração: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "cultura_atividade_agricola_vinculada",
+        "rotulo": "Cultura/atividade agrícola vinculada:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "propriedade_rural",
+        "rotulo": "Propriedade rural:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Período estimado da safra:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período estimado da safra: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_8",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao de Vinculo Empregaticio",
+    "arquivo": "03-Declaracoes/01-Declaracao_de_Vinculo_Empregaticio.docx",
+    "campos_extras": [
+      {
+        "nome": "desde",
+        "rotulo": "Desde",
+        "tipo": "texto"
+      },
+      {
+        "nome": "jornada_trabalho",
+        "rotulo": "Jornada de trabalho de",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao de Nao Vinculo Empregaticio",
+    "arquivo": "03-Declaracoes/02-Declaracao_de_Nao_Vinculo_Empregaticio.docx",
+    "campos_extras": []
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao de Horario de Trabalho",
+    "arquivo": "03-Declaracoes/03-Declaracao_de_Horario_de_Trabalho.docx",
+    "campos_extras": [
+      {
+        "nome": "dias_da_semana",
+        "rotulo": "Dias da semana:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "horario_de_entrada",
+        "rotulo": "Horário de entrada:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Horário de intervalo:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "as",
+        "rotulo": "Horário de intervalo: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "horario_de_saida",
+        "rotulo": "Horário de saída:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Carga horária semanal:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao de Salario Renda",
+    "arquivo": "03-Declaracoes/04-Declaracao_de_Salario_Renda.docx",
+    "campos_extras": [
+      {
+        "nome": "salario_base",
+        "rotulo": "Salário-base:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "media_horas_extras_quando_houver",
+        "rotulo": "Média de horas extras (quando houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "outros_adicionais_quando_houver",
+        "rotulo": "Outros adicionais (quando houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "remuneracao_bruta_mensal_media",
+        "rotulo": "Remuneração bruta mensal (média):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "colaborador_desta_empresa_desde",
+        "rotulo": "Colaborador(a) desta empresa desde",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao de Dependentes IRRF",
+    "arquivo": "03-Declaracoes/05-Declaracao_de_Dependentes_IRRF.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Nome do dependente 1:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Nome do dependente 1: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Nome do dependente 1: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Nome do dependente 1: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Nome do dependente 2:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "Nome do dependente 2: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "Nome do dependente 2: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "Nome do dependente 2: (parte 4)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_8",
+        "rotulo": "Nome do dependente 3:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_9",
+        "rotulo": "Nome do dependente 3: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_10",
+        "rotulo": "Nome do dependente 3: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_11",
+        "rotulo": "Nome do dependente 3: (parte 4)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Nada Consta",
+    "arquivo": "03-Declaracoes/06-Declaracao_Nada_Consta.docx",
+    "campos_extras": [
+      {
+        "nome": "colaborador_desta_empresa_desde",
+        "rotulo": "Colaborador(a) desta empresa desde",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Nao Acumulacao de Cargo",
+    "arquivo": "03-Declaracoes/07-Declaracao_Nao_Acumulacao_de_Cargo.docx",
+    "campos_extras": [
+      {
+        "nome": "outra_empresa_atividade_se_houver",
+        "rotulo": "Outra empresa/atividade (se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "cargo_funcao_na_outra_atividade",
+        "rotulo": "Cargo/função na outra atividade:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "horario_da_outra_atividade",
+        "rotulo": "Horário da outra atividade:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Opcao Vale Transporte",
+    "arquivo": "03-Declaracoes/08-Declaracao_Opcao_Vale_Transporte.docx",
+    "campos_extras": [
+      {
+        "nome": "linhas_meios_de_transporte_utilizados",
+        "rotulo": "Linhas/meios de transporte utilizados:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "quantidade_de_vales_necessarios_por_dia",
+        "rotulo": "Quantidade de vales necessários por dia:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Recebimento EPI Uniforme",
+    "arquivo": "03-Declaracoes/09-Declaracao_Recebimento_EPI_Uniforme.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Item 1:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Item 1: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ca",
+        "rotulo": "Item 1: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Item 2:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Item 2: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ca_4",
+        "rotulo": "Item 2: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "Item 3:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "Item 3: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ca_7",
+        "rotulo": "Item 3: (parte 3)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Salario Familia",
+    "arquivo": "03-Declaracoes/10-Declaracao_Salario_Familia.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Nome do dependente 1:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Nome do dependente 1: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "certidao",
+        "rotulo": "Nome do dependente 1: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Nome do dependente 2:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Nome do dependente 2: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "certidao_4",
+        "rotulo": "Nome do dependente 2: (parte 3)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "03-Declaracoes",
+    "nome": "Declaracao Uniao Estavel Dependente",
+    "arquivo": "03-Declaracoes/11-Declaracao_Uniao_Estavel_Dependente.docx",
+    "campos_extras": [
+      {
+        "nome": "manter_uniao_estavel",
+        "rotulo": "Manter união estável com",
+        "tipo": "texto"
+      },
+      {
+        "nome": "desde",
+        "rotulo": "Desde",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Carta de Advertencia Geral",
+    "arquivo": "04-Advertencias-e-Suspensoes/01-Carta_de_Advertencia_Geral.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Descrever, de forma objetiva e detalhada, a data, o local, o fato ocorrido e a norma ou orientação descumprida.",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Carta de Advertencia Atraso Falta",
+    "arquivo": "04-Advertencias-e-Suspensoes/02-Carta_de_Advertencia_Atraso_Falta.docx",
+    "campos_extras": [
+      {
+        "nome": "ocorrido",
+        "rotulo": "Ocorrido em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "as",
+        "rotulo": "Às",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ocorrida",
+        "rotulo": "Ocorrida em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "atrasos_faltas_nos_ultimos",
+        "rotulo": "De atrasos/faltas nos últimos",
+        "tipo": "texto"
+      },
+      {
+        "nome": "totalizando",
+        "rotulo": "Totalizando",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Carta de Advertencia Conduta Insubordinacao",
+    "arquivo": "04-Advertencias-e-Suspensoes/03-Carta_de_Advertencia_Conduta_Insubordinacao.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Descrever de forma objetiva a data, o local, as pessoas envolvidas e o comportamento observado — ex.: desrespeito a colega/liderança, recusa em cumprir orientação de serviço, uso inadequado de equipamentos, entre outros.",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Notificacao Suspensao Disciplinar",
+    "arquivo": "04-Advertencias-e-Suspensoes/04-Notificacao_Suspensao_Disciplinar.docx",
+    "campos_extras": [
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período da suspensão:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_1",
+        "rotulo": "Período da suspensão: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_dd_mm_aaaa",
+        "rotulo": "Período da suspensão: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_retorno_ao_trabalho",
+        "rotulo": "Data de retorno ao trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Descrever de forma objetiva os fatos que motivam a suspensão, fazendo referência, quando cabível, às advertências anteriores (datas e motivos).",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Carta de Advertencia Uso Indevido Equipamentos Celular",
+    "arquivo": "04-Advertencias-e-Suspensoes/05-Carta_de_Advertencia_Uso_Indevido_Equipamentos_Celular.docx",
+    "campos_extras": [
+      {
+        "nome": "conforme_fato_ocorrido",
+        "rotulo": "Conforme fato ocorrido em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Descrever a situação: uso de celular durante atendimento/produção, acesso a conteúdo não relacionado ao trabalho, uso de equipamento da empresa para fins particulares, danos causados por mau uso, etc.",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "04-Advertencias-e-Suspensoes",
+    "nome": "Registro de Ocorrencia Disciplinar",
+    "arquivo": "04-Advertencias-e-Suspensoes/06-Registro_de_Ocorrencia_Disciplinar.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Data e horário do fato:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_as",
+        "rotulo": "Data e horário do fato: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "local_do_fato",
+        "rotulo": "Local do fato:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "responsavel_pelo_registro",
+        "rotulo": "Responsável pelo registro:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Relatar, de forma factual e sem juízo de valor, o que foi observado ou reportado: o que aconteceu, quem estava envolvido, testemunhas presentes e eventuais medidas imediatas tomadas no momento.",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Registrar, se aplicável, a versão apresentada pelo(a) colaborador(a) sobre o ocorrido.",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Nome do líder/gestor",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Nome da testemunha, quando houver",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "05-Cartas-de-Recomendacao",
+    "nome": "Carta de Recomendacao Profissional",
+    "arquivo": "05-Cartas-de-Recomendacao/01-Carta_de_Recomendacao_Profissional.docx",
+    "campos_extras": [
+      {
+        "nome": "periodo",
+        "rotulo": "No período de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "periodo_dd_mm_aaaa",
+        "rotulo": "Período de [dd/mm/aaaa] a",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "nome_demonstrou",
+        "rotulo": "[nome] demonstrou",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Descrever uma realização, projeto ou característica marcante do desempenho do(a) profissional",
+        "tipo": "texto"
+      },
+      {
+        "nome": "recomendamos",
+        "rotulo": "Recomendamos",
+        "tipo": "texto"
+      },
+      {
+        "nome": "adicionais_atraves_contato",
+        "rotulo": "Adicionais através do contato",
+        "tipo": "texto"
+      },
+      {
+        "nome": "nome_responsavel",
+        "rotulo": "Nome_responsavel }} –",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "05-Cartas-de-Recomendacao",
+    "nome": "Carta de Referencia Funcional",
+    "arquivo": "05-Cartas-de-Recomendacao/02-Carta_de_Referencia_Funcional.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Período:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "motivo_de_desligamento_se_aplicavel",
+        "rotulo": "Motivo de desligamento (se aplicável):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "periodo",
+        "rotulo": "No período de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "periodo_dd_mm_aaaa",
+        "rotulo": "Período de [dd/mm/aaaa] a",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "06-Admissao-e-Registro-Funcional",
+    "nome": "Ficha de Registro de Empregado",
+    "arquivo": "06-Admissao-e-Registro-Funcional/01-Ficha_de_Registro_de_Empregado.docx",
+    "campos_extras": [
+      {
+        "nome": "ctps_no_serie",
+        "rotulo": "CTPS (nº/série):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "titulo_de_eleitor",
+        "rotulo": "Título de eleitor:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "contato_de_emergencia",
+        "rotulo": "Contato de emergência:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Jornada de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "salario_base",
+        "rotulo": "Salário-base:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "lider_imediato",
+        "rotulo": "Líder imediato:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "06-Admissao-e-Registro-Funcional",
+    "nome": "Termo de Responsabilidade Uso de Equipamentos",
+    "arquivo": "06-Admissao-e-Registro-Funcional/02-Termo_de_Responsabilidade_Uso_de_Equipamentos.docx",
+    "campos_extras": [
+      {
+        "nome": "marca_modelo",
+        "rotulo": "Marca/Modelo:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "numero_de_serie_placa",
+        "rotulo": "Número de série / Placa:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "estado_de_conservacao_na_entrega",
+        "rotulo": "Estado de conservação na entrega:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "acessorios_entregues",
+        "rotulo": "Acessórios entregues:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "06-Admissao-e-Registro-Funcional",
+    "nome": "Termo de Recebimento Uniforme e EPI",
+    "arquivo": "06-Admissao-e-Registro-Funcional/03-Termo_de_Recebimento_Uniforme_e_EPI.docx",
+    "campos_extras": [
+      {
+        "nome": "item_1_uniforme",
+        "rotulo": "Item 1 (uniforme):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "item_2_epi",
+        "rotulo": "Item 2 (EPI):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "item_3",
+        "rotulo": "Item 3:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Contrato de Aprendizagem",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/01-Contrato_de_Aprendizagem.docx",
+    "campos_extras": [
+      {
+        "nome": "entidade_qualificadora_senai_senac_outra",
+        "rotulo": "Entidade qualificadora (SENAI/SENAC/outra):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "curso_de_aprendizagem",
+        "rotulo": "Curso de aprendizagem:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Idade do(a) aprendiz:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Prazo do contrato:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "bolsa_aprendizagem",
+        "rotulo": "Bolsa-aprendizagem:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Termo de Compromisso de Estagio",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/02-Termo_de_Compromisso_de_Estagio.docx",
+    "campos_extras": [
+      {
+        "nome": "matricula",
+        "rotulo": "Estagiário(a):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "instituicao_de_ensino",
+        "rotulo": "Instituição de ensino:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Curso:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "nome_curso",
+        "rotulo": "Curso: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "agente_de_integracao_se_houver",
+        "rotulo": "Agente de integração (se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "area_de_atuacao_atividades",
+        "rotulo": "Área de atuação/atividades:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_inicio",
+        "rotulo": "Data de início:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Data prevista de término:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Carga horária:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "horas_diarias",
+        "rotulo": "Carga horária: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "bolsa_estagio",
+        "rotulo": "Bolsa-estágio:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "auxilio_transporte",
+        "rotulo": "Auxílio-transporte:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Supervisor(a) na empresa:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "professor_a_orientador_a",
+        "rotulo": "Professor(a) orientador(a):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "apolice",
+        "rotulo": "Seguro contra acidentes pessoais:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "seguradora",
+        "rotulo": "Seguro contra acidentes pessoais: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "Nome do professor(a) orientador(a)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Contrato de Trabalho Intermitente",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/03-Contrato_de_Trabalho_Intermitente.docx",
+    "campos_extras": [
+      {
+        "nome": "valor_hora_trabalho",
+        "rotulo": "Valor da hora de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "forma_de_convocacao",
+        "rotulo": "Forma de convocação:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Aditivo Contratual Alteracao Cargo Salario",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/04-Aditivo_Contratual_Alteracao_Cargo_Salario.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Cargo/salário/setor anterior:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "cargo_r",
+        "rotulo": "Cargo/salário/setor anterior: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "cargo_salario_setor_anterior",
+        "rotulo": "Cargo/salário/setor anterior: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Novo cargo/salário/setor:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "cargo_r_2",
+        "rotulo": "Novo cargo/salário/setor: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "novo_cargo_salario_setor",
+        "rotulo": "Novo cargo/salário/setor: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_vigencia_da_alteracao",
+        "rotulo": "Data de vigência da alteração:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "trabalho_firmado",
+        "rotulo": "De trabalho firmado em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_6",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_7",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Termo de Confidencialidade NDA",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/05-Termo_de_Confidencialidade_NDA.docx",
+    "campos_extras": [
+      {
+        "nome": "vigente_pelo_prazo",
+        "rotulo": "Vigente pelo prazo de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Acordo de Compensacao de Jornada Banco de Horas",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/06-Acordo_de_Compensacao_de_Jornada_Banco_de_Horas.docx",
+    "campos_extras": [
+      {
+        "nome": "mediante_aviso_previo",
+        "rotulo": "Mediante aviso prévio de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "07-Contratos-Especiais-e-Aditivos",
+    "nome": "Acordo de Prorrogacao de Jornada 12x36",
+    "arquivo": "07-Contratos-Especiais-e-Aditivos/07-Acordo_de_Prorrogacao_de_Jornada_12x36.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Horário de trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "as",
+        "rotulo": "Horário de trabalho: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "escala",
+        "rotulo": "Escala:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Nome",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "08-Ferias-e-Afastamentos",
+    "nome": "Aviso de Ferias",
+    "arquivo": "08-Ferias-e-Afastamentos/01-Aviso_de_Ferias.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Período aquisitivo:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período aquisitivo: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Período de gozo das férias:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_2",
+        "rotulo": "Período de gozo das férias: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_dd_mm_aaaa",
+        "rotulo": "Período de gozo das férias: (parte 3)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_retorno_ao_trabalho",
+        "rotulo": "Data de retorno ao trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "solicitado",
+        "rotulo": "Abono pecuniário (venda de 1/3):",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "08-Ferias-e-Afastamentos",
+    "nome": "Recibo de Ferias",
+    "arquivo": "08-Ferias-e-Afastamentos/02-Recibo_de_Ferias.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Período aquisitivo:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período aquisitivo: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Período de gozo:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_2",
+        "rotulo": "Período de gozo: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "salario_ferias",
+        "rotulo": "Salário de férias:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "terco_constitucional_1_3",
+        "rotulo": "Terço constitucional (1/3):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "abono_pecuniario_se_houver",
+        "rotulo": "Abono pecuniário (se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "descontos_inss_irrf",
+        "rotulo": "Descontos (inss/irrf):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "valor_liquido_recebido",
+        "rotulo": "Valor líquido recebido:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_do_pagamento",
+        "rotulo": "Data do pagamento:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "08-Ferias-e-Afastamentos",
+    "nome": "Termo de Retorno de Afastamento",
+    "arquivo": "08-Ferias-e-Afastamentos/03-Termo_de_Retorno_de_Afastamento.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Período de afastamento:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Período de afastamento: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_de_retorno_ao_trabalho",
+        "rotulo": "Data de retorno ao trabalho:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Exame de retorno ao trabalho realizado:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "09-Rescisao-e-Desligamento",
+    "nome": "Termo de Rescisao Resumo Informativo",
+    "arquivo": "09-Rescisao-e-Desligamento/01-Termo_de_Rescisao_Resumo_Informativo.docx",
+    "campos_extras": [
+      {
+        "nome": "data_de_afastamento_desligamento",
+        "rotulo": "Data de afastamento/desligamento:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "saldo_salario",
+        "rotulo": "Saldo de salário:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "aviso_previo_indenizado_se_houver",
+        "rotulo": "Aviso prévio (indenizado, se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ferias_vencidas_1_3",
+        "rotulo": "Férias vencidas + 1/3:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ferias_proporcionais_1_3",
+        "rotulo": "Férias proporcionais + 1/3:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_13o_salario_proporcional",
+        "rotulo": "13º salário proporcional:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "multa_40_fgts_se_aplicavel",
+        "rotulo": "Multa de 40% do fgts (se aplicável):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "outras_verbas",
+        "rotulo": "Outras verbas:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "total_bruto",
+        "rotulo": "Total bruto:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "descontos_inss_irrf_outros",
+        "rotulo": "Descontos (inss/irrf/outros):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "valor_liquido_pagar",
+        "rotulo": "Valor líquido a pagar:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "09-Rescisao-e-Desligamento",
+    "nome": "Termo de Quitacao de Verbas Rescisorias",
+    "arquivo": "09-Rescisao-e-Desligamento/02-Termo_de_Quitacao_de_Verbas_Rescisorias.docx",
+    "campos_extras": [
+      {
+        "nome": "valor_liquido_recebido",
+        "rotulo": "Valor líquido recebido:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "data_do_pagamento",
+        "rotulo": "Data do pagamento:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "quantia_liquida_r",
+        "rotulo": "Quantia líquida de r$",
+        "tipo": "texto"
+      },
+      {
+        "nome": "r",
+        "rotulo": "De r$ [_______] (",
+        "tipo": "texto"
+      },
+      {
+        "nome": "iniciado",
+        "rotulo": "Iniciado em",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa_encerrado",
+        "rotulo": "[dd/mm/aaaa] e encerrado em",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "09-Rescisao-e-Desligamento",
+    "nome": "Termo de Devolucao de Bens da Empresa",
+    "arquivo": "09-Rescisao-e-Desligamento/03-Termo_de_Devolucao_de_Bens_da_Empresa.docx",
+    "campos_extras": [
+      {
+        "nome": "campo",
+        "rotulo": "Item 1:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "Item 1: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "Item 2:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "Item 2: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_4",
+        "rotulo": "Item 3:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_5",
+        "rotulo": "Item 3: (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "dd_mm_aaaa",
+        "rotulo": "Acesso a sistemas revogado:",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "09-Rescisao-e-Desligamento",
+    "nome": "Distrato Rescisao por Acordo Art 484A",
+    "arquivo": "09-Rescisao-e-Desligamento/04-Distrato_Rescisao_por_Acordo_Art_484A.docx",
+    "campos_extras": [
+      {
+        "nome": "data_de_encerramento_do_contrato",
+        "rotulo": "Data de encerramento do contrato:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      }
+    ]
+  },
+  {
+    "categoria": "09-Rescisao-e-Desligamento",
+    "nome": "Recibo de Pagamento de Verbas",
+    "arquivo": "09-Rescisao-e-Desligamento/05-Recibo_de_Pagamento_de_Verbas.docx",
+    "campos_extras": [
+      {
+        "nome": "campo_13o_salario_avos",
+        "rotulo": "13º salário [__] avos:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ferias_avos",
+        "rotulo": "Férias [__] avos:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1_3_sobre_ferias",
+        "rotulo": "1/3 sobre férias:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "saldo_salario",
+        "rotulo": "Saldo de salário:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "aviso_previo_se_houver",
+        "rotulo": "Aviso prévio (se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "outro_provento_especificar",
+        "rotulo": "Outro provento (especificar):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "total_proventos",
+        "rotulo": "Total de proventos (a):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "inss",
+        "rotulo": "Inss:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "irrf",
+        "rotulo": "Irrf:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "adiantamentos_vales_ja_pagos",
+        "rotulo": "Adiantamentos/vales já pagos:",
+        "tipo": "texto"
+      },
+      {
+        "nome": "aviso_previo_nao_cumprido_se_houver",
+        "rotulo": "Aviso prévio não cumprido (se houver):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "outro_desconto_especificar",
+        "rotulo": "Outro desconto (especificar):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "total_descontos_b",
+        "rotulo": "Total de descontos (b):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "liquido_receber_b",
+        "rotulo": "Líquido a receber (a − b):",
+        "tipo": "texto"
+      },
+      {
+        "nome": "r",
+        "rotulo": "R$",
+        "tipo": "texto"
+      },
+      {
+        "nome": "periodo",
+        "rotulo": "No período de",
+        "tipo": "texto"
+      },
+      {
+        "nome": "periodo_dd_mm_aaaa",
+        "rotulo": "Período de [dd/mm/aaaa] a",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo",
+        "rotulo": "_______________________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_1",
+        "rotulo": "___________",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_2",
+        "rotulo": "_______________________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_3",
+        "rotulo": "___________ (parte 2)",
+        "tipo": "texto"
+      },
+      {
+        "nome": "campo_13o_salario",
+        "rotulo": "13º salário",
+        "tipo": "texto"
+      },
+      {
+        "nome": "ferias",
+        "rotulo": "Férias",
+        "tipo": "texto"
+      }
+    ]
+  }
+]

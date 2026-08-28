@@ -1,0 +1,7 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Descrever de forma objetiva a data, o local, as pessoas envolvidas e o comportamento observado — ex.: desrespeito a colega/liderança, recusa em cumprir orientação de serviço, uso inadequado de equipamentos, entre outros.",
+    "tipo": "texto"
+  }
+]

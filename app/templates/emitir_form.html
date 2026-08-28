@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block titulo %}{{ template.nome }} — {{ empresa.razao_social }}{% endblock %}
+{% block conteudo %}
+
+<a href="/empresas/{{ empresa.id }}/emitir">← Voltar ao catálogo</a>
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ template.nome }}</h2>
+    <span class="badge">{{ template.categoria }}</span>
+  </div>
+
+  <p class="texto-muted">
+    Os dados de empresa e do empregado escolhido são preenchidos automaticamente.
+    Preencha abaixo apenas as informações específicas deste documento.
+  </p>
+
+  <form method="post" action="/empresas/{{ empresa.id }}/emitir/{{ template.id }}" class="form-grid">
+    <label class="col-2">Empregado *
+      <select name="empregado_id" required>
+        <option value="">Selecione...</option>
+        {% for emp in empregados %}
+          <option value="{{ emp.id }}">{{ emp.nome_completo }} — {{ emp.cargo or "sem cargo definido" }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Data de emissão do documento
+      <input type="date" name="data_emissao">
+    </label>
+
+    {% if template.campos_extra() %}
+    <h3 class="col-2">Campos específicos deste documento</h3>
+    {% for campo in template.campos_extra() %}
+    <label class="col-2">{{ campo.rotulo }}
+      <input name="extra_{{ campo.nome }}" placeholder="{{ campo.rotulo }}">
+    </label>
+    {% endfor %}
+    {% endif %}
+
+    <div class="col-2 acoes-form">
+      <button type="submit">Gerar documento</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}

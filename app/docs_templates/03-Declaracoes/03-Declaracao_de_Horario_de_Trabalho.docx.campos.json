@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "dias_da_semana",
+    "rotulo": "Dias da semana:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "horario_de_entrada",
+    "rotulo": "Horário de entrada:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Horário de intervalo:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "as",
+    "rotulo": "Horário de intervalo: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "horario_de_saida",
+    "rotulo": "Horário de saída:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Carga horária semanal:",
+    "tipo": "texto"
+  }
+]

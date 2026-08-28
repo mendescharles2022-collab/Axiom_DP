@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "linhas_meios_de_transporte_utilizados",
+    "rotulo": "Linhas/meios de transporte utilizados:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "quantidade_de_vales_necessarios_por_dia",
+    "rotulo": "Quantidade de vales necessários por dia:",
+    "tipo": "texto"
+  }
+]

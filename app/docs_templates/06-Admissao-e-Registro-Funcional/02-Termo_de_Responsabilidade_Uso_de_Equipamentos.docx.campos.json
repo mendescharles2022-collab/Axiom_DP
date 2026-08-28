@@ -1,0 +1,22 @@
+[
+  {
+    "nome": "marca_modelo",
+    "rotulo": "Marca/Modelo:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "numero_de_serie_placa",
+    "rotulo": "Número de série / Placa:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "estado_de_conservacao_na_entrega",
+    "rotulo": "Estado de conservação na entrega:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "acessorios_entregues",
+    "rotulo": "Acessórios entregues:",
+    "tipo": "texto"
+  }
+]

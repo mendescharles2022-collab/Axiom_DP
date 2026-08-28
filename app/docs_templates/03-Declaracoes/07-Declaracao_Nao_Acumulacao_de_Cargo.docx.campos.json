@@ -1,0 +1,17 @@
+[
+  {
+    "nome": "outra_empresa_atividade_se_houver",
+    "rotulo": "Outra empresa/atividade (se houver):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "cargo_funcao_na_outra_atividade",
+    "rotulo": "Cargo/função na outra atividade:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "horario_da_outra_atividade",
+    "rotulo": "Horário da outra atividade:",
+    "tipo": "texto"
+  }
+]

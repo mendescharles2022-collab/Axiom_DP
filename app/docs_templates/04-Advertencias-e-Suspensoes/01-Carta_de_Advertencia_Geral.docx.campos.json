@@ -1,0 +1,7 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Descrever, de forma objetiva e detalhada, a data, o local, o fato ocorrido e a norma ou orientação descumprida.",
+    "tipo": "texto"
+  }
+]

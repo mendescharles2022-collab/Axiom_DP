@@ -1,0 +1,57 @@
+[
+  {
+    "nome": "entidade_qualificadora_senai_senac_outra",
+    "rotulo": "Entidade qualificadora (SENAI/SENAC/outra):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "curso_de_aprendizagem",
+    "rotulo": "Curso de aprendizagem:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Idade do(a) aprendiz:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_inicio",
+    "rotulo": "Data de início:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Prazo do contrato:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "bolsa_aprendizagem",
+    "rotulo": "Bolsa-aprendizagem:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Nome",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_6",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Período de afastamento:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Período de afastamento: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_retorno_ao_trabalho",
+    "rotulo": "Data de retorno ao trabalho:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Exame de retorno ao trabalho realizado:",
+    "tipo": "texto"
+  }
+]

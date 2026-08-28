@@ -1,0 +1,27 @@
+[
+  {
+    "nome": "ultimo_dia_efetivamente_trabalhado",
+    "rotulo": "Último dia efetivamente trabalhado:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_saida_para_todos_os_fins_legais",
+    "rotulo": "Data de saída (para todos os fins legais):",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Duração do aviso prévio indenizado:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "acrescidos",
+    "rotulo": "Duração do aviso prévio indenizado: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "totalizando",
+    "rotulo": "Duração do aviso prévio indenizado: (parte 3)",
+    "tipo": "texto"
+  }
+]

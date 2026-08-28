@@ -1,0 +1,12 @@
+[
+  {
+    "nome": "conforme_fato_ocorrido",
+    "rotulo": "Conforme fato ocorrido em",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Descrever a situação: uso de celular durante atendimento/produção, acesso a conteúdo não relacionado ao trabalho, uso de equipamento da empresa para fins particulares, danos causados por mau uso, etc.",
+    "tipo": "texto"
+  }
+]

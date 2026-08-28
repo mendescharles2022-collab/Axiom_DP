@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block titulo %}Documento gerado{% endblock %}
+{% block conteudo %}
+
+<section class="card card-sucesso">
+  <h2>Documento gerado com sucesso</h2>
+  <table class="tabela-dados">
+    <tr><td>Modelo</td><td>{{ documento.template.nome }}</td></tr>
+    <tr><td>Empresa</td><td>{{ documento.empresa.razao_social }}</td></tr>
+    <tr><td>Empregado</td><td>{{ documento.empregado.nome_completo if documento.empregado else "-" }}</td></tr>
+    <tr><td>Emitido em</td><td>{{ documento.emitido_em.strftime("%d/%m/%Y às %H:%M") }}</td></tr>
+  </table>
+
+  <div class="acoes-form">
+    <a class="botao" href="/documentos/{{ documento.id }}/baixar">Baixar documento (.docx)</a>
+    <a class="botao botao-secundario" href="/empresas/{{ documento.empresa_id }}/emitir">Emitir outro documento</a>
+    <a href="/empresas/{{ documento.empresa_id }}">Voltar para a empresa</a>
+  </div>
+</section>
+
+{% endblock %}

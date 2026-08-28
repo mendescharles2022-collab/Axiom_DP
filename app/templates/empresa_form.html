@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar empresa" if empresa and empresa.id else "Nova empresa" }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+{% set e = empresa or {} %}
+{% set eid = e.id if e is mapping else (e.id if e else None) %}
+{% set acao = ("/empresas/%d/editar" % eid) if eid else "/empresas/nova" %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ "Editar empresa" if eid else "Nova empresa" }}</h2>
+    {% if eid %}<a href="/empresas/{{ eid }}">← Voltar para a empresa</a>{% else %}<a href="/">← Voltar</a>{% endif %}
+  </div>
+
+  <div class="linha busca-cnpj">
+    <input id="cnpj-busca" placeholder="Digite um CNPJ para buscar na Receita Federal">
+    <button type="button" onclick="buscarCnpjNoFormulario()">Buscar na Receita Federal</button>
+  </div>
+  <p id="cnpj-busca-status" class="texto-muted"></p>
+
+  <form method="post" action="{{ acao }}" class="form-grid">
+    <label>Razão social *
+      <input name="razao_social" required value="{{ e.razao_social or '' }}">
+    </label>
+    <label>Nome fantasia
+      <input name="nome_fantasia" value="{{ e.nome_fantasia or '' }}">
+    </label>
+
+    <label>CNPJ *
+      <input name="cnpj" id="cnpj" required value="{{ e.cnpj or '' }}">
+    </label>
+    <label>Inscrição estadual
+      <input name="inscricao_estadual" id="inscricao_estadual" value="{{ e.inscricao_estadual or '' }}">
+    </label>
+
+    <label class="col-2">Logradouro
+      <input name="logradouro" id="logradouro" value="{{ e.logradouro or '' }}">
+    </label>
+    <label>Número
+      <input name="numero" id="numero" value="{{ e.numero or '' }}">
+    </label>
+    <label>Complemento
+      <input name="complemento" id="complemento" value="{{ e.complemento or '' }}">
+    </label>
+
+    <label>Bairro
+      <input name="bairro" id="bairro" value="{{ e.bairro or '' }}">
+    </label>
+    <label>Município
+      <input name="municipio" id="municipio" value="{{ e.municipio or '' }}">
+    </label>
+    <label>UF
+      <input name="uf" id="uf" maxlength="2" value="{{ e.uf or '' }}">
+    </label>
+
+    <label>CEP
+      <input name="cep" id="cep" value="{{ e.cep or '' }}">
+    </label>
+    <label class="col-2">CNAE principal
+      <input name="cnae_principal" id="cnae_principal" value="{{ e.cnae_principal or '' }}">
+    </label>
+
+    <label>Situação cadastral
+      <input name="situacao_cadastral" id="situacao_cadastral" value="{{ e.situacao_cadastral or '' }}">
+    </label>
+    <label>Data de abertura
+      <input name="data_abertura" id="data_abertura" placeholder="AAAA-MM-DD" value="{{ e.data_abertura or '' }}">
+    </label>
+    <label>Natureza jurídica
+      <input name="natureza_juridica" id="natureza_juridica" value="{{ e.natureza_juridica or '' }}">
+    </label>
+
+    <label class="col-2">Observações
+      <textarea name="observacoes" rows="3">{{ e.observacoes or '' }}</textarea>
+    </label>
+
+    <div class="col-2 acoes-form">
+      <button type="submit">Salvar empresa</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}
+
+{% block script_extra %}
+<script>
+async function buscarCnpjNoFormulario() {
+  const cnpj = document.getElementById("cnpj-busca").value;
+  const status = document.getElementById("cnpj-busca-status");
+  if (!cnpj) return;
+  status.textContent = "Consultando...";
+  const resp = await fetch(`/empresas/buscar-cnpj?cnpj=${encodeURIComponent(cnpj)}`);
+  const dados = await resp.json();
+  if (dados.erro) {
+    status.textContent = "Erro: " + dados.erro;
+    return;
+  }
+  status.textContent = "Dados encontrados e preenchidos abaixo. Confira antes de salvar.";
+  const mapa = {
+    razao_social: "razao_social", nome_fantasia: "nome_fantasia", cnpj: "cnpj",
+    logradouro: "logradouro", numero: "numero", complemento: "complemento",
+    bairro: "bairro", municipio: "municipio", uf: "uf", cep: "cep",
+    cnae_principal: "cnae_principal", situacao_cadastral: "situacao_cadastral",
+    data_abertura: "data_abertura", natureza_juridica: "natureza_juridica",
+  };
+  for (const [campoApi, campoInput] of Object.entries(mapa)) {
+    const el = document.querySelector(`[name="${campoInput}"]`);
+    if (el && dados[campoApi]) el.value = dados[campoApi];
+  }
+}
+</script>
+{% endblock %}

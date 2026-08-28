@@ -1,0 +1,22 @@
+[
+  {
+    "nome": "data_do_desligamento",
+    "rotulo": "Data do desligamento:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "alinea",
+    "rotulo": "Fundamento legal:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "alinea_1",
+    "rotulo": "Alínea \"",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Descrever, de forma objetiva, clara e cronológica, os fatos, datas e eventuais advertências ou suspensões anteriores relacionadas à conduta que fundamenta a dispensa por justa causa.",
+    "tipo": "texto"
+  }
+]

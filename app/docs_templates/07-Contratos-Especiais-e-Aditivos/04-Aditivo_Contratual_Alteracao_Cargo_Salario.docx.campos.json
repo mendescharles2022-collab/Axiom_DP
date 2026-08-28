@@ -1,0 +1,67 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Cargo/salário/setor anterior:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "cargo_r",
+    "rotulo": "Cargo/salário/setor anterior: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "cargo_salario_setor_anterior",
+    "rotulo": "Cargo/salário/setor anterior: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Novo cargo/salário/setor:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "cargo_r_2",
+    "rotulo": "Novo cargo/salário/setor: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "novo_cargo_salario_setor",
+    "rotulo": "Novo cargo/salário/setor: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_vigencia_da_alteracao",
+    "rotulo": "Data de vigência da alteração:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "trabalho_firmado",
+    "rotulo": "De trabalho firmado em",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Nome",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_6",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_7",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  }
+]

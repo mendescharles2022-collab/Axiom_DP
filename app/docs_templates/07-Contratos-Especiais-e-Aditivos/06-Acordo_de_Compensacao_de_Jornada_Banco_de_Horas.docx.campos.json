@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "mediante_aviso_previo",
+    "rotulo": "Mediante aviso prévio de",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Nome",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  }
+]

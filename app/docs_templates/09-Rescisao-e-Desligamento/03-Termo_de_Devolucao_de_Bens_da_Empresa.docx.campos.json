@@ -1,0 +1,37 @@
+[
+  {
+    "nome": "campo",
+    "rotulo": "Item 1:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Item 1: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Item 2:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Item 2: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "Item 3:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "Item 3: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Acesso a sistemas revogado:",
+    "tipo": "texto"
+  }
+]

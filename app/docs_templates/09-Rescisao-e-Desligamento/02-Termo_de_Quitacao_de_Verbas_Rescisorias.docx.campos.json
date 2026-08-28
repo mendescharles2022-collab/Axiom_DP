@@ -1,0 +1,32 @@
+[
+  {
+    "nome": "valor_liquido_recebido",
+    "rotulo": "Valor líquido recebido:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_do_pagamento",
+    "rotulo": "Data do pagamento:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "quantia_liquida_r",
+    "rotulo": "Quantia líquida de r$",
+    "tipo": "texto"
+  },
+  {
+    "nome": "r",
+    "rotulo": "De r$ [_______] (",
+    "tipo": "texto"
+  },
+  {
+    "nome": "iniciado",
+    "rotulo": "Iniciado em",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa_encerrado",
+    "rotulo": "[dd/mm/aaaa] e encerrado em",
+    "tipo": "texto"
+  }
+]

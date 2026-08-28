@@ -1,0 +1,92 @@
+[
+  {
+    "nome": "descricao_sumaria_das_atribuicoes",
+    "rotulo": "Descrição sumária das atribuições:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "local_de_trabalho",
+    "rotulo": "Local de trabalho:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "data_de_inicio",
+    "rotulo": "Data de início:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo",
+    "rotulo": "Jornada de trabalho:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_1",
+    "rotulo": "Jornada de trabalho: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_2",
+    "rotulo": "Jornada de trabalho: (parte 3)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_3",
+    "rotulo": "Jornada de trabalho: (parte 4)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "h_as",
+    "rotulo": "Jornada de trabalho: (parte 5)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "intervalo",
+    "rotulo": "Jornada de trabalho: (parte 6)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "remuneracao",
+    "rotulo": "Remuneração:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "remuneracao_2",
+    "rotulo": "Remuneração: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "obra_servico_a_que_se_vincula_o_contrato",
+    "rotulo": "Obra/serviço a que se vincula o contrato:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_4",
+    "rotulo": "Duração estimada da obra/etapa:",
+    "tipo": "texto"
+  },
+  {
+    "nome": "dd_mm_aaaa",
+    "rotulo": "Duração estimada da obra/etapa: (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_5",
+    "rotulo": "_______________________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_6",
+    "rotulo": "___________",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_7",
+    "rotulo": "_______________________ (parte 2)",
+    "tipo": "texto"
+  },
+  {
+    "nome": "campo_8",
+    "rotulo": "___________ (parte 2)",
+    "tipo": "texto"
+  }
+]
