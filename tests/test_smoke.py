@@ -27,13 +27,13 @@ def test_catalogo_tem_48_modelos():
     assert len(catalogo) == 48
 
 
-def test_dashboard_carrega(client):
-    resp = client.get("/")
+def test_dashboard_carrega(auth_client):
+    resp = auth_client.get("/")
     assert resp.status_code == 200
 
 
-def test_crud_empresa(client):
-    resp = client.post(
+def test_crud_empresa(auth_client):
+    resp = auth_client.post(
         "/empresas/nova",
         data={"razao_social": "Empresa Teste LTDA", "cnpj": "11.222.333/0001-81"},
         follow_redirects=True,
@@ -42,7 +42,7 @@ def test_crud_empresa(client):
     assert "Empresa Teste LTDA" in resp.get_data(as_text=True)
 
 
-def test_crud_empregado(app, client):
+def test_crud_empregado(app, auth_client):
     with app.app_context():
         from app.models.empresa import Empresa
 
@@ -51,7 +51,7 @@ def test_crud_empregado(app, client):
         db.session.commit()
         empresa_id = empresa.id
 
-    resp = client.post(
+    resp = auth_client.post(
         f"/empresas/{empresa_id}/empregados/novo",
         data={"nome_completo": "Fulano de Tal", "cpf": "123.456.789-00"},
         follow_redirects=True,
@@ -60,7 +60,7 @@ def test_crud_empregado(app, client):
     assert "Fulano de Tal" in resp.get_data(as_text=True)
 
 
-def test_geracao_de_documento_via_http(app, client):
+def test_geracao_de_documento_via_http(app, auth_client):
     with app.app_context():
         from app.models.empresa import Empresa
         from app.models.empregado import Empregado
@@ -78,7 +78,7 @@ def test_geracao_de_documento_via_http(app, client):
         template = TemplateDocumento.query.first()
         empresa_id, empregado_id, template_id = empresa.id, empregado.id, template.id
 
-    resp = client.post(
+    resp = auth_client.post(
         f"/empresas/{empresa_id}/emitir/{template_id}",
         data={"empregado_id": str(empregado_id)},
         follow_redirects=True,
@@ -87,7 +87,7 @@ def test_geracao_de_documento_via_http(app, client):
     assert "gerado com sucesso" in resp.get_data(as_text=True)
 
 
-def test_todos_os_48_modelos_geram_documento(app, client):
+def test_todos_os_48_modelos_geram_documento(app, auth_client):
     with app.app_context():
         from app.models.empresa import Empresa
         from app.models.empregado import Empregado
@@ -107,7 +107,7 @@ def test_todos_os_48_modelos_geram_documento(app, client):
 
     assert len(template_ids) == 48
     for template_id in template_ids:
-        resp = client.post(
+        resp = auth_client.post(
             f"/empresas/{empresa_id}/emitir/{template_id}",
             data={"empregado_id": str(empregado_id)},
             follow_redirects=True,

@@ -8,8 +8,21 @@
 <body>
   <header>
     <div class="header-topo">
-      <h1><a href="/">Axiom_DP</a></h1>
-      <p class="subtitulo">Departamento Pessoal</p>
+      <div>
+        <h1><a href="/">Axiom_DP</a></h1>
+        <p class="subtitulo">Departamento Pessoal</p>
+      </div>
+      {% if current_user.is_authenticated %}
+      <div class="sessao-usuario">
+        <span class="nome-usuario">{{ current_user.nome }}</span>
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('usuarios.listar') }}">Usuários</a>
+        {% endif %}
+        <form method="post" action="{{ url_for('auth.logout') }}" class="form-inline">
+          <button type="submit" class="botao-sair">Sair</button>
+        </form>
+      </div>
+      {% endif %}
     </div>
   </header>
 

@@ -58,6 +58,43 @@ td.acoes { display: flex; gap: 10px; align-items: center; border-bottom: none; }
 .grupo-categoria { margin-bottom: 20px; }
 .grupo-categoria h3 { font-size: 13px; color: #1F3864; border-bottom: 1px solid #eee; padding-bottom: 6px; margin-bottom: 8px; }
 .lista-templates { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+
+/* -------------------------------------------------- Cabeçalho / sessão */
+.header-topo { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+.sessao-usuario { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+.sessao-usuario .nome-usuario { color: #C9D3E6; }
+.sessao-usuario a { color: #fff; }
+.botao-sair { background: transparent; border: 1px solid #4FD1C5; color: #fff; padding: 5px 12px; font-size: 12px; }
+.botao-sair:hover { background: #16294A; }
+
+/* -------------------------------------------------- Telas de login */
+.pagina-auth body, body.pagina-auth { background: #0F1E3D; margin: 0; }
+.auth-tela {
+  display: flex; min-height: 100vh; align-items: stretch; max-width: none; padding: 0; margin: 0;
+}
+.auth-arte {
+  flex: 1.1; background: linear-gradient(160deg, #0F1E3D 0%, #1F3864 100%);
+  display: flex; align-items: center; justify-content: center; padding: 40px;
+}
+.auth-ilustracao { max-width: 480px; width: 100%; height: auto; }
+.auth-caixa {
+  flex: 1; background: #F4F5F7; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; padding: 40px 24px;
+}
+.auth-marca { text-align: center; margin-bottom: 18px; }
+.auth-marca h1 { color: #1F3864; margin: 0; font-size: 26px; }
+.auth-marca .subtitulo { color: #B08D3E; font-weight: 600; letter-spacing: .03em; margin: 2px 0 0; }
+.auth-form {
+  background: #fff; border: 1px solid #E0E0E0; border-radius: 10px; padding: 28px 30px;
+  width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 12px;
+}
+.auth-form h2 { margin: 0; color: #1F3864; font-size: 18px; }
+.botao-auth { width: 100%; margin-top: 6px; background: #1F3864; }
+.botao-auth:hover { background: #B08D3E; }
+@media (max-width: 760px) {
+  .auth-tela { flex-direction: column; }
+  .auth-arte { display: none; }
+}
 .lista-templates li a { display: block; padding: 6px 8px; border-radius: 4px; font-size: 13.5px; }
 .lista-templates li a:hover { background: #F0F4FC; text-decoration: none; }
 

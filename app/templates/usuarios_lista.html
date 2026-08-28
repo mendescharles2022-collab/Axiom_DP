@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block titulo %}Usuários — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>Usuários</h2>
+    <a class="botao" href="{{ url_for('usuarios.novo_form') }}">+ Novo usuário</a>
+  </div>
+
+  {% if usuarios %}
+  <table>
+    <thead>
+      <tr><th>Nome</th><th>Login</th><th>Perfil</th><th>Situação</th><th>Último acesso</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for u in usuarios %}
+      <tr>
+        <td>{{ u.nome }}</td>
+        <td>{{ u.login }}</td>
+        <td><span class="badge">{{ "Administrador" if u.perfil == "admin" else "Operador" }}</span></td>
+        <td>{% if u.ativo %}Ativo{% else %}<span class="texto-muted">Inativo</span>{% endif %}</td>
+        <td>{{ u.ultimo_acesso.strftime("%d/%m/%Y %H:%M") if u.ultimo_acesso else "—" }}</td>
+        <td class="acoes"><a href="{{ url_for('usuarios.editar_form', usuario_id=u.id) }}">Editar</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="texto-muted">Nenhum usuário cadastrado ainda.</p>
+  {% endif %}
+</section>
+
+{% endblock %}

@@ -1,5 +1,6 @@
 import os
 from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
+from flask_login import login_required
 from app.extensions import db
 from app.models.empresa import Empresa
 from app.models.empregado import Empregado
@@ -9,6 +10,12 @@ from app.services.cnpj_service import consultar_cnpj, CnpjConsultaError
 from app.services.document_engine import gerar_documento, GeracaoDocumentoError
 
 paginas_bp = Blueprint("paginas", __name__)
+
+
+@paginas_bp.before_request
+@login_required
+def _exigir_login():
+    return None
 
 TIPOS_CONTRATO = [
     ("indeterminado", "Prazo indeterminado"),

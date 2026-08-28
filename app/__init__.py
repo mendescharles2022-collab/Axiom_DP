@@ -1,6 +1,6 @@
 from flask import Flask
 from app.config import Config
-from app.extensions import db
+from app.extensions import db, login_manager
 
 
 def create_app(config_overrides: dict | None = None):
@@ -13,11 +13,25 @@ def create_app(config_overrides: dict | None = None):
 
     db.init_app(app)
 
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
+    login_manager.login_message = "Faça login para continuar."
+    login_manager.login_message_category = "erro"
+
+    @login_manager.user_loader
+    def carregar_usuario(user_id):
+        from app.models.usuario import Usuario
+        return Usuario.query.get(int(user_id))
+
+    from app.routes.auth import auth_bp
     from app.routes.empresas import empresas_bp
     from app.routes.empregados import empregados_bp
     from app.routes.paginas import paginas_bp
+    from app.routes.usuarios import usuarios_bp
 
+    app.register_blueprint(auth_bp)
     app.register_blueprint(paginas_bp)
+    app.register_blueprint(usuarios_bp, url_prefix="/usuarios")
     app.register_blueprint(empresas_bp, url_prefix="/api/empresas")
     app.register_blueprint(empregados_bp, url_prefix="/api/empregados")
 

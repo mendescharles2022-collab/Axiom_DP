@@ -1,10 +1,17 @@
 from datetime import datetime
 from flask import Blueprint, request, jsonify
+from flask_login import current_user
 from app.extensions import db
 from app.models.empresa import Empresa
 from app.services.cnpj_service import consultar_cnpj, CnpjConsultaError
 
 empresas_bp = Blueprint("empresas", __name__)
+
+
+@empresas_bp.before_request
+def _exigir_login_api():
+    if not current_user.is_authenticated:
+        return jsonify({"erro": "Autenticação necessária."}), 401
 
 
 @empresas_bp.get("/")

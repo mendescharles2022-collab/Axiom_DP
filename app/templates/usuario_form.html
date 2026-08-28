@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}{{ "Editar usuário" if usuario and usuario.id else "Novo usuário" }} — Axiom_DP{% endblock %}
+{% block conteudo %}
+
+<section class="card">
+  <div class="card-topo">
+    <h2>{{ "Editar usuário" if usuario and usuario.id else "Novo usuário" }}</h2>
+    <a class="botao botao-secundario" href="{{ url_for('usuarios.listar') }}">Voltar</a>
+  </div>
+
+  <form method="post" class="form-grid"
+        action="{{ url_for('usuarios.editar_salvar', usuario_id=usuario.id) if usuario and usuario.id else url_for('usuarios.novo_salvar') }}">
+    <label>Nome
+      <input type="text" name="nome" value="{{ usuario.nome if usuario else '' }}" required>
+    </label>
+
+    {% if usuario and usuario.id %}
+    <label>Login
+      <input type="text" value="{{ usuario.login }}" disabled>
+    </label>
+    {% else %}
+    <label>Login
+      <input type="text" name="login" value="{{ usuario.login if usuario else '' }}" required>
+    </label>
+    {% endif %}
+
+    <label>Perfil
+      <select name="perfil">
+        {% for p in perfis %}
+        <option value="{{ p }}" {% if usuario and usuario.perfil == p %}selected{% endif %}>
+          {{ "Administrador" if p == "admin" else "Operador" }}
+        </option>
+        {% endfor %}
+      </select>
+    </label>
+
+    {% if usuario and usuario.id %}
+    <label>
+      <span>Ativo</span>
+      <input type="checkbox" name="ativo" {% if usuario.ativo %}checked{% endif %} style="width:auto;">
+    </label>
+    {% endif %}
+
+    <label class="col-2">{{ "Nova senha (deixe em branco para manter a atual)" if usuario and usuario.id else "Senha" }}
+      <input type="password" name="senha" minlength="8" {% if not usuario or not usuario.id %}required{% endif %}>
+    </label>
+
+    <div class="acoes-form col-2">
+      <button type="submit" class="botao">Salvar</button>
+    </div>
+  </form>
+</section>
+
+{% endblock %}
