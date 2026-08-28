@@ -3,17 +3,18 @@ Motor de cálculo de contracheque/pró-labore avulso (HANDOFF seção 5.5).
 
 IMPORTANTE — leia antes de usar para fechar folha real:
 
-1. As tabelas de INSS/IRRF ficam no banco (TabelaINSS/TabelaIRRF/
-   TabelaIRRFRedutor), históricas por vigência — nunca hardcoded aqui, de
-   propósito, para que competências passadas continuem corretas mesmo
-   depois de uma tabela nova entrar em vigor. scripts/seed_tabelas_fiscais.py
-   semeia o histórico completo (INSS 2012-2026, IRRF 2015-2026 e o
-   redutor da Lei nº 15.270/2025 a partir de 01/2026) a partir de um
-   dataset oficial fornecido pelo Charles — não são mais estimativas da
-   memória de treinamento. Único valor ainda não confirmado pela fonte
-   oficial: a dedução por dependente do IRRF (ver aviso no próprio
-   script). Se uma tabela nova entrar em vigor, adicione uma linha nova
-   (nunca edite/sobrescreva uma vigência existente).
+1. As tabelas de INSS/IRRF/salário-família ficam no banco
+   (TabelaINSS/TabelaIRRF/TabelaIRRFRedutor/TabelaSalarioFamilia),
+   históricas por vigência — nunca hardcoded aqui, de propósito, para que
+   competências passadas continuem corretas mesmo depois de uma tabela
+   nova entrar em vigor. scripts/seed_tabelas_fiscais.py semeia o
+   histórico completo (INSS 2012-2026, IRRF 2015-2026, salário-família
+   1999-2026, e o redutor da Lei nº 15.270/2025 a partir de 01/2026) a
+   partir de um dataset oficial fornecido pelo Charles — não são mais
+   estimativas da memória de treinamento. Único valor ainda não
+   confirmado pela fonte oficial: a dedução por dependente do IRRF (ver
+   aviso no próprio script). Se uma tabela nova entrar em vigor, adicione
+   uma linha nova (nunca edite/sobrescreva uma vigência existente).
 2. `incidencia_irrf` em Rubrica usa os códigos oficiais da Tabela 21 do
    eSocial (leiaute S-1.3) — ver INCIDENCIAS_IRRF_QUE_NAO_ENTRAM_NA_BASE
    abaixo, classificado a partir da descrição oficial de cada código
@@ -29,6 +30,7 @@ from decimal import ROUND_HALF_UP, Decimal
 from app.models.tabela_inss import TabelaINSS
 from app.models.tabela_irrf import TabelaIRRF
 from app.models.tabela_irrf_redutor import TabelaIRRFRedutor
+from app.models.tabela_salario_familia import TabelaSalarioFamilia
 
 DOIS_CENTAVOS = Decimal("0.01")
 ALIQUOTA_FGTS = Decimal("8")
@@ -155,6 +157,38 @@ def calcular_irrf(base_calculo, competencia: str, dependentes: int = 0) -> dict:
     }
 
 
+def calcular_salario_familia(remuneracao, numero_dependentes: int, competencia: str) -> dict:
+    """
+    Benefício pago ao empregado CLT (não a pró-labore) cuja remuneração
+    fica dentro do limite, por dependente elegível (filho/equiparado até
+    14 anos incompletos ou inválido) — HANDOFF ADENDO. É custeado pela
+    Previdência (a empresa só repassa e depois compensa/deduz no FGTS
+    digital ou GPS conforme o regime), então não entra na base de
+    INSS/IRRF/FGTS do próprio empregado.
+    """
+    resultado_vazio = {"elegivel": False, "valor": Decimal("0"), "valor_cota": Decimal("0"), "tabela": None}
+    if not numero_dependentes:
+        return resultado_vazio
+
+    try:
+        tabela = _tabela_vigente(TabelaSalarioFamilia, competencia)
+    except CalculoFolhaError:
+        return resultado_vazio
+
+    remuneracao = _d(remuneracao)
+    for faixa in tabela.faixas():  # ordenada por limite_remuneracao crescente
+        if remuneracao <= _d(faixa["limite_remuneracao"]):
+            valor_cota = _d(faixa["valor_cota"])
+            return {
+                "elegivel": True,
+                "valor": _arredondar(valor_cota * numero_dependentes),
+                "valor_cota": _arredondar(valor_cota),
+                "tabela": tabela,
+            }
+
+    return {"elegivel": False, "valor": Decimal("0"), "valor_cota": Decimal("0"), "tabela": tabela}
+
+
 def _incide_irrf(codigo) -> bool:
     """Lookup real, a partir da Tabela 21 do eSocial (ver topo do arquivo)."""
     if codigo is None:
@@ -174,13 +208,25 @@ def _incide_heuristica(codigo) -> bool:
     return codigo not in (None, 0)
 
 
-def montar_calculo_recibo(recibo, dependentes: int = 0) -> dict:
+def montar_calculo_recibo(recibo, dependentes_irrf: int = None, dependentes_salario_familia: int = None) -> dict:
     """
     Percorre os itens de um ReciboAvulso, apura as bases de INSS/IRRF/FGTS
     a partir da incidência de cada Rubrica, calcula os tributos e devolve
     o líquido. Não persiste nada — quem chama decide o que fazer com o
     resultado (ex.: gerar o documento do recibo).
+
+    Por padrão os números de dependentes vêm do cadastro do empregado
+    (Empregado.numero_dependentes_irrf/numero_dependentes_salario_familia)
+    — os parâmetros só existem para permitir sobrescrever em casos
+    excepcionais (ex.: pró-labore sem empregado cadastrado). Salário-
+    família só é considerado para contracheque de empregado com registro
+    (pró-labore de sócio não tem direito ao benefício).
     """
+    if dependentes_irrf is None:
+        dependentes_irrf = recibo.empregado.numero_dependentes_irrf if recibo.empregado else 0
+    if dependentes_salario_familia is None:
+        dependentes_salario_familia = recibo.empregado.numero_dependentes_salario_familia if recibo.empregado else 0
+
     total_proventos = Decimal("0")
     total_descontos = Decimal("0")
     base_inss = Decimal("0")
@@ -205,11 +251,22 @@ def montar_calculo_recibo(recibo, dependentes: int = 0) -> dict:
     inss = calcular_inss(base_inss, recibo.competencia)
 
     base_irrf_apos_inss = max(base_irrf_bruta - inss["valor"], Decimal("0"))
-    irrf = calcular_irrf(base_irrf_apos_inss, recibo.competencia, dependentes=dependentes)
+    irrf = calcular_irrf(base_irrf_apos_inss, recibo.competencia, dependentes=dependentes_irrf)
 
     fgts_valor = _arredondar(max(base_fgts, Decimal("0")) * ALIQUOTA_FGTS / Decimal("100"))
 
-    liquido = total_proventos - total_descontos - inss["valor"] - irrf["valor_final"]
+    salario_familia = {"elegivel": False, "valor": Decimal("0"), "valor_cota": Decimal("0"), "tabela": None}
+    if recibo.tipo == "contracheque" and recibo.empregado and dependentes_salario_familia:
+        # Elegibilidade compara a remuneração bruta (soma dos itens
+        # lançados) com o limite da tabela — não é a "base_inss" nem a
+        # "base_irrf", que já vêm líquidas de itens isentos.
+        salario_familia = calcular_salario_familia(
+            total_proventos, dependentes_salario_familia, recibo.competencia
+        )
+
+    liquido = (
+        total_proventos - total_descontos - inss["valor"] - irrf["valor_final"] + salario_familia["valor"]
+    )
 
     return {
         "total_proventos": _arredondar(total_proventos),
@@ -220,5 +277,6 @@ def montar_calculo_recibo(recibo, dependentes: int = 0) -> dict:
         "irrf": irrf,
         "base_fgts": _arredondar(base_fgts),
         "fgts": fgts_valor,
+        "salario_familia": salario_familia,
         "liquido": _arredondar(liquido),
     }

@@ -100,6 +100,8 @@ def _campos_empregado_do_form(form):
         data_desligamento=form.get("data_desligamento", "").strip() or None,
         jornada_semanal_horas=float(jornada) if jornada else None,
         salario_base=salario,
+        numero_dependentes_irrf=form.get("numero_dependentes_irrf", type=int) or 0,
+        numero_dependentes_salario_familia=form.get("numero_dependentes_salario_familia", type=int) or 0,
         banco=form.get("banco", "").strip() or None,
         agencia=form.get("agencia", "").strip() or None,
         conta=form.get("conta", "").strip() or None,

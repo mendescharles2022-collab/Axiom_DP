@@ -10,6 +10,7 @@ from app.services.calculo_folha import (
     CalculoFolhaError,
     calcular_inss,
     calcular_irrf,
+    calcular_salario_familia,
     montar_calculo_recibo,
 )
 
@@ -17,10 +18,16 @@ from app.services.calculo_folha import (
 @pytest.fixture
 def tabelas_2024(app):
     with app.app_context():
-        from scripts.seed_tabelas_fiscais import seed_inss, seed_irrf, seed_irrf_redutor
+        from scripts.seed_tabelas_fiscais import (
+            seed_inss,
+            seed_irrf,
+            seed_irrf_redutor,
+            seed_salario_familia,
+        )
 
         seed_inss()
         seed_irrf()
+        seed_salario_familia()
         seed_irrf_redutor()
         yield
 
@@ -166,6 +173,101 @@ def test_montar_calculo_recibo_nao_soma_rubrica_isenta_de_irrf_na_base(app, tabe
         resultado = montar_calculo_recibo(recibo)
 
     assert resultado["base_irrf"] == Decimal("0.00")
+
+
+def test_calcular_salario_familia_elegivel(app, tabelas_2024):
+    with app.app_context():
+        resultado = calcular_salario_familia("1500", 2, "2026-03")
+        assert resultado["elegivel"] is True
+        assert resultado["valor_cota"] == Decimal("67.54")
+        assert resultado["valor"] == Decimal("135.08")
+
+
+def test_calcular_salario_familia_acima_do_limite_nao_e_elegivel(app, tabelas_2024):
+    with app.app_context():
+        resultado = calcular_salario_familia("3000", 2, "2026-03")
+        assert resultado["elegivel"] is False
+        assert resultado["valor"] == Decimal("0")
+
+
+def test_calcular_salario_familia_sem_dependentes_nao_e_elegivel(app, tabelas_2024):
+    with app.app_context():
+        resultado = calcular_salario_familia("1500", 0, "2026-03")
+        assert resultado["elegivel"] is False
+
+
+def test_calcular_salario_familia_duas_faixas_historicas(app, tabelas_2024):
+    with app.app_context():
+        # 2018: faixa 1 até 877,67 (R$45,00) / faixa 2 até 1319,18 (R$31,71)
+        baixa = calcular_salario_familia("800", 1, "2018-06")
+        alta = calcular_salario_familia("1200", 1, "2018-06")
+        assert baixa["valor_cota"] == Decimal("45.00")
+        assert alta["valor_cota"] == Decimal("31.71")
+
+
+def test_montar_calculo_recibo_soma_salario_familia_para_contracheque(app, tabelas_2024):
+    from app.models.empresa import Empresa
+    from app.models.empregado import Empregado
+    from app.models.rubrica import Rubrica
+    from app.models.recibo_avulso import ReciboAvulso, ReciboAvulsoItem
+
+    with app.app_context():
+        empresa = Empresa(razao_social="Empresa Salario Familia LTDA", cnpj="88.888.888/0001-88")
+        db.session.add(empresa)
+        db.session.commit()
+        empregado = Empregado(
+            empresa_id=empresa.id, nome_completo="Empregado Com Filhos", cpf="222.333.444-55",
+            numero_dependentes_salario_familia=2,
+        )
+        db.session.add(empregado)
+        rubrica = Rubrica(codigo=1, nome="SALARIO BASE", tipo="P",
+                           incidencia_irrf=11, incidencia_inss=11, incidencia_fgts=11, incidencia_pis=11)
+        db.session.add(rubrica)
+        db.session.commit()
+
+        recibo = ReciboAvulso(empresa_id=empresa.id, empregado_id=empregado.id, competencia="2026-03", tipo="contracheque")
+        db.session.add(recibo)
+        db.session.commit()
+        db.session.add(ReciboAvulsoItem(recibo_id=recibo.id, rubrica_id=rubrica.id, valor_provento="1500.00"))
+        db.session.commit()
+
+        resultado = montar_calculo_recibo(recibo)
+
+    assert resultado["salario_familia"]["elegivel"] is True
+    assert resultado["salario_familia"]["valor"] == Decimal("135.08")
+    # líquido inclui o salário-família (que não sofre INSS/IRRF)
+    assert resultado["liquido"] == (
+        resultado["total_proventos"] - resultado["inss"]["valor"] - resultado["irrf"]["valor_final"]
+        + resultado["salario_familia"]["valor"]
+    )
+
+
+def test_montar_calculo_recibo_pro_labore_nao_recebe_salario_familia(app, tabelas_2024):
+    """Pró-labore de sócio não tem direito ao benefício, mesmo com dependentes cadastrados."""
+    from app.models.empresa import Empresa
+    from app.models.rubrica import Rubrica
+    from app.models.recibo_avulso import ReciboAvulso, ReciboAvulsoItem
+
+    with app.app_context():
+        empresa = Empresa(razao_social="Empresa Pro Labore LTDA", cnpj="99.888.777/0001-99")
+        db.session.add(empresa)
+        rubrica = Rubrica(codigo=1, nome="PRO LABORE", tipo="P",
+                           incidencia_irrf=11, incidencia_inss=11, incidencia_fgts=0, incidencia_pis=0)
+        db.session.add(rubrica)
+        db.session.commit()
+
+        recibo = ReciboAvulso(
+            empresa_id=empresa.id, competencia="2026-03", tipo="pro_labore", nome_pro_labore="Socio Teste",
+        )
+        db.session.add(recibo)
+        db.session.commit()
+        db.session.add(ReciboAvulsoItem(recibo_id=recibo.id, rubrica_id=rubrica.id, valor_provento="1500.00"))
+        db.session.commit()
+
+        # mesmo passando dependentes explicitamente, pró-labore não tem empregado -> sem benefício
+        resultado = montar_calculo_recibo(recibo, dependentes_salario_familia=3)
+
+    assert resultado["salario_familia"]["elegivel"] is False
 
 
 def test_montar_calculo_recibo(app, tabelas_2024):

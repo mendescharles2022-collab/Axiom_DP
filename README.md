@@ -34,10 +34,11 @@ Receita Federal.
 - Importação das 537 empresas e 1.798 rubricas do escritório
   (idempotente — `scripts/importar_dados_escritorio.py`)
 - Motor de cálculo de contracheque/pró-labore avulso: INSS progressivo,
-  IRRF por tabela + redutor 2026 (Lei 15.270/2025), FGTS — **ver os
-  avisos de "valores a confirmar" no topo de
-  `app/services/calculo_folha.py` e `scripts/seed_tabelas_fiscais.py`
-  antes de usar para fechar folha real**
+  IRRF por tabela + redutor 2026 (Lei 15.270/2025), FGTS, salário-família
+  (automático para contracheque de empregado elegível, a partir de
+  `Empregado.numero_dependentes_salario_familia`) — **ver os avisos de
+  "valores a confirmar" no topo de `app/services/calculo_folha.py` e
+  `scripts/seed_tabelas_fiscais.py` antes de usar para fechar folha real**
 - Telas de emissão do recibo avulso (empresa/empregado ou pró-labore sem
   registro, itens por rubrica, cálculo automático, `.docx` em 2 vias) e
   CRUD de frases de quitação parametrizáveis por empresa
@@ -59,6 +60,14 @@ Receita Federal.
   incide, resto incide" — vários códigos de isenção (diárias, ajuda de
   custo, indenização, abono pecuniário de férias etc.) são != 0 mas não
   entram na base tributável.
+- Adicionado salário-família (`TabelaSalarioFamilia`, histórico 1999-2026):
+  soma automaticamente no contracheque de empregado elegível
+  (remuneração dentro do limite + dependentes cadastrados), sem entrar
+  na base de INSS/IRRF/FGTS. Novos campos em Empregado:
+  `numero_dependentes_irrf` (dedução do IRRF) e
+  `numero_dependentes_salario_familia` (elegibilidade ao benefício) —
+  são contagens separadas porque as regras de dependente são diferentes
+  para cada um. Pró-labore de sócio não recebe o benefício.
 
 **Avisos que ainda dependem de confirmação humana antes de uso em
 produção real (documentados também no código):**

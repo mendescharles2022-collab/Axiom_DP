@@ -14,10 +14,16 @@ from app.services.recibo_engine import gerar_recibo_docx
 
 def _seed_tabelas(app):
     with app.app_context():
-        from scripts.seed_tabelas_fiscais import seed_inss, seed_irrf, seed_irrf_redutor
+        from scripts.seed_tabelas_fiscais import (
+            seed_inss,
+            seed_irrf,
+            seed_irrf_redutor,
+            seed_salario_familia,
+        )
 
         seed_inss()
         seed_irrf()
+        seed_salario_familia()
         seed_irrf_redutor()
 
 
@@ -159,6 +165,45 @@ def test_gerar_recibo_docx_contem_dados_esperados(app):
     assert "2ª VIA - EMPREGADO" in todo_texto
     assert "258,82" in todo_texto  # INSS (formatado em pt-BR pelo recibo_engine._fmt)
     assert os.path.exists(caminho)
+
+
+def test_gerar_recibo_docx_inclui_salario_familia_quando_elegivel(app):
+    from app.models.recibo_avulso import ReciboAvulsoItem
+
+    _seed_tabelas(app)
+    with app.app_context():
+        empresa = Empresa(razao_social="Empresa Salario Familia LTDA", cnpj="12.121.212/0001-12")
+        db.session.add(empresa)
+        db.session.commit()
+        empregado = Empregado(
+            empresa_id=empresa.id, nome_completo="Empregado Elegivel", cpf="333.444.555-66",
+            numero_dependentes_salario_familia=2,
+        )
+        db.session.add(empregado)
+        rubrica = Rubrica(codigo=1, nome="SALARIO BASE", tipo="P",
+                           incidencia_irrf=11, incidencia_inss=11, incidencia_fgts=11, incidencia_pis=11)
+        db.session.add(rubrica)
+        db.session.commit()
+
+        recibo = ReciboAvulso(empresa_id=empresa.id, empregado_id=empregado.id, competencia="2026-03", tipo="contracheque")
+        db.session.add(recibo)
+        db.session.commit()
+        db.session.add(ReciboAvulsoItem(recibo_id=recibo.id, rubrica_id=rubrica.id, valor_provento="1500.00"))
+        db.session.commit()
+
+        resultado = montar_calculo_recibo(recibo)
+        caminho = gerar_recibo_docx(recibo, resultado)
+
+        doc = Document(caminho)
+        todo_texto = ""
+        for t in doc.tables:
+            for row in t.rows:
+                for cell in row.cells:
+                    todo_texto += cell.text + "\n"
+
+    assert "SALÁRIO-FAMÍLIA" in todo_texto
+    assert "135,08" in todo_texto  # 2 dependentes x R$ 67,54
+    assert "1.635,08" in todo_texto  # total dos vencimentos: 1500 + 135,08
 
 
 def test_frase_quitacao_padrao_da_empresa_e_usada(app, auth_client):

@@ -108,13 +108,25 @@ def _escrever_via(doc: Document, recibo, resultado, frase: str, rotulo_via: str)
         linha[3].text = _fmt(item.valor_provento) if item.valor_provento else ""
         linha[4].text = _fmt(item.valor_desconto) if item.valor_desconto else ""
 
+    salario_familia = resultado.get("salario_familia") or {}
+    if salario_familia.get("elegivel"):
+        linha = tabela_itens.add_row().cells
+        linha[0].text = "-"
+        dependentes = recibo.empregado.numero_dependentes_salario_familia if recibo.empregado else 0
+        linha[1].text = f"SALÁRIO-FAMÍLIA ({dependentes} dependente(s) x {_fmt(salario_familia['valor_cota'])})"
+        linha[2].text = "-"
+        linha[3].text = _fmt(salario_familia["valor"])
+        linha[4].text = ""
+
+    total_proventos_com_salario_familia = resultado["total_proventos"] + salario_familia.get("valor", 0)
+
     doc.add_paragraph()
     tabela_totais = doc.add_table(rows=2, cols=3)
     tabela_totais.style = "Table Grid"
     tabela_totais.rows[0].cells[0].text = "Total dos Vencimentos"
     tabela_totais.rows[0].cells[1].text = "Total dos Descontos"
     tabela_totais.rows[0].cells[2].text = "Líquido a Receber"
-    tabela_totais.rows[1].cells[0].text = _fmt(resultado["total_proventos"])
+    tabela_totais.rows[1].cells[0].text = _fmt(total_proventos_com_salario_familia)
     tabela_totais.rows[1].cells[1].text = _fmt(resultado["total_descontos"] + resultado["inss"]["valor"] + resultado["irrf"]["valor_final"])
     tabela_totais.rows[1].cells[2].text = _fmt(resultado["liquido"])
 

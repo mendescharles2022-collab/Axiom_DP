@@ -10,6 +10,7 @@ from app.models.rubrica import Rubrica
 from app.models.tabela_inss import TabelaINSS
 from app.models.tabela_irrf import TabelaIRRF
 from app.models.tabela_irrf_redutor import TabelaIRRFRedutor
+from app.models.tabela_salario_familia import TabelaSalarioFamilia
 from app.models.frase_quitacao import FraseQuitacao
 from app.models.recibo_avulso import ReciboAvulso, ReciboAvulsoItem
 
@@ -26,6 +27,7 @@ __all__ = [
     "TabelaINSS",
     "TabelaIRRF",
     "TabelaIRRFRedutor",
+    "TabelaSalarioFamilia",
     "FraseQuitacao",
     "ReciboAvulso",
     "ReciboAvulsoItem",

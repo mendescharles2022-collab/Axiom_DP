@@ -33,6 +33,14 @@ class Empregado(db.Model):
     jornada_semanal_horas = db.Column(db.Float)
     salario_base = db.Column(db.Numeric(10, 2))
 
+    # Dependentes — são contagens distintas porque as regras de
+    # elegibilidade são diferentes (IRRF aceita cônjuge/filhos até 21 ou
+    # 24 se estudante etc.; salário-família só filho/equiparado até 14
+    # anos incompletos ou inválido de qualquer idade), então um mesmo
+    # empregado pode ter números diferentes em cada um.
+    numero_dependentes_irrf = db.Column(db.Integer, default=0)
+    numero_dependentes_salario_familia = db.Column(db.Integer, default=0)
+
     # Dados bancários
     banco = db.Column(db.String(100))
     agencia = db.Column(db.String(20))
@@ -59,6 +67,8 @@ class Empregado(db.Model):
             "tipo_contrato": self.tipo_contrato,
             "data_admissao": self.data_admissao,
             "salario_base": float(self.salario_base) if self.salario_base else None,
+            "numero_dependentes_irrf": self.numero_dependentes_irrf,
+            "numero_dependentes_salario_familia": self.numero_dependentes_salario_familia,
             "ativo": self.ativo,
         }
 

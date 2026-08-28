@@ -1,13 +1,13 @@
 """
 Semeia as tabelas fiscais históricas (TabelaINSS, TabelaIRRF,
-TabelaIRRFRedutor) usadas pelo motor de cálculo de folha
-(app/services/calculo_folha.py). Idempotente por vigencia_inicio: rodar
-de novo não duplica.
+TabelaIRRFRedutor, TabelaSalarioFamilia) usadas pelo motor de cálculo de
+folha (app/services/calculo_folha.py). Idempotente por vigencia_inicio:
+rodar de novo não duplica.
 
 Fonte dos valores: dataset oficial fornecido pelo Charles (histórico
-consolidado INSS 2012-2026, IRRF 2015-2026 e o redutor da Lei
-15.270/2025 a partir de 01/2026) — não é mais estimativa da memória de
-treinamento como na primeira versão deste script.
+consolidado INSS 2012-2026, IRRF 2015-2026, salário-família 1999-2026, e
+o redutor da Lei 15.270/2025 a partir de 01/2026) — não é mais estimativa
+da memória de treinamento como na primeira versão deste script.
 
 *** ÚNICO PONTO AINDA NÃO CONFIRMADO PELA FONTE OFICIAL ***
 A dedução por dependente do IRRF (R$ 189,59/mês) não veio no dataset
@@ -28,6 +28,7 @@ from app.extensions import db
 from app.models.tabela_inss import TabelaINSS
 from app.models.tabela_irrf import TabelaIRRF
 from app.models.tabela_irrf_redutor import TabelaIRRFRedutor
+from app.models.tabela_salario_familia import TabelaSalarioFamilia
 
 DEDUCAO_DEPENDENTE_PADRAO = 189.59
 
@@ -78,6 +79,39 @@ TABELAS_IRRF = [
     ]),
 ]
 
+# Cada item: (vigencia_inicio, vigencia_fim, [(limite_remuneracao, valor_cota), ...])
+# ordenado por limite_remuneracao crescente. Até 2019 o benefício tinha
+# 2 faixas (extinto pela reforma da previdência, EC 103/2019); de 2020
+# em diante é faixa única.
+TABELAS_SALARIO_FAMILIA = [
+    ("1999-06-01", "2000-05-31", [(376.60, 9.05)]),
+    ("2000-06-01", "2001-05-31", [(398.48, 9.58)]),
+    ("2001-06-01", "2002-05-31", [(429.00, 10.31)]),
+    ("2002-06-01", "2003-05-31", [(468.47, 11.26)]),
+    ("2003-06-01", "2004-04-30", [(560.81, 13.48)]),
+    ("2004-05-01", "2005-04-30", [(390.00, 20.00), (586.19, 14.09)]),
+    ("2005-05-01", "2006-07-31", [(414.78, 21.27), (623.44, 14.99)]),
+    ("2006-08-01", "2007-03-31", [(435.56, 22.34), (654.67, 15.74)]),
+    ("2007-04-01", "2008-02-29", [(449.93, 23.08), (676.27, 16.26)]),
+    ("2008-03-01", "2009-01-31", [(472.43, 24.23), (710.08, 17.07)]),
+    ("2009-02-01", "2009-12-31", [(500.40, 25.66), (752.12, 18.08)]),
+    ("2010-01-01", "2010-12-31", [(539.03, 27.64), (810.18, 19.48)]),
+    ("2011-01-01", "2011-12-31", [(573.91, 29.43), (862.60, 20.74)]),
+    ("2012-01-01", "2012-12-31", [(608.80, 31.22), (915.05, 22.00)]),
+    ("2013-01-01", "2013-12-31", [(646.55, 33.16), (971.78, 23.36)]),
+    ("2014-01-01", "2014-12-31", [(682.50, 35.00), (1025.81, 24.66)]),
+    ("2015-01-01", "2016-12-31", [(725.02, 37.18), (1089.72, 26.20)]),
+    ("2017-01-01", "2017-12-31", [(859.88, 44.09), (1292.43, 31.07)]),
+    ("2018-01-01", "2018-12-31", [(877.67, 45.00), (1319.18, 31.71)]),
+    ("2019-01-01", "2019-12-31", [(907.77, 46.54), (1364.43, 32.80)]),
+    ("2020-01-01", "2021-12-31", [(1425.56, 48.62)]),
+    ("2022-01-01", "2022-12-31", [(1655.98, 56.47)]),
+    ("2023-01-01", "2023-12-31", [(1754.18, 59.82)]),
+    ("2024-01-01", "2024-12-31", [(1819.26, 62.04)]),
+    ("2025-01-01", "2025-12-31", [(1906.04, 65.00)]),
+    ("2026-01-01", None, [(1980.38, 67.54)]),
+]
+
 
 def _faixas_inss_json(faixas):
     return json.dumps([{"ate": ate, "aliquota": aliquota} for ate, aliquota in faixas])
@@ -86,6 +120,12 @@ def _faixas_inss_json(faixas):
 def _faixas_irrf_json(faixas):
     return json.dumps(
         [{"ate": ate, "aliquota": aliquota, "parcela_deduzir": parcela} for ate, aliquota, parcela in faixas]
+    )
+
+
+def _faixas_salario_familia_json(faixas):
+    return json.dumps(
+        [{"limite_remuneracao": limite, "valor_cota": cota} for limite, cota in faixas]
     )
 
 
@@ -125,6 +165,23 @@ def seed_irrf():
     print(f"TabelaIRRF — {criadas} vigência(s) criada(s) de {len(TABELAS_IRRF)}.")
 
 
+def seed_salario_familia():
+    criadas = 0
+    for vigencia_inicio, vigencia_fim, faixas in TABELAS_SALARIO_FAMILIA:
+        if TabelaSalarioFamilia.query.filter_by(vigencia_inicio=vigencia_inicio).first():
+            continue
+        db.session.add(
+            TabelaSalarioFamilia(
+                vigencia_inicio=vigencia_inicio,
+                vigencia_fim=vigencia_fim,
+                faixas_json=_faixas_salario_familia_json(faixas),
+            )
+        )
+        criadas += 1
+    db.session.commit()
+    print(f"TabelaSalarioFamilia — {criadas} vigência(s) criada(s) de {len(TABELAS_SALARIO_FAMILIA)}.")
+
+
 def seed_irrf_redutor():
     if TabelaIRRFRedutor.query.filter_by(vigencia_inicio="2026-01-01").first():
         print("TabelaIRRFRedutor 2026-01-01 já existe.")
@@ -148,6 +205,7 @@ def main():
     with app.app_context():
         seed_inss()
         seed_irrf()
+        seed_salario_familia()
         seed_irrf_redutor()
 
 

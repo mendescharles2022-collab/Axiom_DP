@@ -58,6 +58,8 @@ def criar_empregado():
         data_admissao=dados.get("data_admissao"),
         jornada_semanal_horas=dados.get("jornada_semanal_horas"),
         salario_base=dados.get("salario_base"),
+        numero_dependentes_irrf=dados.get("numero_dependentes_irrf", 0),
+        numero_dependentes_salario_familia=dados.get("numero_dependentes_salario_familia", 0),
         banco=dados.get("banco"),
         agencia=dados.get("agencia"),
         conta=dados.get("conta"),
@@ -76,7 +78,8 @@ def atualizar_empregado(empregado_id):
         "nome_completo", "cpf", "rg", "data_nascimento", "nacionalidade", "estado_civil",
         "ctps_numero", "ctps_serie", "pis_pasep", "endereco", "telefone", "email",
         "cargo", "setor", "tipo_contrato", "data_admissao", "data_desligamento",
-        "jornada_semanal_horas", "salario_base", "banco", "agencia", "conta",
+        "jornada_semanal_horas", "salario_base", "numero_dependentes_irrf",
+        "numero_dependentes_salario_familia", "banco", "agencia", "conta",
         "chave_pix", "ativo", "observacoes",
     ]:
         if campo in dados:

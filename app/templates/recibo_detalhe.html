@@ -53,7 +53,13 @@
 <section class="card">
   <h2>Cálculo</h2>
   <table class="tabela-dados">
-    <tr><td>Total de proventos</td><td>R$ {{ "%.2f"|format(resultado.total_proventos) }}</td></tr>
+    <tr><td>Total de proventos (itens lançados)</td><td>R$ {{ "%.2f"|format(resultado.total_proventos) }}</td></tr>
+    {% if resultado.salario_familia and resultado.salario_familia.elegivel %}
+    <tr>
+      <td>Salário-família ({{ recibo.empregado.numero_dependentes_salario_familia }} dependente(s) × R$ {{ "%.2f"|format(resultado.salario_familia.valor_cota) }})</td>
+      <td>R$ {{ "%.2f"|format(resultado.salario_familia.valor) }}</td>
+    </tr>
+    {% endif %}
     <tr><td>Total de descontos (itens)</td><td>R$ {{ "%.2f"|format(resultado.total_descontos) }}</td></tr>
     <tr><td>Base de cálculo INSS</td><td>R$ {{ "%.2f"|format(resultado.base_inss) }}</td></tr>
     <tr><td>INSS</td><td>R$ {{ "%.2f"|format(resultado.inss.valor) }}</td></tr>

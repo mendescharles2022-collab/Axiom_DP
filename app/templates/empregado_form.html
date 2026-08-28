@@ -79,6 +79,12 @@
     <label>Salário-base (R$)
       <input name="salario_base" value="{{ emp.salario_base or '' }}" data-mask="moeda" inputmode="decimal">
     </label>
+    <label>Dependentes p/ dedução do IRRF
+      <input name="numero_dependentes_irrf" type="number" step="1" min="0" value="{{ emp.numero_dependentes_irrf or 0 }}">
+    </label>
+    <label>Dependentes p/ salário-família
+      <input name="numero_dependentes_salario_familia" type="number" step="1" min="0" value="{{ emp.numero_dependentes_salario_familia or 0 }}">
+    </label>
 
     <h3 class="col-2">Dados bancários</h3>
     <label>Banco
