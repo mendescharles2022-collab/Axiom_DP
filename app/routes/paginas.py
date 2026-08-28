@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from flask import Blueprint, render_template, request, redirect, url_for, flash, send_file
 from flask_login import login_required
 from app.extensions import db
@@ -6,6 +7,9 @@ from app.models.empresa import Empresa
 from app.models.empregado import Empregado
 from app.models.documento import TemplateDocumento
 from app.models.emissao import DocumentoEmitido
+from app.models.cnae_secundario import CnaeSecundario
+from app.models.socio import Socio
+from app.models.inscricao_estadual import InscricaoEstadual
 from app.services.cnpj_service import consultar_cnpj, CnpjConsultaError
 from app.services.document_engine import gerar_documento, GeracaoDocumentoError
 
@@ -34,8 +38,12 @@ def _campos_empresa_do_form(form):
     return dict(
         razao_social=form.get("razao_social", "").strip(),
         nome_fantasia=form.get("nome_fantasia", "").strip() or None,
+        tipo_inscricao=form.get("tipo_inscricao", "CNPJ").strip().upper() or "CNPJ",
         cnpj=form.get("cnpj", "").strip(),
         inscricao_estadual=form.get("inscricao_estadual", "").strip() or None,
+        caepf=form.get("caepf", "").strip() or None,
+        cei=form.get("cei", "").strip() or None,
+        cno=form.get("cno", "").strip() or None,
         logradouro=form.get("logradouro", "").strip() or None,
         numero=form.get("numero", "").strip() or None,
         complemento=form.get("complemento", "").strip() or None,
@@ -47,6 +55,8 @@ def _campos_empresa_do_form(form):
         situacao_cadastral=form.get("situacao_cadastral", "").strip() or None,
         data_abertura=form.get("data_abertura", "").strip() or None,
         natureza_juridica=form.get("natureza_juridica", "").strip() or None,
+        status=form.get("status", "Ativo").strip() or "Ativo",
+        forma_envio=form.get("forma_envio", "").strip() or None,
         observacoes=form.get("observacoes", "").strip() or None,
     )
 
@@ -180,6 +190,58 @@ def empresa_buscar_cnpj_form():
         return dados
     except CnpjConsultaError as exc:
         return {"erro": str(exc)}, 400
+
+
+_CAMPOS_EMPRESA_DA_RECEITA = [
+    "nome_fantasia", "logradouro", "numero", "complemento", "bairro", "municipio",
+    "uf", "cep", "cnae_principal", "situacao_cadastral", "data_abertura",
+    "data_fundacao", "natureza_juridica", "porte", "capital_social",
+    "situacao_especial", "data_situacao_especial", "telefone_rfb", "email_rfb",
+    "opcao_simples", "data_opcao_simples", "opcao_mei", "data_opcao_mei",
+]
+
+
+@paginas_bp.post("/empresas/<int:empresa_id>/atualizar-receita")
+def empresa_atualizar_receita(empresa_id):
+    """
+    Busca os dados atuais na CNPJá e atualiza a empresa: campos básicos +
+    CNAEs secundários, sócios (QSA) e inscrições estaduais (substitui os
+    registros relacionados existentes pelos mais recentes).
+    """
+    empresa = Empresa.query.get_or_404(empresa_id)
+    if empresa.tipo_inscricao != "CNPJ":
+        flash("A atualização automática só está disponível para empresas com CNPJ.", "erro")
+        return redirect(url_for("paginas.empresa_detalhe", empresa_id=empresa_id))
+
+    try:
+        dados = consultar_cnpj(empresa.cnpj)
+    except CnpjConsultaError as exc:
+        flash(f"Erro ao consultar a Receita Federal: {exc}", "erro")
+        return redirect(url_for("paginas.empresa_detalhe", empresa_id=empresa_id))
+
+    for campo in _CAMPOS_EMPRESA_DA_RECEITA:
+        if campo in dados:
+            setattr(empresa, campo, dados[campo])
+    empresa.ultima_consulta_api = datetime.utcnow()
+
+    CnaeSecundario.query.filter_by(empresa_id=empresa.id).delete()
+    for item in dados.get("cnaes_secundarios") or []:
+        if item.get("codigo") or item.get("descricao"):
+            db.session.add(CnaeSecundario(empresa_id=empresa.id, **item))
+
+    Socio.query.filter_by(empresa_id=empresa.id).delete()
+    for item in dados.get("socios") or []:
+        if item.get("nome"):
+            db.session.add(Socio(empresa_id=empresa.id, **item))
+
+    InscricaoEstadual.query.filter_by(empresa_id=empresa.id).delete()
+    for item in dados.get("inscricoes_estaduais") or []:
+        if item.get("numero"):
+            db.session.add(InscricaoEstadual(empresa_id=empresa.id, **item))
+
+    db.session.commit()
+    flash("Dados da Receita Federal atualizados.", "ok")
+    return redirect(url_for("paginas.empresa_detalhe", empresa_id=empresa_id))
 
 
 # ---------------------------------------------------------------- Empregados

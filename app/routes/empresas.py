@@ -38,8 +38,12 @@ def criar_empresa():
     empresa = Empresa(
         razao_social=dados.get("razao_social"),
         nome_fantasia=dados.get("nome_fantasia"),
+        tipo_inscricao=dados.get("tipo_inscricao", "CNPJ"),
         cnpj=dados.get("cnpj"),
         inscricao_estadual=dados.get("inscricao_estadual"),
+        caepf=dados.get("caepf"),
+        cei=dados.get("cei"),
+        cno=dados.get("cno"),
         logradouro=dados.get("logradouro"),
         numero=dados.get("numero"),
         complemento=dados.get("complemento"),
@@ -51,6 +55,8 @@ def criar_empresa():
         situacao_cadastral=dados.get("situacao_cadastral"),
         data_abertura=dados.get("data_abertura"),
         natureza_juridica=dados.get("natureza_juridica"),
+        status=dados.get("status", "Ativo"),
+        forma_envio=dados.get("forma_envio"),
     )
     db.session.add(empresa)
     db.session.commit()
@@ -62,9 +68,13 @@ def atualizar_empresa(empresa_id):
     empresa = Empresa.query.get_or_404(empresa_id)
     dados = request.get_json(force=True)
     for campo in [
-        "razao_social", "nome_fantasia", "cnpj", "inscricao_estadual",
+        "razao_social", "nome_fantasia", "tipo_inscricao", "cnpj", "inscricao_estadual",
+        "caepf", "cei", "cno",
         "logradouro", "numero", "complemento", "bairro", "municipio", "uf", "cep",
         "cnae_principal", "situacao_cadastral", "data_abertura", "natureza_juridica",
+        "porte", "capital_social", "situacao_especial", "data_situacao_especial",
+        "telefone_rfb", "email_rfb", "opcao_simples", "data_opcao_simples",
+        "opcao_mei", "data_opcao_mei", "status", "forma_envio",
         "ativo", "observacoes",
     ]:
         if campo in dados:
@@ -83,7 +93,7 @@ def excluir_empresa(empresa_id):
 
 @empresas_bp.get("/consultar-cnpj/<cnpj>")
 def consultar_cnpj_route(cnpj):
-    """Consulta a BrasilAPI e devolve os dados prontos para pré-preencher o formulário."""
+    """Consulta a CNPJá e devolve os dados prontos para pré-preencher o formulário."""
     try:
         dados = consultar_cnpj(cnpj)
     except CnpjConsultaError as exc:

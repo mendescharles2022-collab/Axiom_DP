@@ -16,13 +16,14 @@ Receita Federal.
 - Testado ponta a ponta via requisição HTTP real, não só em memória
 
 **Concluído (AXDP-003):** login com sessão e perfis de usuário
-(admin/operador), banco de dados fora da pasta do sistema com WAL, e
+(admin/operador), banco de dados fora da pasta do sistema com WAL,
 migração para servidor de rede local acessado por navegador (sem mais
-`pywebview`/janela única).
+`pywebview`/janela única), e troca do provedor de CNPJ para a **CNPJá**
+(sócios/QSA, CNAEs secundários, inscrições estaduais, porte, capital
+social, opção Simples/MEI, situação especial), com suporte a CNPJ
+alfanumérico e aos campos CAEPF/CEI/CNO para clientes sem CNPJ.
 
-**Em andamento:** troca do provedor de CNPJ para a CNPJá (mais completo:
-sócios, CNAEs secundários, inscrições estaduais), suporte a CNPJ
-alfanumérico e a CAEPF/CEI/CNO, biblioteca de máscaras completa, e um
+**Em andamento:** biblioteca de máscaras completa nos formulários, e um
 motor de emissão de contracheque/pró-labore avulso com tabelas
 históricas de INSS e IRRF.
 
@@ -80,9 +81,15 @@ conta de administrador; depois disso, login é sempre exigido.
 
 ## Notas técnicas importantes
 
-- A consulta de CNPJ hoje usa a **BrasilAPI**; a próxima sprint troca
-  para a **CNPJá** (mais completa — ver handoff, seção 4). A troca é
-  isolada em `app/services/cnpj_service.py`.
+- A consulta de CNPJ usa a **CNPJá** (`open.cnpja.com`, endpoint público,
+  5 requisições/minuto por IP — ver handoff, seção 4), isolada em
+  `app/services/cnpj_service.py`. O mapeamento de campos foi feito a
+  partir da documentação pública da API (o ambiente de desenvolvimento
+  não teve saída de rede para validar contra uma chamada real) — confira
+  o aviso no topo do arquivo antes de depender dele em produção.
+- Na tela de uma empresa já cadastrada (com CNPJ), o botão "Atualizar
+  dados da Receita" busca os dados atuais e substitui CNAEs secundários,
+  sócios e inscrições estaduais pelos mais recentes.
 - Jinja não chama métodos Python automaticamente: o motor de documentos
   sempre resolve valores (como `empresa.endereco_completo()`) antes de
   montar o contexto — nunca depender de chamada implícita no template.

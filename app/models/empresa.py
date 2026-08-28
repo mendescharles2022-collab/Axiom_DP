@@ -8,10 +8,18 @@ class Empresa(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     # Identificação
+    # "cnpj" guarda o número de inscrição principal — CNPJ ou CPF, conforme
+    # tipo_inscricao (produtor rural, autônomo e empregador doméstico usam
+    # CPF). Mantido com este nome por compatibilidade com os 48 modelos de
+    # documento já publicados, que referenciam {{ empresa.cnpj }}.
     razao_social = db.Column(db.String(200), nullable=False)
     nome_fantasia = db.Column(db.String(200))
+    tipo_inscricao = db.Column(db.String(4), nullable=False, default="CNPJ")  # CNPJ | CPF
     cnpj = db.Column(db.String(18), unique=True, nullable=False, index=True)
     inscricao_estadual = db.Column(db.String(30))
+    caepf = db.Column(db.String(20))
+    cei = db.Column(db.String(20))
+    cno = db.Column(db.String(20))
 
     # Endereço
     logradouro = db.Column(db.String(200))
@@ -27,7 +35,22 @@ class Empresa(db.Model):
     situacao_cadastral = db.Column(db.String(50))
     data_abertura = db.Column(db.String(10))
     natureza_juridica = db.Column(db.String(150))
+    data_fundacao = db.Column(db.String(10))
+    porte = db.Column(db.String(100))
+    capital_social = db.Column(db.Numeric(14, 2))
+    situacao_especial = db.Column(db.String(150))
+    data_situacao_especial = db.Column(db.String(10))
+    telefone_rfb = db.Column(db.String(20))
+    email_rfb = db.Column(db.String(150))
+    opcao_simples = db.Column(db.Boolean)
+    data_opcao_simples = db.Column(db.String(10))
+    opcao_mei = db.Column(db.Boolean)
+    data_opcao_mei = db.Column(db.String(10))
     ultima_consulta_api = db.Column(db.DateTime)
+
+    # Dados do escritório (planilha de clientes)
+    status = db.Column(db.String(20), default="Ativo")  # Ativo | Inativo (cliente do escritório)
+    forma_envio = db.Column(db.String(100))
 
     # Metadados internos
     ativo = db.Column(db.Boolean, default=True)
@@ -37,6 +60,15 @@ class Empresa(db.Model):
 
     empregados = db.relationship(
         "Empregado", backref="empresa", cascade="all, delete-orphan", lazy=True
+    )
+    cnaes_secundarios = db.relationship(
+        "CnaeSecundario", backref="empresa", cascade="all, delete-orphan", lazy=True
+    )
+    socios = db.relationship(
+        "Socio", backref="empresa", cascade="all, delete-orphan", lazy=True
+    )
+    inscricoes_estaduais = db.relationship(
+        "InscricaoEstadual", backref="empresa", cascade="all, delete-orphan", lazy=True
     )
 
     def endereco_completo(self):
@@ -50,11 +82,21 @@ class Empresa(db.Model):
             "id": self.id,
             "razao_social": self.razao_social,
             "nome_fantasia": self.nome_fantasia,
+            "tipo_inscricao": self.tipo_inscricao,
             "cnpj": self.cnpj,
             "inscricao_estadual": self.inscricao_estadual,
+            "caepf": self.caepf,
+            "cei": self.cei,
+            "cno": self.cno,
             "endereco": self.endereco_completo(),
             "cnae_principal": self.cnae_principal,
             "situacao_cadastral": self.situacao_cadastral,
+            "porte": self.porte,
+            "capital_social": float(self.capital_social) if self.capital_social is not None else None,
+            "situacao_especial": self.situacao_especial,
+            "opcao_simples": self.opcao_simples,
+            "opcao_mei": self.opcao_mei,
+            "status": self.status,
             "ativo": self.ativo,
         }
 

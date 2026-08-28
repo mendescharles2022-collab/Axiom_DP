@@ -26,11 +26,27 @@
       <input name="nome_fantasia" value="{{ e.nome_fantasia or '' }}">
     </label>
 
-    <label>CNPJ *
+    <label>Tipo de inscrição
+      <select name="tipo_inscricao" id="tipo_inscricao">
+        <option value="CNPJ" {% if (e.tipo_inscricao or "CNPJ") == "CNPJ" %}selected{% endif %}>CNPJ</option>
+        <option value="CPF" {% if e.tipo_inscricao == "CPF" %}selected{% endif %}>CPF (produtor rural, autônomo, empregador doméstico)</option>
+      </select>
+    </label>
+    <label>CNPJ/CPF *
       <input name="cnpj" id="cnpj" required value="{{ e.cnpj or '' }}">
     </label>
+
     <label>Inscrição estadual
       <input name="inscricao_estadual" id="inscricao_estadual" value="{{ e.inscricao_estadual or '' }}">
+    </label>
+    <label>CAEPF
+      <input name="caepf" id="caepf" value="{{ e.caepf or '' }}">
+    </label>
+    <label>CEI
+      <input name="cei" id="cei" value="{{ e.cei or '' }}">
+    </label>
+    <label>CNO
+      <input name="cno" id="cno" value="{{ e.cno or '' }}">
     </label>
 
     <label class="col-2">Logradouro
@@ -70,6 +86,16 @@
       <input name="natureza_juridica" id="natureza_juridica" value="{{ e.natureza_juridica or '' }}">
     </label>
 
+    <label>Situação (cliente do escritório)
+      <select name="status" id="status">
+        <option value="Ativo" {% if (e.status or "Ativo") == "Ativo" %}selected{% endif %}>Ativo</option>
+        <option value="Inativo" {% if e.status == "Inativo" %}selected{% endif %}>Inativo</option>
+      </select>
+    </label>
+    <label>Forma de envio
+      <input name="forma_envio" id="forma_envio" value="{{ e.forma_envio or '' }}">
+    </label>
+
     <label class="col-2">Observações
       <textarea name="observacoes" rows="3">{{ e.observacoes or '' }}</textarea>
     </label>
@@ -103,6 +129,10 @@ async function buscarCnpjNoFormulario() {
     cnae_principal: "cnae_principal", situacao_cadastral: "situacao_cadastral",
     data_abertura: "data_abertura", natureza_juridica: "natureza_juridica",
   };
+  // Os demais campos vindos da CNPJá (sócios, CNAEs secundários, inscrições
+  // estaduais, porte, capital social etc.) só ficam disponíveis depois de
+  // salvar a empresa, usando o botão "Atualizar dados da Receita Federal"
+  // na tela de detalhe — eles dependem do ID da empresa já existir.
   for (const [campoApi, campoInput] of Object.entries(mapa)) {
     const el = document.querySelector(`[name="${campoInput}"]`);
     if (el && dados[campoApi]) el.value = dados[campoApi];

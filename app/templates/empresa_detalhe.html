@@ -11,6 +11,11 @@
       <a class="botao" href="/empresas/{{ empresa.id }}/emitir">Emitir documento</a>
       <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/historico">Histórico</a>
       <a class="botao botao-secundario" href="/empresas/{{ empresa.id }}/editar">Editar</a>
+      {% if empresa.tipo_inscricao == "CNPJ" %}
+      <form method="post" action="/empresas/{{ empresa.id }}/atualizar-receita" class="form-inline">
+        <button type="submit" class="botao botao-secundario">Atualizar dados da Receita</button>
+      </form>
+      {% endif %}
       <form method="post" action="/empresas/{{ empresa.id }}/excluir" onsubmit="return confirm('Excluir esta empresa e TODOS os empregados vinculados a ela? Essa ação não pode ser desfeita.');" class="form-inline">
         <button type="submit" class="botao-perigo">Excluir empresa</button>
       </form>
@@ -19,14 +24,69 @@
 
   <table class="tabela-dados">
     <tr><td>Nome fantasia</td><td>{{ empresa.nome_fantasia or "-" }}</td></tr>
-    <tr><td>CNPJ</td><td>{{ empresa.cnpj }}</td></tr>
+    <tr><td>{{ empresa.tipo_inscricao }}</td><td>{{ empresa.cnpj }}</td></tr>
     <tr><td>Inscrição estadual</td><td>{{ empresa.inscricao_estadual or "-" }}</td></tr>
+    {% if empresa.caepf %}<tr><td>CAEPF</td><td>{{ empresa.caepf }}</td></tr>{% endif %}
+    {% if empresa.cei %}<tr><td>CEI</td><td>{{ empresa.cei }}</td></tr>{% endif %}
+    {% if empresa.cno %}<tr><td>CNO</td><td>{{ empresa.cno }}</td></tr>{% endif %}
     <tr><td>Endereço</td><td>{{ empresa.endereco_completo() }}</td></tr>
     <tr><td>CNAE principal</td><td>{{ empresa.cnae_principal or "-" }}</td></tr>
     <tr><td>Situação cadastral</td><td>{{ empresa.situacao_cadastral or "-" }}</td></tr>
     <tr><td>Natureza jurídica</td><td>{{ empresa.natureza_juridica or "-" }}</td></tr>
+    <tr><td>Porte</td><td>{{ empresa.porte or "-" }}</td></tr>
+    <tr><td>Capital social</td><td>{{ "R$ %.2f"|format(empresa.capital_social) if empresa.capital_social is not none else "-" }}</td></tr>
+    {% if empresa.situacao_especial %}<tr><td>Situação especial</td><td>{{ empresa.situacao_especial }} {% if empresa.data_situacao_especial %}({{ empresa.data_situacao_especial }}){% endif %}</td></tr>{% endif %}
+    <tr><td>Opção Simples Nacional</td><td>{{ "Sim, desde " ~ empresa.data_opcao_simples if empresa.opcao_simples and empresa.data_opcao_simples else ("Sim" if empresa.opcao_simples else "Não") }}</td></tr>
+    <tr><td>Opção MEI</td><td>{{ "Sim, desde " ~ empresa.data_opcao_mei if empresa.opcao_mei and empresa.data_opcao_mei else ("Sim" if empresa.opcao_mei else "Não") }}</td></tr>
+    <tr><td>Telefone (RFB)</td><td>{{ empresa.telefone_rfb or "-" }}</td></tr>
+    <tr><td>E-mail (RFB)</td><td>{{ empresa.email_rfb or "-" }}</td></tr>
+    <tr><td>Status no escritório</td><td>{{ empresa.status or "Ativo" }}</td></tr>
+    <tr><td>Forma de envio</td><td>{{ empresa.forma_envio or "-" }}</td></tr>
+    <tr><td>Última consulta à Receita</td><td>{{ empresa.ultima_consulta_api.strftime("%d/%m/%Y %H:%M") if empresa.ultima_consulta_api else "nunca consultado" }}</td></tr>
   </table>
 </section>
+
+{% if empresa.cnaes_secundarios %}
+<section class="card">
+  <h2>CNAEs secundários</h2>
+  <table>
+    <thead><tr><th>Código</th><th>Descrição</th></tr></thead>
+    <tbody>
+      {% for c in empresa.cnaes_secundarios %}
+      <tr><td>{{ c.codigo or "-" }}</td><td>{{ c.descricao or "-" }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+{% if empresa.socios %}
+<section class="card">
+  <h2>Quadro societário</h2>
+  <table>
+    <thead><tr><th>Nome</th><th>Qualificação</th><th>CPF</th></tr></thead>
+    <tbody>
+      {% for s in empresa.socios %}
+      <tr><td>{{ s.nome or "-" }}</td><td>{{ s.qualificacao or "-" }}</td><td>{{ s.cpf_parcial or "-" }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+{% if empresa.inscricoes_estaduais %}
+<section class="card">
+  <h2>Inscrições estaduais</h2>
+  <table>
+    <thead><tr><th>UF</th><th>Número</th><th>Situação</th></tr></thead>
+    <tbody>
+      {% for ie in empresa.inscricoes_estaduais %}
+      <tr><td>{{ ie.uf or "-" }}</td><td>{{ ie.numero or "-" }}</td><td>{{ ie.situacao or "-" }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
 
 <section class="card">
   <div class="card-topo">
