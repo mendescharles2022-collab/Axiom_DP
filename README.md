@@ -18,14 +18,19 @@ Receita Federal.
 **Concluído (AXDP-003):** login com sessão e perfis de usuário
 (admin/operador), banco de dados fora da pasta do sistema com WAL,
 migração para servidor de rede local acessado por navegador (sem mais
-`pywebview`/janela única), e troca do provedor de CNPJ para a **CNPJá**
+`pywebview`/janela única), troca do provedor de CNPJ para a **CNPJá**
 (sócios/QSA, CNAEs secundários, inscrições estaduais, porte, capital
-social, opção Simples/MEI, situação especial), com suporte a CNPJ
-alfanumérico e aos campos CAEPF/CEI/CNO para clientes sem CNPJ.
+social, opção Simples/MEI, situação especial) com suporte a CNPJ
+alfanumérico e aos campos CAEPF/CEI/CNO, máscaras completas nos
+formulários, `titulo_pt` para corrigir capitalização de dados vindos em
+CAIXA ALTA, importação das 537 empresas e 1.798 rubricas do escritório,
+e o motor de cálculo de contracheque/pró-labore avulso (INSS progressivo,
+IRRF por tabela + redutor 2026/Lei 15.270/2025, FGTS) — ver avisos de
+"valores a confirmar" no topo de `app/services/calculo_folha.py` e
+`scripts/seed_tabelas_fiscais.py` antes de usar para folha real.
 
-**Em andamento:** biblioteca de máscaras completa nos formulários, e um
-motor de emissão de contracheque/pró-labore avulso com tabelas
-históricas de INSS e IRRF.
+**Em andamento:** telas/rotas de emissão do recibo avulso (parametrização
+da frase de quitação) e módulo de relatórios/histórico.
 
 **Antes de continuar o desenvolvimento, leia [`HANDOFF_CLAUDE_CODE.md`](./HANDOFF_CLAUDE_CODE.md).**
 Ele consolida todas as decisões de arquitetura e o roteiro detalhado

@@ -53,6 +53,9 @@ class Empresa(db.Model):
     status = db.Column(db.String(20), default="Ativo")  # Ativo | Inativo (cliente do escritório)
     forma_envio = db.Column(db.String(100))
 
+    # Recibo avulso / folha
+    frase_quitacao_padrao_id = db.Column(db.Integer, db.ForeignKey("frases_quitacao.id"))
+
     # Metadados internos
     ativo = db.Column(db.Boolean, default=True)
     observacoes = db.Column(db.Text)
@@ -71,6 +74,7 @@ class Empresa(db.Model):
     inscricoes_estaduais = db.relationship(
         "InscricaoEstadual", backref="empresa", cascade="all, delete-orphan", lazy=True
     )
+    frase_quitacao_padrao = db.relationship("FraseQuitacao")
 
     def endereco_completo(self):
         """
