@@ -1,5 +1,6 @@
 import os
 
+import pytest
 from docx import Document
 
 from app.extensions import db
@@ -9,7 +10,7 @@ from app.models.frase_quitacao import FraseQuitacao
 from app.models.recibo_avulso import ReciboAvulso
 from app.models.rubrica import Rubrica
 from app.services.calculo_folha import montar_calculo_recibo
-from app.services.recibo_engine import gerar_recibo_docx
+from app.services.recibo_engine import GeracaoReciboError, gerar_recibo_docx
 
 
 def _seed_tabelas(app):
@@ -20,11 +21,13 @@ def _seed_tabelas(app):
             seed_irrf_redutor,
             seed_salario_familia,
         )
+        from scripts.seed_templates_recibo import seed as seed_templates_recibo
 
         seed_inss()
         seed_irrf()
         seed_salario_familia()
         seed_irrf_redutor()
+        seed_templates_recibo()
 
 
 def _criar_empresa_empregado_rubricas(app):
@@ -165,6 +168,72 @@ def test_gerar_recibo_docx_contem_dados_esperados(app):
     assert "2ª VIA - EMPREGADO" in todo_texto
     assert "258,82" in todo_texto  # INSS (formatado em pt-BR pelo recibo_engine._fmt)
     assert os.path.exists(caminho)
+
+
+def test_escolher_template_recibo_moderno_via_formulario(app, auth_client):
+    from app.models.template_recibo import TemplateRecibo
+
+    _seed_tabelas(app)
+    empresa_id, empregado_id, salario_id, vt_id, cod_salario, cod_vt = _criar_empresa_empregado_rubricas(app)
+
+    with app.app_context():
+        template_moderno = TemplateRecibo.query.filter_by(tipo="contracheque", nome="Moderno").first()
+        template_moderno_id = template_moderno.id
+
+    auth_client.post(
+        f"/empresas/{empresa_id}/recibos/novo",
+        data={
+            "tipo": "contracheque", "competencia": "2026-03", "empregado_id": str(empregado_id),
+            "template_recibo_id": str(template_moderno_id),
+            "rubrica_texto_0": str(cod_salario), "valor_provento_0": "3000",
+        },
+    )
+    with app.app_context():
+        recibo = ReciboAvulso.query.filter_by(empresa_id=empresa_id).first()
+        assert recibo.template_recibo_id == template_moderno_id
+
+    resp = auth_client.post(f"/recibos/{recibo.id}/gerar", follow_redirects=True)
+    assert resp.status_code == 200
+
+    with app.app_context():
+        recibo = ReciboAvulso.query.get(recibo.id)
+        doc = Document(recibo.caminho_arquivo_gerado)
+        todo_texto = "\n".join(p.text for p in doc.paragraphs)
+        for t in doc.tables:
+            for row in t.rows:
+                for cell in row.cells:
+                    todo_texto += "\n" + cell.text
+
+    # o modelo "Moderno" não duplica em 2 vias e usa a linha "Beneficiário:"
+    assert "1ª VIA" not in todo_texto
+    assert "Beneficiário:" in todo_texto
+    assert "Trabalhador de Teste" in todo_texto
+
+
+def test_gerar_recibo_sem_templates_cadastrados_da_erro_claro(app):
+    from app.models.recibo_avulso import ReciboAvulsoItem
+
+    with app.app_context():
+        from scripts.seed_tabelas_fiscais import seed_inss, seed_irrf, seed_irrf_redutor, seed_salario_familia
+
+        seed_inss()
+        seed_irrf()
+        seed_salario_familia()
+        seed_irrf_redutor()
+        # propositalmente NÃO chama seed_templates_recibo()
+
+    empresa_id, empregado_id, salario_id, _vt_id, _cod_salario, _cod_vt = _criar_empresa_empregado_rubricas(app)
+
+    with app.app_context():
+        recibo = ReciboAvulso(empresa_id=empresa_id, empregado_id=empregado_id, competencia="2026-03", tipo="contracheque")
+        db.session.add(recibo)
+        db.session.commit()
+        db.session.add(ReciboAvulsoItem(recibo_id=recibo.id, rubrica_id=salario_id, valor_provento="1000.00"))
+        db.session.commit()
+
+        resultado = montar_calculo_recibo(recibo)
+        with pytest.raises(GeracaoReciboError, match="Nenhum modelo de recibo cadastrado"):
+            gerar_recibo_docx(recibo, resultado)
 
 
 def test_gerar_recibo_docx_inclui_salario_familia_quando_elegivel(app):

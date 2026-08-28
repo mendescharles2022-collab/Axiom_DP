@@ -1,28 +1,23 @@
 """
 Gera o .docx do recibo avulso (contracheque/pró-labore) a partir do
-resultado de app.services.calculo_folha.montar_calculo_recibo().
-
-Ao contrário dos 48 modelos de documento (docxtpl, catálogo em
-app/docs_templates/), este recibo tem uma estrutura própria — tabela de
-rubricas de tamanho variável, bases de cálculo, duas vias (empregador e
-empregado) — então é montado diretamente com python-docx em vez de um
-template fixo. A estrutura de campos segue a planilha de referência
-fornecida pelo escritório
-(dados_para_importar/Recibo_de_Salário_-_Sebastião_das_Dores_da_Silva.xls
-— HANDOFF seção 5.6).
+resultado de app.services.calculo_folha.montar_calculo_recibo(), usando
+docxtpl contra o modelo escolhido em app/docs_templates_recibo/ — mesmo
+mecanismo dos 48 modelos de DP (app/services/document_engine.py), com um
+catálogo de modelos por tipo (TemplateRecibo) em vez de um único layout
+fixo (HANDOFF ADENDO seção A).
 """
 import os
+import re
+import unicodedata
 from datetime import datetime
+from types import SimpleNamespace
 
-from docx import Document
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.shared import Pt
+from docxtpl import DocxTemplate
 
-from app.config import OUTPUT_DIR
+from app.config import DOCS_TEMPLATES_RECIBO_DIR, OUTPUT_DIR
+from app.models.template_recibo import TemplateRecibo
+from app.services.document_engine import MESES_PT, _empresa_contexto, _v
 from app.utils.texto import titulo_pt
-
-MESES_PT = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho",
-            "agosto", "setembro", "outubro", "novembro", "dezembro"]
 
 FRASE_PADRAO = "Declaro que recebi o valor descrito e dou plena quitação do que me é devido até o momento."
 
@@ -33,7 +28,7 @@ class GeracaoReciboError(Exception):
 
 def _fmt(valor) -> str:
     if valor is None:
-        return "-"
+        return ""
     return f"{valor:,.2f}".replace(",", "_").replace(".", ",").replace("_", ".")
 
 
@@ -47,10 +42,6 @@ def _documento_empregador(empresa):
     return empresa.tipo_inscricao or "CNPJ", empresa.cnpj
 
 
-def _titulo_documento(recibo):
-    return "Recibo de Pagamento de Pró-Labore" if recibo.tipo == "pro_labore" else "Recibo de Pagamento de Salário"
-
-
 def _nome_beneficiario(recibo):
     if recibo.empregado:
         return recibo.empregado.nome_completo
@@ -62,113 +53,93 @@ def _competencia_extenso(competencia: str) -> str:
     return f"{MESES_PT[int(mes) - 1]}/{ano}"
 
 
-def _escrever_via(doc: Document, recibo, resultado, frase: str, rotulo_via: str):
-    empresa = recibo.empresa
-    doc_tipo, doc_numero = _documento_empregador(empresa)
-
-    p = doc.add_paragraph()
-    p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    run = p.add_run(frase)
-    run.italic = True
-    run.font.size = Pt(8)
-
-    titulo = doc.add_heading(_titulo_documento(recibo), level=2)
-
-    tabela_cab = doc.add_table(rows=3, cols=2)
-    tabela_cab.style = "Table Grid"
-    tabela_cab.cell(0, 0).text = "Empregador"
-    tabela_cab.cell(0, 1).text = titulo_pt(empresa.razao_social)
-    tabela_cab.cell(1, 0).text = "Endereço"
-    tabela_cab.cell(1, 1).text = empresa.endereco_completo()
-    tabela_cab.cell(2, 0).text = doc_tipo
-    tabela_cab.cell(2, 1).text = doc_numero or "-"
-
-    doc.add_paragraph(f"Referente ao mês/ano: {_competencia_extenso(recibo.competencia)}")
-
-    tabela_func = doc.add_table(rows=2, cols=3)
-    tabela_func.style = "Table Grid"
-    hdr = tabela_func.rows[0].cells
-    hdr[0].text, hdr[1].text, hdr[2].text = "Código", "Nome", "Cargo/Função"
-    dados = tabela_func.rows[1].cells
-    dados[0].text = str(recibo.empregado_id or "-")
-    dados[1].text = titulo_pt(_nome_beneficiario(recibo))
-    dados[2].text = (recibo.empregado.cargo if recibo.empregado and recibo.empregado.cargo else "-")
-
-    doc.add_paragraph()
-    tabela_itens = doc.add_table(rows=1, cols=5)
-    tabela_itens.style = "Table Grid"
-    hdr = tabela_itens.rows[0].cells
-    for i, titulo_col in enumerate(["Cód.", "Descrição", "Referência", "Proventos", "Descontos"]):
-        hdr[i].text = titulo_col
-    for item in recibo.itens:
-        linha = tabela_itens.add_row().cells
-        linha[0].text = str(item.rubrica.codigo)
-        linha[1].text = item.rubrica.nome
-        linha[2].text = item.referencia or "-"
-        linha[3].text = _fmt(item.valor_provento) if item.valor_provento else ""
-        linha[4].text = _fmt(item.valor_desconto) if item.valor_desconto else ""
-
-    salario_familia = resultado.get("salario_familia") or {}
-    if salario_familia.get("elegivel"):
-        linha = tabela_itens.add_row().cells
-        linha[0].text = "-"
-        dependentes = recibo.empregado.numero_dependentes_salario_familia if recibo.empregado else 0
-        linha[1].text = f"SALÁRIO-FAMÍLIA ({dependentes} dependente(s) x {_fmt(salario_familia['valor_cota'])})"
-        linha[2].text = "-"
-        linha[3].text = _fmt(salario_familia["valor"])
-        linha[4].text = ""
-
-    total_proventos_com_salario_familia = resultado["total_proventos"] + salario_familia.get("valor", 0)
-
-    doc.add_paragraph()
-    tabela_totais = doc.add_table(rows=2, cols=3)
-    tabela_totais.style = "Table Grid"
-    tabela_totais.rows[0].cells[0].text = "Total dos Vencimentos"
-    tabela_totais.rows[0].cells[1].text = "Total dos Descontos"
-    tabela_totais.rows[0].cells[2].text = "Líquido a Receber"
-    tabela_totais.rows[1].cells[0].text = _fmt(total_proventos_com_salario_familia)
-    tabela_totais.rows[1].cells[1].text = _fmt(resultado["total_descontos"] + resultado["inss"]["valor"] + resultado["irrf"]["valor_final"])
-    tabela_totais.rows[1].cells[2].text = _fmt(resultado["liquido"])
-
-    doc.add_paragraph()
-    tabela_bases = doc.add_table(rows=2, cols=6)
-    tabela_bases.style = "Table Grid"
-    rotulos_base = ["Base Cálc. INSS", "INSS", "Base Cálc. FGTS", "FGTS do Mês", "Base Cálc. IRRF", "IRRF"]
-    valores_base = [
-        _fmt(resultado["base_inss"]), _fmt(resultado["inss"]["valor"]),
-        _fmt(resultado["base_fgts"]), _fmt(resultado["fgts"]),
-        _fmt(resultado["base_irrf"]), _fmt(resultado["irrf"]["valor_final"]),
-    ]
-    for i, rotulo in enumerate(rotulos_base):
-        tabela_bases.rows[0].cells[i].text = rotulo
-        tabela_bases.rows[1].cells[i].text = valores_base[i]
-
-    doc.add_paragraph()
-    p = doc.add_paragraph()
-    p.add_run("Data: ____/____/________" + " " * 20 + "Assinatura: _______________________________")
-
-    p = doc.add_paragraph(rotulo_via)
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    for run in p.runs:
-        run.bold = True
-        run.font.size = Pt(9)
-
-
 def _slug(texto: str) -> str:
-    import re
-    import unicodedata
     texto = unicodedata.normalize("NFKD", texto or "").encode("ascii", "ignore").decode()
     texto = re.sub(r"[^A-Za-z0-9]+", "_", texto).strip("_")
     return texto or "recibo"
 
 
-def gerar_recibo_docx(recibo, resultado) -> str:
-    frase = recibo.frase_quitacao.texto if recibo.frase_quitacao else FRASE_PADRAO
+def escolher_template_padrao(tipo: str):
+    return (
+        TemplateRecibo.query.filter_by(tipo=tipo, ativo=True)
+        .order_by(TemplateRecibo.nome)
+        .first()
+    )
 
-    doc = Document()
-    _escrever_via(doc, recibo, resultado, frase, "1ª VIA - EMPREGADOR")
-    doc.add_page_break()
-    _escrever_via(doc, recibo, resultado, frase, "2ª VIA - EMPREGADO")
+
+def _montar_contexto(recibo, resultado):
+    empresa_ctx = _empresa_contexto(recibo.empresa)
+    doc_rotulo, doc_numero = _documento_empregador(recibo.empresa)
+    empresa_ctx.documento_rotulo = doc_rotulo
+    empresa_ctx.documento_numero = _v(doc_numero)
+
+    beneficiario_ctx = SimpleNamespace(
+        codigo=str(recibo.empregado_id) if recibo.empregado_id else "-",
+        nome_completo=_v(titulo_pt(_nome_beneficiario(recibo))),
+        cargo=_v(recibo.empregado.cargo) if recibo.empregado and recibo.empregado.cargo else "-",
+    )
+
+    itens_ctx = [
+        SimpleNamespace(
+            codigo=str(item.rubrica.codigo),
+            nome=item.rubrica.nome,
+            referencia=item.referencia or "-",
+            provento=_fmt(item.valor_provento) if item.valor_provento else "",
+            desconto=_fmt(item.valor_desconto) if item.valor_desconto else "",
+        )
+        for item in recibo.itens
+    ]
+
+    sf = resultado.get("salario_familia") or {}
+    salario_familia_ctx = SimpleNamespace(
+        elegivel=bool(sf.get("elegivel")),
+        dependentes=(recibo.empregado.numero_dependentes_salario_familia if recibo.empregado else 0) or 0,
+        valor_cota=_fmt(sf.get("valor_cota")),
+        valor=_fmt(sf.get("valor")),
+    )
+
+    total_vencimentos = resultado["total_proventos"] + sf.get("valor", 0)
+    total_descontos_com_tributos = (
+        resultado["total_descontos"] + resultado["inss"]["valor"] + resultado["irrf"]["valor_final"]
+    )
+
+    return {
+        "empresa": empresa_ctx,
+        "beneficiario": beneficiario_ctx,
+        "competencia_extenso": _competencia_extenso(recibo.competencia),
+        "frase_quitacao": recibo.frase_quitacao.texto if recibo.frase_quitacao else FRASE_PADRAO,
+        "itens": itens_ctx,
+        "salario_familia": salario_familia_ctx,
+        "total_vencimentos": _fmt(total_vencimentos),
+        "total_descontos_com_tributos": _fmt(total_descontos_com_tributos),
+        "liquido": _fmt(resultado["liquido"]),
+        "inss_base": _fmt(resultado["base_inss"]),
+        "inss_valor": _fmt(resultado["inss"]["valor"]),
+        "irrf_base": _fmt(resultado["base_irrf"]),
+        "irrf_valor": _fmt(resultado["irrf"]["valor_final"]),
+        "irrf_aliquota": str(resultado["irrf"]["aliquota_faixa"]),
+        "fgts_base": _fmt(resultado["base_fgts"]),
+        "fgts_valor": _fmt(resultado["fgts"]),
+    }
+
+
+def gerar_recibo_docx(recibo, resultado) -> str:
+    template = recibo.template_recibo or escolher_template_padrao(recibo.tipo)
+    if not template:
+        raise GeracaoReciboError(
+            f'Nenhum modelo de recibo cadastrado para o tipo "{recibo.tipo}". '
+            "Rode scripts/seed_templates_recibo.py."
+        )
+
+    caminho_template = os.path.join(DOCS_TEMPLATES_RECIBO_DIR, template.arquivo)
+    if not os.path.exists(caminho_template):
+        raise GeracaoReciboError(f"Arquivo de modelo não encontrado: {template.arquivo}")
+
+    try:
+        doc = DocxTemplate(caminho_template)
+        doc.render(_montar_contexto(recibo, resultado))
+    except Exception as exc:
+        raise GeracaoReciboError(f"Falha ao preencher o modelo: {exc}") from exc
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     nome_beneficiario = _slug(_nome_beneficiario(recibo))

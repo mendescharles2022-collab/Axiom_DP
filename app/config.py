@@ -45,6 +45,7 @@ DATA_DIR = os.environ.get("AXIOM_DP_DATA_DIR") or _data_dir_padrao()
 DATABASE_DIR = os.path.join(DATA_DIR, "database")
 DATABASE_PATH = os.path.join(DATABASE_DIR, "axiom_dp.sqlite3")
 DOCS_TEMPLATES_DIR = os.path.join(BASE_DIR, "app", "docs_templates")
+DOCS_TEMPLATES_RECIBO_DIR = os.path.join(BASE_DIR, "app", "docs_templates_recibo")
 OUTPUT_DIR = os.path.join(DATA_DIR, "documentos_gerados")
 
 
@@ -60,4 +61,5 @@ class Config:
     def ensure_dirs():
         os.makedirs(DATABASE_DIR, exist_ok=True)
         os.makedirs(DOCS_TEMPLATES_DIR, exist_ok=True)
+        os.makedirs(DOCS_TEMPLATES_RECIBO_DIR, exist_ok=True)
         os.makedirs(OUTPUT_DIR, exist_ok=True)

@@ -69,6 +69,29 @@ Receita Federal.
   são contagens separadas porque as regras de dependente são diferentes
   para cada um. Pró-labore de sócio não recebe o benefício.
 
+**Concluído (ADENDO A — múltiplos modelos visuais de recibo):**
+- Catálogo `TemplateRecibo` (tipo, nome, arquivo, ativo) com 4 modelos
+  prontos, no mesmo padrão visual dos 48 documentos de DP (navy/dourado,
+  Cambria para títulos, Calibri para dados):
+  - Contracheque — Clássico (2 vias empregador/empregado) e Moderno
+  - Pró-labore — Clássico (2 vias) e Moderno
+- Na tela de novo recibo avulso, o campo "Modelo visual do recibo" lista
+  só os modelos do tipo escolhido (contracheque × pró-labore), filtrado
+  via JS conforme o campo "Tipo" muda; se nada for escolhido, usa o
+  primeiro modelo ativo cadastrado para aquele tipo.
+- `app/services/recibo_engine.py` foi reescrito de geração manual
+  (python-docx) para `docxtpl`, igual ao motor dos 48 documentos —
+  renderiza o `.docx` do modelo escolhido (`ReciboAvulso.template_recibo_id`)
+  com o contexto do cálculo (itens, INSS, IRRF, FGTS, salário-família).
+- `scripts/gerar_templates_recibo.py`: script de autoria (python-docx) que
+  gera os 4 `.docx` em `app/docs_templates_recibo/` — só precisa rodar de
+  novo se os modelos visuais forem alterados.
+- `scripts/seed_templates_recibo.py`: popula o catálogo `TemplateRecibo`
+  (idempotente por arquivo).
+- Corrigido também: `Empresa.endereco_completo()` não deixa mais "CEP"
+  solto sem valor quando a empresa ainda não tem endereço preenchido
+  (comum nas importadas antes de "Atualizar dados da Receita").
+
 **Avisos que ainda dependem de confirmação humana antes de uso em
 produção real (documentados também no código):**
 1. O mapeamento de campos da CNPJá (`app/services/cnpj_service.py`) foi
@@ -94,15 +117,18 @@ das próximas sprints — é o documento mais atualizado do repositório.
 app/
 ├── models/          Empresa (+CNAE/Sócio/IE secundários), Empregado, Usuario,
 │                    TemplateDocumento, DocumentoEmitido, Rubrica, TabelaINSS,
-│                    TabelaIRRF, TabelaIRRFRedutor, FraseQuitacao, ReciboAvulso
+│                    TabelaIRRF, TabelaIRRFRedutor, TabelaSalarioFamilia,
+│                    FraseQuitacao, TemplateRecibo, ReciboAvulso
 ├── routes/          rotas server-side (CRUD, emissão, recibos, relatórios) e API JSON
 ├── services/        CNPJá, motor de geração de documentos, cálculo de folha, recibo avulso
 ├── utils/           titulo_pt (capitalização pt-BR de dados em CAIXA ALTA)
 ├── docs_templates/  48 modelos .docx prontos para merge (docxtpl)
+├── docs_templates_recibo/  4 modelos visuais de recibo (contracheque/pró-labore ×
+│                    clássico/moderno), gerados por scripts/gerar_templates_recibo.py
 ├── templates/       telas HTML (Jinja2)
 └── static/          CSS, JS (IMask vendorizado), imagens (arte da tela de login)
 scripts/             seed de templates/tabelas fiscais/frase e importação de planilhas
-tests/               suíte pytest (77 testes) — CRUD, auth, cálculo de folha, geração de
+tests/               suíte pytest (90 testes) — CRUD, auth, cálculo de folha, geração de
                      documentos/recibos, importação, tudo via requisição HTTP real
 dados_para_importar/ planilhas fornecidas pelo escritório (clientes, rubricas, recibo de referência)
 database/            banco SQLite (fica fora da pasta do sistema — ver "Dados e variável de ambiente")
@@ -135,6 +161,7 @@ python scripts/seed_templates.py    # popula o catálogo de modelos (1x, ou de n
 python scripts/importar_dados_escritorio.py   # importa as 537 empresas e as 1.798 rubricas do escritório
 python scripts/seed_tabelas_fiscais.py        # histórico INSS 2012-2026, IRRF 2015-2026 + redutor 2026
 python scripts/seed_frase_quitacao.py         # frase de quitação "Tradicional"
+python scripts/seed_templates_recibo.py       # catálogo dos 4 modelos visuais de recibo
 python main.py
 ```
 

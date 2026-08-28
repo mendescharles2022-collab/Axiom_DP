@@ -32,13 +32,21 @@
       <input name="nome_pro_labore">
     </label>
 
-    <label class="col-2">Frase de quitação
+    <label>Frase de quitação
       <select name="frase_quitacao_id">
         <option value="">
           {% if empresa.frase_quitacao_padrao %}padrão da empresa: {{ empresa.frase_quitacao_padrao.nome }}{% else %}frase tradicional{% endif %}
         </option>
         {% for f in frases %}
         <option value="{{ f.id }}">{{ f.nome }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>Modelo visual do recibo
+      <select name="template_recibo_id" id="template_recibo_id">
+        <option value="">— padrão do tipo escolhido —</option>
+        {% for t in templates_recibo %}
+        <option value="{{ t.id }}" data-tipo="{{ t.tipo }}">{{ "Contracheque" if t.tipo == "contracheque" else "Pró-labore" }} — {{ t.nome }}</option>
         {% endfor %}
       </select>
     </label>
@@ -82,4 +90,28 @@
   </form>
 </section>
 
+{% endblock %}
+
+{% block script_extra %}
+<script>
+(function () {
+  var campoTipo = document.getElementById("tipo");
+  var campoTemplate = document.getElementById("template_recibo_id");
+  if (!campoTipo || !campoTemplate) return;
+
+  function filtrarModelos() {
+    var tipo = campoTipo.value;
+    Array.prototype.forEach.call(campoTemplate.options, function (opt) {
+      if (!opt.dataset.tipo) return; // opção "padrão do tipo escolhido"
+      opt.hidden = opt.dataset.tipo !== tipo;
+    });
+    if (campoTemplate.selectedOptions[0] && campoTemplate.selectedOptions[0].hidden) {
+      campoTemplate.value = "";
+    }
+  }
+
+  campoTipo.addEventListener("change", filtrarModelos);
+  filtrarModelos();
+})();
+</script>
 {% endblock %}

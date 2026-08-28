@@ -18,6 +18,7 @@ class ReciboAvulso(db.Model):
     competencia = db.Column(db.String(7), nullable=False)  # "AAAA-MM"
     tipo = db.Column(db.String(20), nullable=False, default="contracheque")  # contracheque | pro_labore
     frase_quitacao_id = db.Column(db.Integer, db.ForeignKey("frases_quitacao.id"))
+    template_recibo_id = db.Column(db.Integer, db.ForeignKey("templates_recibos.id"))
     nome_pro_labore = db.Column(db.String(200))  # nome do sócio, só quando empregado_id é nulo
     caminho_arquivo_gerado = db.Column(db.String(400))
     criado_em = db.Column(db.DateTime, default=datetime.utcnow)
@@ -25,6 +26,7 @@ class ReciboAvulso(db.Model):
     empresa = db.relationship("Empresa")
     empregado = db.relationship("Empregado")
     frase_quitacao = db.relationship("FraseQuitacao")
+    template_recibo = db.relationship("TemplateRecibo")
     itens = db.relationship(
         "ReciboAvulsoItem", backref="recibo", cascade="all, delete-orphan", lazy=True,
         order_by="ReciboAvulsoItem.id",

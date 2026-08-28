@@ -9,6 +9,7 @@ from app.models.empregado import Empregado
 from app.models.frase_quitacao import FraseQuitacao
 from app.models.recibo_avulso import ReciboAvulso, ReciboAvulsoItem
 from app.models.rubrica import Rubrica
+from app.models.template_recibo import TemplateRecibo
 from app.services.calculo_folha import CalculoFolhaError, montar_calculo_recibo
 from app.services.recibo_engine import GeracaoReciboError, gerar_recibo_docx
 
@@ -41,10 +42,11 @@ def novo_form(empresa_id):
     empregados = Empregado.query.filter_by(empresa_id=empresa_id).order_by(Empregado.nome_completo).all()
     rubricas = Rubrica.query.order_by(Rubrica.codigo).all()
     frases = FraseQuitacao.query.order_by(FraseQuitacao.nome).all()
+    templates_recibo = TemplateRecibo.query.filter_by(ativo=True).order_by(TemplateRecibo.tipo, TemplateRecibo.nome).all()
     return render_template(
         "recibo_form.html",
         empresa=empresa, empregados=empregados, rubricas=rubricas, frases=frases,
-        linhas=range(LINHAS_ITEM_PADRAO),
+        templates_recibo=templates_recibo, linhas=range(LINHAS_ITEM_PADRAO),
     )
 
 
@@ -57,6 +59,7 @@ def novo_salvar(empresa_id):
     empregado_id = request.form.get("empregado_id", type=int)
     nome_pro_labore = request.form.get("nome_pro_labore", "").strip() or None
     frase_quitacao_id = request.form.get("frase_quitacao_id", type=int) or empresa.frase_quitacao_padrao_id
+    template_recibo_id = request.form.get("template_recibo_id", type=int)
 
     erro = None
     if not competencia:
@@ -82,6 +85,7 @@ def novo_salvar(empresa_id):
         competencia=competencia,
         tipo=tipo,
         frase_quitacao_id=frase_quitacao_id,
+        template_recibo_id=template_recibo_id,
     )
     db.session.add(recibo)
     db.session.flush()

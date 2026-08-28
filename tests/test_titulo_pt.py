@@ -43,6 +43,22 @@ def test_endereco_completo_aplica_titulo_pt(app):
     assert "CEP 76490-000" in endereco  # "CEP" continua maiúsculo (rótulo fixo)
 
 
+def test_endereco_completo_sem_dados_nao_deixa_cep_orfao(app):
+    """
+    Empresas recém-importadas (antes de "Atualizar dados da Receita") não
+    têm nenhum campo de endereço preenchido — não pode sobrar "CEP" solto
+    sem valor nenhum depois (regressão: afetava a aparência dos recibos).
+    """
+    from app.models.empresa import Empresa
+
+    with app.app_context():
+        empresa = Empresa(razao_social="EMPRESA SEM ENDERECO LTDA", cnpj="22.222.222/0001-22")
+        endereco = empresa.endereco_completo()
+
+    assert endereco == ""
+    assert "CEP" not in endereco
+
+
 def test_documento_gerado_com_titulo_pt(app, auth_client):
     from app.extensions import db
     from app.models.empresa import Empresa

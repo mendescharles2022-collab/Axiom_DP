@@ -89,7 +89,8 @@ class Empresa(db.Model):
         ]
         rua = ", ".join([p for p in partes if p])
         cidade = f"{titulo_pt(self.municipio)}/{self.uf}" if self.municipio else ""
-        return f"{rua} - {cidade} - CEP {self.cep or ''}".strip(" -")
+        cep = f"CEP {self.cep}" if self.cep else ""
+        return " - ".join([bloco for bloco in [rua, cidade, cep] if bloco])
 
     def to_dict(self):
         return {
