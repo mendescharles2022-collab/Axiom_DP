@@ -8,13 +8,13 @@
 </head>
 <body class="pagina-auth">
   <main class="auth-tela">
-    <div class="auth-caixa">
-      <div class="auth-marca">
-        <div class="auth-logo">A</div>
-        <h1>Axiom_DP</h1>
-        <p class="subtitulo">Departamento Pessoal</p>
-      </div>
+    <div class="auth-marca-lateral">
+      <div class="auth-logo">A</div>
+      <h1>Axiom_DP</h1>
+      <p class="auth-frase">Departamento Pessoal do escritório, automatizado do jeito certo — sem planilha, sem retrabalho.</p>
+    </div>
 
+    <div class="auth-caixa">
       {% with mensagens = get_flashed_messages(with_categories=true) %}
         {% if mensagens %}
           {% for categoria, texto in mensagens %}

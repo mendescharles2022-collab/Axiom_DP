@@ -67,34 +67,45 @@ td.acoes { display: flex; gap: 10px; align-items: center; border-bottom: none; }
 .botao-sair { background: transparent; border: 1px solid #4FD1C5; color: #fff; padding: 5px 12px; font-size: 12px; }
 .botao-sair:hover { background: #16294A; }
 
-/* -------------------------------------------------- Tela de login (uma tela só, um cartão só) */
+/* -------------------------------------------------- Tela de login (uma tela só, com imagem de fundo) */
 .pagina-auth body, body.pagina-auth { background: #0F1E3D; margin: 0; }
 .auth-tela {
-  min-height: 100vh; max-width: none; margin: 0; padding: 32px 16px;
-  display: flex; align-items: center; justify-content: center;
+  min-height: 100vh; max-width: none; margin: 0; padding: 48px 8vw;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  background: linear-gradient(160deg, rgba(15,30,61,.35), rgba(31,56,100,.45)),
+              url("/static/img/login-fundo.svg") center/cover no-repeat;
 }
-.auth-caixa {
-  width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 16px;
-}
-.auth-marca { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.auth-marca-lateral { flex: 1; max-width: 480px; color: #fff; }
 .auth-logo {
   width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
   background: linear-gradient(135deg, #1F3864, #2C4A80); border: 1px solid #B08D3E;
   color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 24px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
 }
-.auth-marca h1 { color: #fff; margin: 0; font-size: 24px; }
-.auth-marca .subtitulo {
-  color: #B08D3E; font-weight: 600; letter-spacing: .08em; margin: 0;
-  font-size: 11px; text-transform: uppercase;
+.auth-marca-lateral h1 { margin: 0; font-size: 38px; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+.auth-marca-lateral .auth-frase {
+  color: #E4E9F5; font-size: 16px; line-height: 1.55; margin: 14px 0 0;
+  max-width: 400px; text-shadow: 0 1px 6px rgba(0,0,0,.3);
+}
+.auth-caixa {
+  width: 100%; max-width: 360px; flex-shrink: 0; display: flex; flex-direction: column; gap: 12px;
 }
 .auth-form {
-  background: #fff; border: 1px solid #E0E0E0; border-radius: 10px; padding: 28px 26px;
-  width: 100%; display: flex; flex-direction: column; gap: 12px;
+  background: rgba(255,255,255,.82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.6); border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(15,30,61,.35);
+  padding: 28px 26px; width: 100%; display: flex; flex-direction: column; gap: 12px;
 }
 .auth-form h2 { margin: 0; color: #1F3864; font-size: 18px; }
 .botao-auth { width: 100%; margin-top: 6px; background: #1F3864; }
 .botao-auth:hover { background: #B08D3E; }
+
+@media (max-width: 820px) {
+  .auth-tela { flex-direction: column; justify-content: center; padding: 32px 20px; gap: 26px; }
+  .auth-marca-lateral { text-align: center; max-width: 100%; }
+  .auth-logo { margin: 0 auto 14px; }
+  .auth-marca-lateral .auth-frase { margin-left: auto; margin-right: auto; }
+}
 .lista-templates li a { display: block; padding: 6px 8px; border-radius: 4px; font-size: 13.5px; }
 .lista-templates li a:hover { background: #F0F4FC; text-decoration: none; }
 
