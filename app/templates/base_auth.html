@@ -2,16 +2,15 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block titulo %}Axiom_DP{% endblock %}</title>
 <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body class="pagina-auth">
   <main class="auth-tela">
-    <section class="auth-arte">
-      <img src="/static/img/login-ilustracao.svg" alt="" class="auth-ilustracao">
-    </section>
-    <section class="auth-caixa">
+    <div class="auth-caixa">
       <div class="auth-marca">
+        <div class="auth-logo">A</div>
         <h1>Axiom_DP</h1>
         <p class="subtitulo">Departamento Pessoal</p>
       </div>
@@ -25,7 +24,7 @@
       {% endwith %}
 
       {% block conteudo_auth %}{% endblock %}
-    </section>
+    </div>
   </main>
 </body>
 </html>

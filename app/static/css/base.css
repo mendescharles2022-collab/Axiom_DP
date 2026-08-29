@@ -67,34 +67,34 @@ td.acoes { display: flex; gap: 10px; align-items: center; border-bottom: none; }
 .botao-sair { background: transparent; border: 1px solid #4FD1C5; color: #fff; padding: 5px 12px; font-size: 12px; }
 .botao-sair:hover { background: #16294A; }
 
-/* -------------------------------------------------- Telas de login */
+/* -------------------------------------------------- Tela de login (uma tela só, um cartão só) */
 .pagina-auth body, body.pagina-auth { background: #0F1E3D; margin: 0; }
 .auth-tela {
-  display: flex; min-height: 100vh; align-items: stretch; max-width: none; padding: 0; margin: 0;
+  min-height: 100vh; max-width: none; margin: 0; padding: 32px 16px;
+  display: flex; align-items: center; justify-content: center;
 }
-.auth-arte {
-  flex: 1.1; background: linear-gradient(160deg, #0F1E3D 0%, #1F3864 100%);
-  display: flex; align-items: center; justify-content: center; padding: 40px;
-}
-.auth-ilustracao { max-width: 480px; width: 100%; height: auto; }
 .auth-caixa {
-  flex: 1; background: #F4F5F7; display: flex; flex-direction: column; justify-content: center;
-  align-items: center; padding: 40px 24px;
+  width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 16px;
 }
-.auth-marca { text-align: center; margin-bottom: 18px; }
-.auth-marca h1 { color: #1F3864; margin: 0; font-size: 26px; }
-.auth-marca .subtitulo { color: #B08D3E; font-weight: 600; letter-spacing: .03em; margin: 2px 0 0; }
+.auth-marca { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.auth-logo {
+  width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #1F3864, #2C4A80); border: 1px solid #B08D3E;
+  color: #fff; font-family: Georgia, "Times New Roman", serif; font-size: 24px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.auth-marca h1 { color: #fff; margin: 0; font-size: 24px; }
+.auth-marca .subtitulo {
+  color: #B08D3E; font-weight: 600; letter-spacing: .08em; margin: 0;
+  font-size: 11px; text-transform: uppercase;
+}
 .auth-form {
-  background: #fff; border: 1px solid #E0E0E0; border-radius: 10px; padding: 28px 30px;
-  width: 100%; max-width: 340px; display: flex; flex-direction: column; gap: 12px;
+  background: #fff; border: 1px solid #E0E0E0; border-radius: 10px; padding: 28px 26px;
+  width: 100%; display: flex; flex-direction: column; gap: 12px;
 }
 .auth-form h2 { margin: 0; color: #1F3864; font-size: 18px; }
 .botao-auth { width: 100%; margin-top: 6px; background: #1F3864; }
 .botao-auth:hover { background: #B08D3E; }
-@media (max-width: 760px) {
-  .auth-tela { flex-direction: column; }
-  .auth-arte { display: none; }
-}
 .lista-templates li a { display: block; padding: 6px 8px; border-radius: 4px; font-size: 13.5px; }
 .lista-templates li a:hover { background: #F0F4FC; text-decoration: none; }
 
